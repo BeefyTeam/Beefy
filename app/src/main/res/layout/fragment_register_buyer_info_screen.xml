@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.auth.registerbuyerscreen.RegisterBuyerInfoScreen">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/registerBuyerInfoTitleTv"
+            style="@style/TextAppearance.Material3.HeadlineLarge"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="24dp"
+            android:text="Sebelum mulai,  \nisi dulu data alamat berikut ini"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/registerBuyerInfoSubTitleTv"
+            style="@style/TextAppearance.Material3.TitleSmall"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Pastikan data terisi dengan benar ya!"
+            android:textColor="#79747E"
+            app:layout_constraintEnd_toEndOf="@+id/registerBuyerInfoTitleTv"
+            app:layout_constraintStart_toStartOf="@+id/registerBuyerInfoTitleTv"
+            app:layout_constraintTop_toBottomOf="@+id/registerBuyerInfoTitleTv" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            android:id="@+id/registerBuyerInfoNameTIL"
+            android:layout_width="324dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            app:layout_constraintEnd_toEndOf="@+id/registerBuyerInfoSubTitleTv"
+            app:layout_constraintStart_toStartOf="@+id/registerBuyerInfoSubTitleTv"
+            app:layout_constraintTop_toBottomOf="@+id/registerBuyerInfoSubTitleTv"
+            android:hint="Nama Penerima" >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/registerBuyerInfoNameTIET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text|textPersonName" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/registerBuyerInfoPhoneNumberTIL"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            android:layout_width="324dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            app:layout_constraintEnd_toEndOf="@+id/registerBuyerInfoNameTIL"
+            app:layout_constraintStart_toStartOf="@+id/registerBuyerInfoNameTIL"
+            app:layout_constraintTop_toBottomOf="@+id/registerBuyerInfoNameTIL"
+            android:hint="Nomor Telepon">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/registerBuyerInfoPhoneNumberTIET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="phone" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/registerBuyerInfoAddressLabelTIL"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            android:layout_width="324dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            app:layout_constraintEnd_toEndOf="@+id/registerBuyerInfoPhoneNumberTIL"
+            app:layout_constraintStart_toStartOf="@+id/registerBuyerInfoPhoneNumberTIL"
+            app:layout_constraintTop_toBottomOf="@+id/registerBuyerInfoPhoneNumberTIL"
+            android:hint="Label Alamat">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/registerBuyerInfoAddressLabelTIET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text|textEmailSubject" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/registerBuyerInfoFullAddressTIL"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            android:layout_width="324dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            app:layout_constraintEnd_toEndOf="@+id/registerBuyerInfoAddressLabelTIL"
+            app:layout_constraintStart_toStartOf="@+id/registerBuyerInfoAddressLabelTIL"
+            app:layout_constraintTop_toBottomOf="@+id/registerBuyerInfoAddressLabelTIL"
+            android:hint="Alamat Lengkap">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/registerBuyerInfoFullAddressTIET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text|textPostalAddress|textImeMultiLine|textMultiLine" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/registerBuyerInfoConfirmAddressBtn"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="KONFIRMASI ALAMAT"
+            app:layout_constraintEnd_toEndOf="@+id/registerBuyerInfoFullAddressTIL"
+            app:layout_constraintStart_toStartOf="@+id/registerBuyerInfoFullAddressTIL"
+            app:layout_constraintTop_toBottomOf="@+id/registerBuyerInfoFullAddressTIL" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

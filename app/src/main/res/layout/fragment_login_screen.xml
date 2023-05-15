@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.auth.loginscreen.LoginScreenFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/loginScreenLogoImageView"
+            android:layout_width="225dp"
+            android:layout_height="225dp"
+            android:layout_marginStart="93dp"
+            android:layout_marginTop="52dp"
+            android:layout_marginEnd="93dp"
+            android:src="@drawable/logo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            style="@style/TextAppearance.Material3.HeadlineLarge"
+            android:id="@+id/loginScreenTitleTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Selamat Datang di Beefy"
+            app:layout_constraintEnd_toEndOf="@+id/loginScreenLogoImageView"
+            app:layout_constraintStart_toStartOf="@+id/loginScreenLogoImageView"
+            app:layout_constraintTop_toBottomOf="@+id/loginScreenLogoImageView" />
+
+        <TextView
+            android:id="@+id/loginScreenSubTitleTv"
+            style="@style/TextAppearance.Material3.TitleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Pastikan akun telah terdaftar ya!"
+            android:textColor="#79747E"
+            app:layout_constraintEnd_toEndOf="@+id/loginScreenTitleTv"
+            app:layout_constraintStart_toStartOf="@+id/loginScreenTitleTv"
+            app:layout_constraintTop_toBottomOf="@+id/loginScreenTitleTv" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/loginScreenEmailTIL"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            android:layout_width="324dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:hint="Email"
+            app:layout_constraintEnd_toEndOf="@+id/loginScreenSubTitleTv"
+            app:layout_constraintStart_toStartOf="@+id/loginScreenSubTitleTv"
+            app:layout_constraintTop_toBottomOf="@+id/loginScreenSubTitleTv"
+            app:startIconDrawable="@drawable/baseline_email_24">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/loginScreenEmailTIET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text|textEmailAddress" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/loginScreenPasswordTIL"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            android:layout_width="324dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:hint="Password"
+            app:endIconMode="password_toggle"
+            app:layout_constraintEnd_toEndOf="@+id/loginScreenEmailTIL"
+            app:layout_constraintStart_toStartOf="@+id/loginScreenEmailTIL"
+            app:layout_constraintTop_toBottomOf="@+id/loginScreenEmailTIL"
+            app:startIconDrawable="@drawable/baseline_lock_24">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/loginScreenPasswordTIET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/loginScreenForgetPasswordBtn"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Lupa Password?"
+            app:layout_constraintEnd_toEndOf="@+id/loginScreenPasswordTIL"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/loginScreenPasswordTIL"
+            app:layout_constraintTop_toBottomOf="@+id/loginScreenPasswordTIL" />
+
+        <Button
+            android:id="@+id/loginScreenLoginBtn"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="MASUK"
+            app:layout_constraintEnd_toEndOf="@+id/loginScreenForgetPasswordBtn"
+            app:layout_constraintStart_toStartOf="@+id/loginScreenPasswordTIL"
+            app:layout_constraintTop_toBottomOf="@+id/loginScreenForgetPasswordBtn" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.auth.registerbuyerscreen.RegisterBuyerScreen">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/registerBuyerTitleTv"
+            style="@style/TextAppearance.Material3.HeadlineLarge"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="60dp"
+            android:layout_marginEnd="32dp"
+            android:text="Daftar Akun \nSebagai Pembeli"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/registerBuyerNameTIL"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            android:layout_width="324dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:hint="Nama"
+            app:errorIconDrawable="@null"
+            app:layout_constraintEnd_toEndOf="@+id/registerBuyerTitleTv"
+            app:layout_constraintStart_toStartOf="@+id/registerBuyerTitleTv"
+            app:layout_constraintTop_toBottomOf="@+id/registerBuyerTitleTv">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/registerBuyerNameTIET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text|textPersonName" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/registerBuyerEmailTIL"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            android:layout_width="324dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:hint="Email"
+            app:errorIconDrawable="@null"
+            app:layout_constraintEnd_toEndOf="@+id/registerBuyerNameTIL"
+            app:layout_constraintStart_toStartOf="@+id/registerBuyerNameTIL"
+            app:layout_constraintTop_toBottomOf="@+id/registerBuyerNameTIL">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/registerBuyerEmailTIET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text|textEmailAddress" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/registerBuyerPasswordTIL"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            android:layout_width="324dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:hint="Password"
+            app:errorIconDrawable="@null"
+            app:layout_constraintEnd_toEndOf="@+id/registerBuyerEmailTIL"
+            app:layout_constraintStart_toStartOf="@+id/registerBuyerEmailTIL"
+            app:layout_constraintTop_toBottomOf="@+id/registerBuyerEmailTIL"
+            app:passwordToggleEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/registerBuyerPassworsTIET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text|textPassword" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/registerBuyerRegisterBtn"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="DAFTAR"
+            app:layout_constraintEnd_toEndOf="@+id/registerBuyerPasswordTIL"
+            app:layout_constraintStart_toStartOf="@+id/registerBuyerPasswordTIL"
+            app:layout_constraintTop_toBottomOf="@+id/registerBuyerPasswordTIL" />
+
+        <Button
+            android:id="@+id/registerBuyerAlrAccBtn"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Sudah punya akun? Masuk sekarang"
+            app:layout_constraintEnd_toEndOf="@+id/registerBuyerRegisterBtn"
+            app:layout_constraintStart_toStartOf="@+id/registerBuyerRegisterBtn"
+            app:layout_constraintTop_toBottomOf="@+id/registerBuyerRegisterBtn" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

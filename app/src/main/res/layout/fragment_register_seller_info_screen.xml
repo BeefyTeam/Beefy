@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.auth.registersellerscreen.RegisterSellerInfoScreen">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/registerSellerInfoTitleTv"
+            style="@style/TextAppearance.Material3.HeadlineLarge"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="602dp"
+            android:text="Sebelum mulai,  \nisi dulu data berikut ini"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/registerSellerInfoSubTitleTv"
+            style="@style/TextAppearance.Material3.TitleSmall"
+            android:layout_width="0dp"
+            android:textColor="#79747E"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Pastikan data terisi dengan benar ya!"
+            app:layout_constraintEnd_toEndOf="@+id/registerSellerInfoTitleTv"
+            app:layout_constraintStart_toStartOf="@+id/registerSellerInfoTitleTv"
+            app:layout_constraintTop_toBottomOf="@+id/registerSellerInfoTitleTv" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/registerSellerInfoAddressTIL"
+            android:layout_width="324dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:hint="Alamat Lengkap"
+            app:layout_constraintEnd_toEndOf="@+id/registerSellerInfoSubTitleTv"
+            app:layout_constraintStart_toStartOf="@+id/registerSellerInfoSubTitleTv"
+            app:layout_constraintTop_toBottomOf="@+id/registerSellerInfoSubTitleTv">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/registerSellerInfoAddressTIET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text|textPostalAddress|textImeMultiLine|textMultiLine" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/registerSellerInfoOpenHourTIL"
+            android:layout_width="324dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:hint="Jam Operasional Buka"
+            app:layout_constraintEnd_toEndOf="@+id/registerSellerInfoAddressTIL"
+            app:layout_constraintStart_toStartOf="@+id/registerSellerInfoAddressTIL"
+            app:layout_constraintTop_toBottomOf="@+id/registerSellerInfoAddressTIL">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/registerSellerInfoOpenHourTIET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="false" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/registerSellerInfoCloseHourTIL"
+            android:layout_width="324dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            app:layout_constraintEnd_toEndOf="@+id/registerSellerInfoOpenHourTIL"
+            app:layout_constraintStart_toStartOf="@+id/registerSellerInfoOpenHourTIL"
+            app:layout_constraintTop_toBottomOf="@+id/registerSellerInfoOpenHourTIL"
+            android:hint="Jam Operasinal Tutup" >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/registerSellerInfoCloseHourTIET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="false" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/registerSellerInfoPaymentMethodTIL"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="324dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            app:layout_constraintEnd_toEndOf="@+id/registerSellerInfoCloseHourTIL"
+            app:layout_constraintStart_toStartOf="@+id/registerSellerInfoCloseHourTIL"
+            app:layout_constraintTop_toBottomOf="@+id/registerSellerInfoCloseHourTIL"
+            android:hint="Metode Pembayaran" >
+
+            <AutoCompleteTextView
+                android:id="@+id/registerSellerInfoPaymentMethodTIET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/registerSellerInfoAccountTIL"
+            android:layout_width="324dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            app:layout_constraintEnd_toEndOf="@+id/registerSellerInfoPaymentMethodTIL"
+            app:layout_constraintStart_toStartOf="@+id/registerSellerInfoPaymentMethodTIL"
+            app:layout_constraintTop_toBottomOf="@+id/registerSellerInfoPaymentMethodTIL"
+            android:hint="Rekening" >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/registerSellerInfoAccountTIET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/registerSellerConfirmDataBtn"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="KONFIRMASI DATA"
+            app:layout_constraintEnd_toEndOf="@+id/registerSellerInfoAccountTIL"
+            app:layout_constraintStart_toStartOf="@+id/registerSellerInfoAccountTIL"
+            app:layout_constraintTop_toBottomOf="@+id/registerSellerInfoAccountTIL" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.auth.landingscreen.LandingScreenFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/landingScreenLogoImageView"
+            android:layout_width="225dp"
+            android:layout_height="225dp"
+            android:layout_marginTop="94dp"
+            android:src="@drawable/logo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/landingsSreenTitleTv"
+            style="@style/TextAppearance.Material3.HeadlineLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="BEEFY"
+            android:textSize="60sp"
+            app:layout_constraintEnd_toEndOf="@+id/landingScreenLogoImageView"
+            app:layout_constraintStart_toStartOf="@+id/landingScreenLogoImageView"
+            app:layout_constraintTop_toBottomOf="@+id/landingScreenLogoImageView" />
+
+        <TextView
+            style="@style/TextAppearance.Material3.HeadlineSmall"
+            android:id="@+id/landingScreenTaglineTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Beefy. Keren."
+            app:layout_constraintEnd_toEndOf="@+id/landingsSreenTitleTv"
+            app:layout_constraintStart_toStartOf="@+id/landingsSreenTitleTv"
+            app:layout_constraintTop_toBottomOf="@+id/landingsSreenTitleTv" />
+
+        <Button
+            android:id="@+id/landingScreenRegisterBtn"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="52dp"
+            android:text="DAFTAR"
+            app:layout_constraintEnd_toEndOf="@+id/landingScreenTaglineTv"
+            app:layout_constraintStart_toStartOf="@+id/landingScreenTaglineTv"
+            app:layout_constraintTop_toBottomOf="@+id/landingScreenTaglineTv" />
+
+        <Button
+            style="@style/Widget.Material3.Button.TextButton"
+            android:id="@+id/landingScreenLoginBtn"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="MASUK"
+            app:layout_constraintEnd_toEndOf="@+id/landingScreenRegisterBtn"
+            app:layout_constraintStart_toStartOf="@+id/landingScreenRegisterBtn"
+            app:layout_constraintTop_toBottomOf="@+id/landingScreenRegisterBtn" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/auth_navigation"
+    app:startDestination="@id/landingScreenFragment">
+
+    <fragment
+        android:id="@+id/landingScreenFragment"
+        android:name="com.example.beefy.ui.auth.landingscreen.LandingScreenFragment"
+        android:label="fragment_landing_screen"
+        tools:layout="@layout/fragment_landing_screen" >
+        <action
+            android:id="@+id/action_landingScreenFragment_to_registerConfirmationScreenFragment"
+            app:destination="@id/registerConfirmationScreenFragment" />
+        <action
+            android:id="@+id/action_landingScreenFragment_to_loginScreenFragment"
+            app:destination="@id/loginScreenFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginScreenFragment"
+        android:name="com.example.beefy.ui.auth.loginscreen.LoginScreenFragment"
+        android:label="fragment_login_screen"
+        tools:layout="@layout/fragment_login_screen" />
+    <fragment
+        android:id="@+id/registerConfirmationScreenFragment"
+        android:name="com.example.beefy.ui.auth.registerconfirmationscreen.RegisterConfirmationScreenFragment"
+        android:label="fragment_register_confirmation_screen"
+        tools:layout="@layout/fragment_register_confirmation_screen" >
+        <action
+            android:id="@+id/action_registerConfirmationScreenFragment_to_registerBuyerScreen"
+            app:destination="@id/registerBuyerScreen" />
+        <action
+            android:id="@+id/action_registerConfirmationScreenFragment_to_registerSellerScreen"
+            app:destination="@id/registerSellerScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerBuyerScreen"
+        android:name="com.example.beefy.ui.auth.registerbuyerscreen.RegisterBuyerScreen"
+        android:label="fragment_register_buyer"
+        tools:layout="@layout/fragment_register_buyer" >
+        <action
+            android:id="@+id/action_registerBuyerScreen_to_registerBuyerInfoScreen"
+            app:destination="@id/registerBuyerInfoScreen" />
+        <action
+            android:id="@+id/action_registerBuyerScreen_to_loginScreenFragment"
+            app:destination="@id/loginScreenFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerBuyerInfoScreen"
+        android:name="com.example.beefy.ui.auth.registerbuyerscreen.RegisterBuyerInfoScreen"
+        android:label="fragment_register_buyer_info_screen"
+        tools:layout="@layout/fragment_register_buyer_info_screen" />
+    <fragment
+        android:id="@+id/registerSellerScreen"
+        android:name="com.example.beefy.ui.auth.registersellerscreen.RegisterSellerScreen"
+        android:label="fragment_register_seller_screen"
+        tools:layout="@layout/fragment_register_seller_screen" >
+        <action
+            android:id="@+id/action_registerSellerScreen_to_registerSellerInfoScreen"
+            app:destination="@id/registerSellerInfoScreen" />
+        <action
+            android:id="@+id/action_registerSellerScreen_to_loginScreenFragment"
+            app:destination="@id/loginScreenFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerSellerInfoScreen"
+        android:name="com.example.beefy.ui.auth.registersellerscreen.RegisterSellerInfoScreen"
+        android:label="fragment_register_seller_info_screen"
+        tools:layout="@layout/fragment_register_seller_info_screen" />
+</navigation>

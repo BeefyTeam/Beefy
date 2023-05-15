@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.auth.registersellerscreen.RegisterSellerScreen">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/registerSellerTitleTv"
+            style="@style/TextAppearance.Material3.HeadlineLarge"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="60dp"
+            android:layout_marginEnd="32dp"
+            android:text="Daftar Akun \nSebagai Penjual"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/registerSellerStoreNameTIL"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            android:layout_width="324dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:hint="Nama Toko"
+            app:errorIconDrawable="@null"
+            app:layout_constraintEnd_toEndOf="@+id/registerSellerTitleTv"
+            app:layout_constraintStart_toStartOf="@+id/registerSellerTitleTv"
+            app:layout_constraintTop_toBottomOf="@+id/registerSellerTitleTv">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/registerSellerStoreNameTIET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text|textPersonName" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/registerSellerPhoneStoreNumberTIL"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            android:layout_width="324dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:hint="Nomor Telepon"
+            app:errorIconDrawable="@null"
+            app:layout_constraintEnd_toEndOf="@+id/registerSellerStoreNameTIL"
+            app:layout_constraintStart_toStartOf="@+id/registerSellerStoreNameTIL"
+            app:layout_constraintTop_toBottomOf="@+id/registerSellerStoreNameTIL">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/registerSellerPhoneNumberTIET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="phone"
+                android:maxLength="12" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/registerSellerEmailTIL"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            android:layout_width="324dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:hint="Email"
+            app:errorIconDrawable="@null"
+            app:layout_constraintEnd_toEndOf="@+id/registerSellerPhoneStoreNumberTIL"
+            app:layout_constraintStart_toStartOf="@+id/registerSellerPhoneStoreNumberTIL"
+            app:layout_constraintTop_toBottomOf="@+id/registerSellerPhoneStoreNumberTIL">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/registerSellerEmailTIET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text|textEmailAddress" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/registerSellerPasswordTIL"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+            android:layout_width="324dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:hint="Kata Sandi"
+            app:errorIconDrawable="@null"
+            app:layout_constraintEnd_toEndOf="@+id/registerSellerEmailTIL"
+            app:layout_constraintStart_toStartOf="@+id/registerSellerEmailTIL"
+            app:layout_constraintTop_toBottomOf="@+id/registerSellerEmailTIL"
+            app:passwordToggleEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/registerSellerPasswordTIET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text|textPassword" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/registerSellerRegisterBtn"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="DAFTAR"
+            app:layout_constraintEnd_toEndOf="@+id/registerSellerPasswordTIL"
+            app:layout_constraintStart_toStartOf="@+id/registerSellerPasswordTIL"
+            app:layout_constraintTop_toBottomOf="@+id/registerSellerPasswordTIL" />
+
+        <Button
+            android:id="@+id/registerSellerAlrHaveAccountBtn"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Sudah punya akun? Masuk Sekarang"
+            app:layout_constraintEnd_toEndOf="@+id/registerSellerRegisterBtn"
+            app:layout_constraintStart_toStartOf="@+id/registerSellerRegisterBtn"
+            app:layout_constraintTop_toBottomOf="@+id/registerSellerRegisterBtn" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

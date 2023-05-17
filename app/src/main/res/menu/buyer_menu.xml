@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/buyer_home_screen"
+        android:enabled="true"
+        android:icon="@drawable/baseline_home_24"
+        android:title="Beranda"/>
+
+    <item
+        android:id="@+id/buyer_scan_screen"
+        android:enabled="true"
+        android:icon="@drawable/baseline_scanner_24"
+        android:title="Pindai"/>
+
+    <item
+        android:id="@+id/buyer_profile_screen"
+        android:enabled="true"
+        android:icon="@drawable/baseline_home_24"
+        android:title="Profil"/>
+
+
+</menu>

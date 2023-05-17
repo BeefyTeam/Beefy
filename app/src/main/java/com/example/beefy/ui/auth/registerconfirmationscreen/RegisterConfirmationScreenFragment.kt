@@ -35,11 +35,11 @@ class RegisterConfirmationScreenFragment : Fragment() {
 
     private fun setupButton(){
 
-        binding.registerConfirmationScreenBuyerCardView.setOnClickListener {
+        binding.registerConfirmationScreenBuyerCardView.root.setOnClickListener {
             it.findNavController().navigate(R.id.action_registerConfirmationScreenFragment_to_registerBuyerScreen)
         }
 
-        binding.registerConfirmationScreenSellerCardView.setOnClickListener {
+        binding.registerConfirmationScreenSellerCardView.root.setOnClickListener {
             it.findNavController().navigate(R.id.action_registerConfirmationScreenFragment_to_registerSellerScreen)
         }
 

@@ -1,14 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.buyer.buyerhomescreen.BuyerHomeScreen">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent">
 
+        <com.denzcoskun.imageslider.ImageSlider
+            android:id="@+id/buyerHomeScreenTopImageSlider"
+            android:layout_width="0dp"
+            android:layout_height="150dp"
+            app:iss_auto_cycle="true"
+            app:iss_delay="1000"
+            app:iss_period="5000"
+            app:iss_text_align="CENTER"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/buyerHomeScreenHelloTv"
+            style="@style/TextAppearance.Material3.BodyLarge"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:text="Halo, "
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/buyerHomeScreenTopImageSlider" />
+
+        <SearchView
+            android:id="@+id/buyerHomeScreenSearchView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:iconifiedByDefault="false"
+            android:queryHint="Cari di Beefy"
+            app:layout_constraintEnd_toEndOf="@+id/buyerHomeScreenHelloTv"
+            app:layout_constraintStart_toStartOf="@+id/buyerHomeScreenHelloTv"
+            app:layout_constraintTop_toBottomOf="@+id/buyerHomeScreenHelloTv" />
+
+        <TextView
+            android:id="@+id/buyerHomeScreenCheckStoreTv"
+            style="@style/TextAppearance.Material3.HeadlineSmall"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Cek toko ini ya!"
+            app:layout_constraintEnd_toEndOf="@+id/buyerHomeScreenSearchView"
+            app:layout_constraintStart_toStartOf="@+id/buyerHomeScreenSearchView"
+            app:layout_constraintTop_toBottomOf="@+id/buyerHomeScreenSearchView" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/buyerHomeScreenBestStoreRv"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="4dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="@+id/buyerHomeScreenCheckStoreTv"
+            app:layout_constraintStart_toStartOf="@+id/buyerHomeScreenCheckStoreTv"
+            app:layout_constraintTop_toBottomOf="@+id/buyerHomeScreenCheckStoreTv"
+            tools:listitem="@layout/best_store_item" />
+
+        <TextView
+            android:id="@+id/buyerHomeSreenBestMeatRv"
+            style="@style/TextAppearance.Material3.HeadlineSmall"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Pilihan daging terbaik"
+            app:layout_constraintEnd_toEndOf="@+id/buyerHomeScreenBestStoreRv"
+            app:layout_constraintStart_toStartOf="@+id/buyerHomeScreenBestStoreRv"
+            app:layout_constraintTop_toBottomOf="@+id/buyerHomeScreenBestStoreRv" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/buyerHomeScreenBestMeatRv"
+            android:layout_width="0dp"
+            android:layout_height="238dp"
+            android:layout_marginTop="4dp"
+            app:layout_constraintEnd_toEndOf="@+id/buyerHomeSreenBestMeatRv"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/buyerHomeSreenBestMeatRv"
+            app:layout_constraintTop_toBottomOf="@+id/buyerHomeSreenBestMeatRv" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

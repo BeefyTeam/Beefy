@@ -1,5 +1,6 @@
 package com.example.beefy.ui.auth.loginscreen
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -11,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.example.beefy.R
 import com.example.beefy.databinding.FragmentLoginScreenBinding
+import com.example.beefy.ui.buyer.BuyerActivity
 
 
 class LoginScreenFragment : Fragment() {
@@ -33,6 +35,9 @@ class LoginScreenFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.loginScreenEmailTIET.setText("a@gmail.com")
+        binding.loginScreenPasswordTIET.setText("aaaaaaaa")
+
         checkEmptyField()
         validateInput()
         setupButton()
@@ -42,7 +47,8 @@ class LoginScreenFragment : Fragment() {
     private fun setupButton(){
         //todo
         binding.loginScreenLoginBtn.setOnClickListener {
-            Toast.makeText(requireContext(), "SUCCESS LOGIN", Toast.LENGTH_SHORT).show()
+            requireActivity().startActivity(Intent(requireContext(), BuyerActivity::class.java))
+
         }
 
         binding.loginScreenForgetPasswordBtn.setOnClickListener {

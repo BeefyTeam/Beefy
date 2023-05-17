@@ -6,4 +6,27 @@
     android:layout_height="match_parent"
     tools:context=".ui.buyer.BuyerActivity">
 
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/buyerFragmentContainerView"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+
+        app:defaultNavHost="true"
+        app:layout_constraintBottom_toTopOf="@+id/buyerBottomNavigationView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navGraph="@navigation/buyer_navigation" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/buyerBottomNavigationView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/buyer_menu" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

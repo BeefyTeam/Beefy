@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.SearchView.OnQueryTextListener
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.denzcoskun.imageslider.constants.ScaleTypes
@@ -23,10 +24,6 @@ class BuyerHomeScreen : Fragment() {
     private var _binding : FragmentBuyerHomeScreenBinding? = null
     private val binding get() = _binding!!
 
-
-    var sampleImages = intArrayOf(
-        R.drawable.logo,
-    )
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -44,9 +41,9 @@ class BuyerHomeScreen : Fragment() {
 
         val imageList = ArrayList<SlideModel>()
 
-        imageList.add(SlideModel("https://bit.ly/2YoJ77H", ))
-        imageList.add(SlideModel("https://bit.ly/2BteuF2", ))
-        imageList.add(SlideModel("https://bit.ly/3fLJf72", ))
+        imageList.add(SlideModel("https://images.unsplash.com/photo-1607082349566-187342175e2f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80", ))
+        imageList.add(SlideModel("https://images.unsplash.com/photo-1607083206325-caf1edba7a0f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1177&q=80", ))
+        imageList.add(SlideModel("https://images.unsplash.com/photo-1546502208-81d149d52bd7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1173&q=80", ))
 
         binding.buyerHomeScreenTopImageSlider.setImageList(imageList, ScaleTypes.FIT)
 
@@ -55,6 +52,7 @@ class BuyerHomeScreen : Fragment() {
         binding.buyerHomeScreenSearchView.setOnQueryTextListener(object : OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
                 Toast.makeText(requireContext(), query, Toast.LENGTH_SHORT).show()
+                findNavController().navigate(R.id.action_buyer_home_screen_to_buyerSearchScreen)
                 return false
             }
 
@@ -63,19 +61,6 @@ class BuyerHomeScreen : Fragment() {
             }
 
         })
-
-        val imgList = ArrayList<String>()
-        imgList.add("https://bit.ly/2YoJ77H")
-        imgList.add("https://bit.ly/2BteuF2")
-        imgList.add("https://bit.ly/3fLJf72")
-        imgList.add("https://bit.ly/2YoJ77H")
-        imgList.add("https://bit.ly/2YoJ77H")
-
-        binding.buyerHomeScreenBestMeatRv.layoutManager = CarouselLayoutManager()
-        val bestMeatAdapter = BuyerHomeScreenBestMeatAdapter(imgList){
-            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
-        }
-        binding.buyerHomeScreenBestMeatRv.adapter = bestMeatAdapter
 
         val storeName = ArrayList<String>()
         storeName.add("Anugrah Bersama")
@@ -86,6 +71,20 @@ class BuyerHomeScreen : Fragment() {
             Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
         }
         binding.buyerHomeScreenBestStoreRv.adapter = checkStoreAdapter
+
+        val imgList = ArrayList<String>()
+        imgList.add("https://cdn.idntimes.com/content-images/post/20211202/2xsirloin-m-041e6839f3db56849a490f059a65b743.jpg")
+        imgList.add("https://cdn.idntimes.com/content-images/post/20211202/striploin-steak-raw-beef-butchery-cut-white-table-top-view-249006-3611-90cff3e110751a704f06e897dd6e72fd.jpg")
+        imgList.add("https://cdn.idntimes.com/content-images/post/20211202/featured-image-tbone-1080x675-1097f7cd916993fcfc1969fa23e7b1a2.jpg")
+        imgList.add("https://cdn.idntimes.com/content-images/post/20211202/porterhouse2-ba1e93edc4eb3d376011a096c909a5f9.jpg")
+
+        binding.buyerHomeScreenBestMeatRv.layoutManager = CarouselLayoutManager()
+        val bestMeatAdapter = BuyerHomeScreenBestMeatAdapter(imgList){
+            Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+        }
+        binding.buyerHomeScreenBestMeatRv.adapter = bestMeatAdapter
+
+
 
 
     }

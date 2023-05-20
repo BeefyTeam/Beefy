@@ -21,4 +21,13 @@
         <!-- Required -->
         <item name="postSplashScreenTheme">@style/Base.Theme.Beefy</item>
     </style>
+
+    <style name="Theme.Beefy.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.Beefy.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.Beefy.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

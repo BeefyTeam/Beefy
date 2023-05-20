@@ -8,15 +8,98 @@
         android:id="@+id/buyer_home_screen"
         android:name="com.example.beefy.ui.buyer.buyerhomescreen.BuyerHomeScreen"
         android:label="fragment_buyer_home_screen"
-        tools:layout="@layout/fragment_buyer_home_screen" />
+        tools:layout="@layout/fragment_buyer_home_screen" >
+        <action
+            android:id="@+id/action_buyer_home_screen_to_buyerSearchScreen"
+            app:destination="@id/buyerSearchScreen" />
+    </fragment>
     <fragment
         android:id="@+id/buyer_profile_screen"
         android:name="com.example.beefy.ui.buyer.buyerprofilescreen.BuyerProfileScreen"
         android:label="fragment_buyer_profile_screen"
-        tools:layout="@layout/fragment_buyer_profile_screen" />
+        tools:layout="@layout/fragment_buyer_profile_screen" >
+        <action
+            android:id="@+id/action_buyer_profile_screen_to_buyerScanHistoryScreen"
+            app:destination="@id/buyerScanHistoryScreen" />
+        <action
+            android:id="@+id/action_buyer_profile_screen_to_buyerOrderStatusScreen"
+            app:destination="@id/buyerOrderStatusScreen" />
+    </fragment>
     <fragment
         android:id="@+id/buyer_scan_screen"
         android:name="com.example.beefy.ui.buyer.buyerscanscreen.BuyerScanScreen"
         android:label="fragment_buyer_scan_screen"
         tools:layout="@layout/fragment_buyer_scan_screen" />
+    <fragment
+        android:id="@+id/buyerSearchScreen"
+        android:name="com.example.beefy.ui.buyer.buyersearchscreen.BuyerSearchScreen"
+        android:label="fragment_buyer_search_screen"
+        tools:layout="@layout/fragment_buyer_search_screen" >
+        <action
+            android:id="@+id/action_buyerSearchScreen_to_buyerProductDetailScreen"
+            app:destination="@id/buyerProductDetailScreen" />
+        <action
+            android:id="@+id/action_buyerSearchScreen_to_buyerStoreDtailScreen"
+            app:destination="@id/buyerStoreDtailScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/buyerProductDetailScreen"
+        android:name="com.example.beefy.ui.buyer.buyerproductdetailscreen.BuyerProductDetailScreen"
+        android:label="BuyerProductDetailScreen" >
+        <action
+            android:id="@+id/action_buyerProductDetailScreen_to_buyerCheckoutScreen"
+            app:destination="@id/buyerCheckoutScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/buyerCheckoutScreen"
+        android:name="com.example.beefy.ui.buyer.buyercheckoutscreen.BuyerCheckoutScreen"
+        android:label="fragment_buyer_checkout_screen"
+        tools:layout="@layout/fragment_buyer_checkout_screen" >
+        <action
+            android:id="@+id/action_buyerCheckoutScreen_to_buyerUploadPaymentProofScreen"
+            app:destination="@id/buyerUploadPaymentProofScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/buyerCompletePaymentScreen"
+        android:name="com.example.beefy.ui.buyer.buyercompletepaymentscreen.BuyerCompletePaymentScreen"
+        android:label="fragment_buyer_complete_payment_screen"
+        tools:layout="@layout/fragment_buyer_complete_payment_screen" >
+        <action
+            android:id="@+id/action_buyerCompletePaymentScreen_to_buyer_home_screen"
+            app:destination="@id/buyer_home_screen" />
+    </fragment>
+    <fragment
+        android:id="@+id/buyerUploadPaymentProofScreen"
+        android:name="com.example.beefy.ui.buyer.buyeruploadpaymentproofscreen.BuyerUploadPaymentProofScreen"
+        android:label="fragment_buyer_upload_payment_proof_screen"
+        tools:layout="@layout/fragment_buyer_upload_payment_proof_screen" >
+        <action
+            android:id="@+id/action_buyerUploadPaymentProofScreen_to_buyerCompletePaymentScreen"
+            app:destination="@id/buyerCompletePaymentScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/buyerStoreDtailScreen"
+        android:name="com.example.beefy.ui.buyer.buyerstoredetailscreen.BuyerStoreDtailScreen"
+        android:label="BuyerStoreDtailScreen" >
+        <action
+            android:id="@+id/action_buyerStoreDtailScreen_to_buyerProductDetailScreen"
+            app:destination="@id/buyerProductDetailScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/buyerScanHistoryScreen"
+        android:name="com.example.beefy.ui.buyer.buyerscanhistoryscreen.BuyerScanHistoryScreen"
+        android:label="BuyerScanHistoryScreen" />
+    <fragment
+        android:id="@+id/buyerOrderStatusScreen"
+        android:name="com.example.beefy.ui.buyer.buyerorderstatusscreen.BuyerOrderStatusScreen"
+        android:label="BuyerOrderStatusScreen" >
+        <action
+            android:id="@+id/action_buyerOrderStatusScreen_to_buyerOrderDetailScreen"
+            app:destination="@id/buyerOrderDetailScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/buyerOrderDetailScreen"
+        android:name="com.example.beefy.ui.buyer.buyerorderdetailscreen.BuyerOrderDetailScreen"
+        android:label="fragment_buyer_order_detail_screen"
+        tools:layout="@layout/fragment_buyer_order_detail_screen" />
 </navigation>

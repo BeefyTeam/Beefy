@@ -1,5 +1,6 @@
 package com.example.beefy.ui.auth.registerbuyerscreen
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -9,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.example.beefy.databinding.FragmentRegisterBuyerInfoScreenBinding
+import com.example.beefy.ui.buyer.BuyerActivity
 
 
 class RegisterBuyerInfoScreen : Fragment() {
@@ -40,6 +42,8 @@ class RegisterBuyerInfoScreen : Fragment() {
         //todo
         binding.registerBuyerInfoConfirmAddressBtn.setOnClickListener {
             Toast.makeText(requireContext(), "SUCCESS REGISTER", Toast.LENGTH_SHORT).show()
+            requireActivity().startActivity(Intent(requireContext(), BuyerActivity::class.java))
+            requireActivity().finish()
         }
     }
 

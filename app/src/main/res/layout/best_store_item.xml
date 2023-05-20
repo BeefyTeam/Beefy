@@ -13,12 +13,12 @@
         android:orientation="horizontal"
         android:padding="8dp">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/bestStoreItemImageView"
             android:layout_width="69dp"
             android:layout_height="72dp"
             android:layout_weight="1"
-            app:srcCompat="@drawable/logo" />
+            android:src="@drawable/logo" />
 
         <TextView
             android:id="@+id/bestStoreItemStoreName"

@@ -36,6 +36,9 @@ android {
     viewBinding{
         enabled = true
     }
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
@@ -74,9 +77,19 @@ dependencies {
     implementation 'androidx.fragment:fragment-ktx:1.5.7'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
     implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
+    implementation "androidx.viewpager2:viewpager2:1.0.0"
 
-    implementation 'org.imaginativeworld.whynotimagecarousel:whynotimagecarousel:2.1.0'
+    //carousel
     implementation 'com.github.denzcoskun:ImageSlideshow:0.1.2'
+
+    //circle image view
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+    //lottie
+    implementation "com.airbnb.android:lottie:6.0.0"
+
+    //image picker
+    implementation 'com.github.dhaval2404:imagepicker:2.1'
 
 
 }

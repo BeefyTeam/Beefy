@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelinever"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <TextView
+        android:id="@+id/paymentDetailCardTotalPriceTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Total Harga"
+        app:layout_constraintEnd_toStartOf="@+id/guidelinever"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/paymentDetailCardTotalPriceAmountTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rp100.000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/guidelinever"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/paymentDetailCardShippingPriceTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Biaya Pengiriman"
+        app:layout_constraintEnd_toStartOf="@+id/guidelinever"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/paymentDetailCardTotalPriceTv"
+        app:layout_constraintTop_toBottomOf="@+id/paymentDetailCardTotalPriceTv" />
+
+    <TextView
+        android:id="@+id/paymentDetailCardShippingPriceAmountTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Rp0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/guidelinever"
+        app:layout_constraintTop_toBottomOf="@+id/paymentDetailCardTotalPriceAmountTv" />
+
+    <TextView
+        android:id="@+id/paymentDetailCardUniqueNumberTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Kode Unik Pembayaran"
+        app:layout_constraintEnd_toStartOf="@+id/guidelinever"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/paymentDetailCardShippingPriceTv" />
+
+    <TextView
+        android:id="@+id/paymentDetailCardUniquePriceTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Rp231"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/guidelinever"
+        app:layout_constraintTop_toBottomOf="@+id/paymentDetailCardShippingPriceAmountTv" />
+
+    <TextView
+        android:id="@+id/paymentDetailCardTotalPaymentPriceTv"
+        style="@style/TextAppearance.Material3.LabelLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Total Pembayaran"
+        app:layout_constraintEnd_toStartOf="@+id/guidelinever"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/paymentDetailCardUniqueNumberTv" />
+
+    <TextView
+        android:id="@+id/paymentDetailCardTotalPaymentPriceAmountTv"
+        style="@style/TextAppearance.Material3.LabelLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Rp100.231"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/guidelinever"
+        app:layout_constraintTop_toBottomOf="@+id/paymentDetailCardUniquePriceTv" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

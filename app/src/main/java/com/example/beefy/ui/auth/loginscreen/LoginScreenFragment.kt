@@ -48,6 +48,7 @@ class LoginScreenFragment : Fragment() {
         //todo
         binding.loginScreenLoginBtn.setOnClickListener {
             requireActivity().startActivity(Intent(requireContext(), BuyerActivity::class.java))
+            requireActivity().finish()
 
         }
 

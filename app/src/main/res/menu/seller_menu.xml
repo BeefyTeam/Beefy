@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:title="Home"
+        android:id="@+id/sellerHomeScreen"
+        android:icon="@drawable/baseline_home_24"/>
+    <item
+        android:title="Transaksi"
+        android:id="@+id/sellerTransactionScreen"
+        android:icon="@drawable/baseline_sell_24"/>
+    <item
+        android:title="Profil"
+        android:id="@+id/sellerProfileScreen"
+        android:icon="@drawable/baseline_emoji_emotions_24"
+        />
+</menu>

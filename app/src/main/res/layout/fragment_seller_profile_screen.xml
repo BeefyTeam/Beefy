@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.buyer.buyerprofilescreen.BuyerProfileScreen">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.seller.sellerprofilescreen.SellerProfileScreen">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,96 +13,68 @@
         android:padding="8dp">
 
         <ImageView
-            android:id="@+id/buyerProfileImageview"
+            android:id="@+id/sellerProfileImageview"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_gravity="center"
             android:src="@drawable/baseline_emoji_emotions_24" />
 
         <TextView
-            android:id="@+id/buyerProfileNameTv"
+            android:id="@+id/sellerProfileNameTv"
             style="@style/TextAppearance.Material3.HeadlineLarge"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:gravity="center"
-            android:text="Budi"
-            android:layout_marginTop="8dp"/>
+            android:text="Ani" />
 
         <TextView
-            android:id="@+id/buyerProfileEmailTv"
+            android:id="@+id/sellerProfileEmailTv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:gravity="center"
-            android:text="budi@gmail.com"
-            android:layout_marginTop="8dp"/>
+            android:text="ani@gmail.com" />
 
         <Button
-            android:id="@+id/buyerProfileEditProfileBtn"
+            android:id="@+id/sellerProfileEditProfileBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Ubah Profil"
-            android:layout_marginTop="8dp"/>
-
-        <TextView
-            android:id="@+id/buyerProfileMyActivityTv"
-            style="@style/TextAppearance.Material3.TitleMedium"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Aktivitas saya"
-            android:layout_marginTop="24dp"/>
-
-        <Button
-            android:id="@+id/buyerProfileScanHistoryBtn"
-            style="@style/Widget.Material3.Button.TextButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Scan History" />
-
-        <com.google.android.material.divider.MaterialDivider
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:dividerInsetStart="8dp"
-            app:dividerInsetEnd="8dp"/>
-
-        <Button
-            android:id="@+id/buyerProfileOrderStatusBtn"
-            style="@style/Widget.Material3.Button.TextButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Status Pesanan" />
+            android:layout_marginTop="8dp"
+            android:text="Ubah Profil" />
 
 
         <TextView
-            android:id="@+id/buyerProfileGeneralTv"
+            android:id="@+id/sellerProfileGeneralTv"
             style="@style/TextAppearance.Material3.TitleMedium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Umum"
-            android:layout_marginTop="24dp"/>
+            android:layout_marginTop="24dp"
+            android:text="Umum" />
 
         <Button
-            android:id="@+id/buyerProfileSettingBtn"
+            android:id="@+id/sellerProfileSettingBtn"
             style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Pengaturan" />
 
         <com.google.android.material.divider.MaterialDivider
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            app:dividerInsetEnd="8dp"
             app:dividerInsetStart="8dp"
-            app:dividerInsetEnd="8dp" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <Button
-            android:id="@+id/buyerProfileFeedbackBtn"
+            android:id="@+id/sellerProfileFeedbackBtn"
             style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Feedback" />
 
         <Button
-            android:id="@+id/buyerProfileLogoutBtn"
+            android:id="@+id/sellerProfileLogoutBtn"
             style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

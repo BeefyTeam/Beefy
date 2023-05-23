@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.seller.sellerdetailitemscreen.SellerDetailItemScreen">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/sellerDetailItemTitleTv"
+            style="@style/TextAppearance.Material3.HeadlineSmall"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:text="Detail Item" />
+
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp" />
+
+        <ImageView
+            android:id="@+id/sellerDetailItemImageView"
+            android:layout_width="match_parent"
+            android:layout_height="275dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:src="@drawable/button_border" />
+
+        <TextView
+            android:id="@+id/sellerDetailItemNameTv"
+            style="@style/TextAppearance.Material3.TitleLarge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="Sirloin 90gr" />
+
+        <TextView
+            android:id="@+id/sellerDetailItemPriceTv"
+            style="@style/TextAppearance.Material3.TitleMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="Rp90.000" />
+
+        <TextView
+            android:id="@+id/sellerDetailItemDescTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lectus magna fringilla urna porttitor. Magna fringilla urna porttitor rhoncus. Arcu odio ut sem nulla pharetra. Turpis egestas maecenas pharetra convallis posuere morbi leo urna. Nam at lectus urna duis convallis convallis tellus id. Vel risus commodo viverra maecenas accumsan lacus vel facilisis. Pulvinar etiam non quam lacus suspendisse faucibus interdum posuere lorem. Tempor orci dapibus ultrices in iaculis nunc. Nunc mi ipsum faucibus vitae aliquet nec ullamcorper. Mauris pellentesque pulvinar pellentesque habitant morbi. Sem nulla pharetra diam sit amet. Tellus integer feugiat scelerisque varius morbi enim. Scelerisque felis imperdiet proin fermentum. Gravida dictum fusce ut placerat orci nulla pellentesque." />
+
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp" />
+
+        <Button
+            android:id="@+id/sellerDetailItemEditItemBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="UBAH BARANG" />
+
+        <Button
+            android:id="@+id/sellerDetailItemDeleteItemBtn"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="Hapus dari etalase toko" />
+
+
+    </LinearLayout>
+</ScrollView>

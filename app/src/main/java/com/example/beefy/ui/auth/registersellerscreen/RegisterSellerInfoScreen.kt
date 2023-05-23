@@ -12,6 +12,7 @@ import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.beefy.R
 import com.example.beefy.databinding.FragmentRegisterSellerInfoScreenBinding
 import java.util.Calendar
@@ -51,6 +52,7 @@ class RegisterSellerInfoScreen : Fragment() {
         //todo
         binding.registerSellerConfirmDataBtn.setOnClickListener {
             Toast.makeText(requireContext(), "SUCCESS", Toast.LENGTH_SHORT).show()
+            findNavController().navigate(R.id.action_registerSellerInfoScreen_to_loginScreenFragment)
         }
     }
 

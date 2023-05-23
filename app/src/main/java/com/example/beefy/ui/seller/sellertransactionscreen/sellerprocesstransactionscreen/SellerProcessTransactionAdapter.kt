@@ -1,13 +1,13 @@
-package com.example.beefy.ui.buyer.buyerorderstatusscreen.buyerorderstatusonprocess
+package com.example.beefy.ui.seller.sellertransactionscreen.sellerprocesstransactionscreen
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.beefy.databinding.OrderStatusCardItemBinding
-import com.example.beefy.ui.buyer.buyerorderstatusscreen.buyerorderstatuscomplete.BuyerOrderStatusCompleteAdapter
+import com.example.beefy.ui.buyer.buyerorderstatusscreen.buyerorderstatusonprocess.BuyerOrderStatusOnProcessAdapter
 
-class BuyerOrderStatusOnProcessAdapter (private val items : ArrayList<String>, private val listener : (String) -> Unit) : RecyclerView.Adapter<BuyerOrderStatusOnProcessAdapter.ViewHolder>() {
+class SellerProcessTransactionAdapter (private val items : ArrayList<String>, private val listener : (String) -> Unit) : RecyclerView.Adapter<SellerProcessTransactionAdapter.ViewHolder>() {
     class ViewHolder(val binding : OrderStatusCardItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(items: String){
             Glide.with(binding.root.context).load(items).into(binding.orderStatusCardImageView)

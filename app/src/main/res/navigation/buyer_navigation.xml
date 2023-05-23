@@ -66,7 +66,9 @@
         tools:layout="@layout/fragment_buyer_complete_payment_screen" >
         <action
             android:id="@+id/action_buyerCompletePaymentScreen_to_buyer_home_screen"
-            app:destination="@id/buyer_home_screen" />
+            app:destination="@id/buyer_home_screen"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/buyer_home_screen" />
     </fragment>
     <fragment
         android:id="@+id/buyerUploadPaymentProofScreen"

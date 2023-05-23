@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    tools:context=".ui.seller.selleradditemscreen.SellerAddItemScreen">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/sellerAddItemTitleTv"
+            style="@style/TextAppearance.Material3.HeadlineSmall"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:text="Pastikan informasi item terisi dengan benar ya"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.divider.MaterialDivider
+            android:id="@+id/materialDivider"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/sellerAddItemTitleTv" />
+
+        <ImageView
+            android:id="@+id/sellerAddItemImageView"
+            android:layout_width="match_parent"
+            android:layout_height="275dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/button_border"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/materialDivider" />
+
+        <Button
+            android:id="@+id/sellerAddItemAddImageBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Pilih Gambar"
+            app:layout_constraintEnd_toEndOf="@+id/sellerAddItemImageView"
+            app:layout_constraintStart_toStartOf="@+id/sellerAddItemImageView"
+            app:layout_constraintTop_toBottomOf="@+id/sellerAddItemImageView" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/sellerAddItemNameTIL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
+            android:hint="Nama Item"
+            app:layout_constraintEnd_toEndOf="@+id/sellerAddItemAddImageBtn"
+            app:layout_constraintStart_toStartOf="@+id/sellerAddItemAddImageBtn"
+            app:layout_constraintTop_toBottomOf="@+id/sellerAddItemAddImageBtn">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/sellerAddItemNameTIET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/sellerAddItemPriceTIL"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:hint="Harga Item"
+            app:layout_constraintEnd_toEndOf="@+id/sellerAddItemNameTIL"
+            app:layout_constraintStart_toStartOf="@+id/sellerAddItemNameTIL"
+            app:layout_constraintTop_toBottomOf="@+id/sellerAddItemNameTIL">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/sellerAddItemPriceTIET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/sellerAddItemDescTIL"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:hint="Deskripsi Item"
+            app:layout_constraintEnd_toEndOf="@+id/sellerAddItemPriceTIL"
+            app:layout_constraintStart_toStartOf="@+id/sellerAddItemPriceTIL"
+            app:layout_constraintTop_toBottomOf="@+id/sellerAddItemPriceTIL">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/sellerAddItemDescTIET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text|textLongMessage|textImeMultiLine|textMultiLine" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/sellerAddItemAddBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="32dp"
+            android:text="TAMBAH ITEM"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/sellerAddItemDescTIL"
+            app:layout_constraintStart_toStartOf="@+id/sellerAddItemDescTIL"
+            app:layout_constraintTop_toBottomOf="@+id/sellerAddItemDescTIL" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

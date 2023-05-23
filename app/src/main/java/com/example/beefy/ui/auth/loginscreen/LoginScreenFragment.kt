@@ -13,6 +13,7 @@ import android.widget.Toast
 import com.example.beefy.R
 import com.example.beefy.databinding.FragmentLoginScreenBinding
 import com.example.beefy.ui.buyer.BuyerActivity
+import com.example.beefy.ui.seller.SellerActivity
 
 
 class LoginScreenFragment : Fragment() {
@@ -47,7 +48,7 @@ class LoginScreenFragment : Fragment() {
     private fun setupButton(){
         //todo
         binding.loginScreenLoginBtn.setOnClickListener {
-            requireActivity().startActivity(Intent(requireContext(), BuyerActivity::class.java))
+            requireActivity().startActivity(Intent(requireContext(), SellerActivity::class.java))
             requireActivity().finish()
 
         }

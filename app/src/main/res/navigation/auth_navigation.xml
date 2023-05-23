@@ -44,13 +44,21 @@
             app:destination="@id/registerBuyerInfoScreen" />
         <action
             android:id="@+id/action_registerBuyerScreen_to_loginScreenFragment"
-            app:destination="@id/loginScreenFragment" />
+            app:destination="@id/loginScreenFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/landingScreenFragment" />
     </fragment>
     <fragment
         android:id="@+id/registerBuyerInfoScreen"
         android:name="com.example.beefy.ui.auth.registerbuyerscreen.RegisterBuyerInfoScreen"
         android:label="fragment_register_buyer_info_screen"
-        tools:layout="@layout/fragment_register_buyer_info_screen" />
+        tools:layout="@layout/fragment_register_buyer_info_screen" >
+        <action
+            android:id="@+id/action_registerBuyerInfoScreen_to_loginScreenFragment"
+            app:destination="@id/loginScreenFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/landingScreenFragment" />
+    </fragment>
     <fragment
         android:id="@+id/registerSellerScreen"
         android:name="com.example.beefy.ui.auth.registersellerscreen.RegisterSellerScreen"
@@ -61,11 +69,19 @@
             app:destination="@id/registerSellerInfoScreen" />
         <action
             android:id="@+id/action_registerSellerScreen_to_loginScreenFragment"
-            app:destination="@id/loginScreenFragment" />
+            app:destination="@id/loginScreenFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/landingScreenFragment" />
     </fragment>
     <fragment
         android:id="@+id/registerSellerInfoScreen"
         android:name="com.example.beefy.ui.auth.registersellerscreen.RegisterSellerInfoScreen"
         android:label="fragment_register_seller_info_screen"
-        tools:layout="@layout/fragment_register_seller_info_screen" />
+        tools:layout="@layout/fragment_register_seller_info_screen" >
+        <action
+            android:id="@+id/action_registerSellerInfoScreen_to_loginScreenFragment"
+            app:destination="@id/loginScreenFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/landingScreenFragment" />
+    </fragment>
 </navigation>

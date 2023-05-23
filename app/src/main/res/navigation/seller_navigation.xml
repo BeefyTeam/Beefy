@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/seller_navigation"
+    app:startDestination="@id/sellerHomeScreen">
+    <fragment
+        android:id="@+id/sellerHomeScreen"
+        android:name="com.example.beefy.ui.seller.sellerhomescreen.SellerHomeScreen"
+        android:label="fragment_seller_home_screen"
+        tools:layout="@layout/fragment_seller_home_screen" >
+        <action
+            android:id="@+id/action_sellerHomeScreen_to_sellerAddItemScreen"
+            app:destination="@id/sellerAddItemScreen" />
+        <action
+            android:id="@+id/action_sellerHomeScreen_to_sellerDetailItemScreen"
+            app:destination="@id/sellerDetailItemScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/sellerTransactionScreen"
+        android:name="com.example.beefy.ui.seller.sellertransactionscreen.SellerTransactionScreen"
+        android:label="fragment_seller_transaction_screen"
+        tools:layout="@layout/fragment_seller_transaction_screen" >
+        <action
+            android:id="@+id/action_sellerTransactionScreen_to_sellerDetailProcessTransactionDetail"
+            app:destination="@id/sellerDetailProcessTransactionDetail" />
+        <action
+            android:id="@+id/action_sellerTransactionScreen_to_sellerDetailCompleteTransactionScreen"
+            app:destination="@id/sellerDetailCompleteTransactionScreen" />
+        <action
+            android:id="@+id/action_sellerTransactionScreen_to_sellerDetailWaitingTransactionScreen"
+            app:destination="@id/sellerDetailWaitingTransactionScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/sellerProfileScreen"
+        android:name="com.example.beefy.ui.seller.sellerprofilescreen.SellerProfileScreen"
+        android:label="fragment_seller_profile_screen"
+        tools:layout="@layout/fragment_seller_profile_screen" />
+    <fragment
+        android:id="@+id/sellerAddItemScreen"
+        android:name="com.example.beefy.ui.seller.selleradditemscreen.SellerAddItemScreen"
+        android:label="fragment_seller_add_item_screen"
+        tools:layout="@layout/fragment_seller_add_item_screen" >
+        <action
+            android:id="@+id/action_sellerAddItemScreen_to_sellerHomeScreen"
+            app:destination="@id/sellerHomeScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/sellerDetailItemScreen"
+        android:name="com.example.beefy.ui.seller.sellerdetailitemscreen.SellerDetailItemScreen"
+        android:label="fragment_seller_detail_item_screen"
+        tools:layout="@layout/fragment_seller_detail_item_screen" >
+        <action
+            android:id="@+id/action_sellerDetailItemScreen_to_sellerHomeScreen"
+            app:destination="@id/sellerHomeScreen"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/sellerHomeScreen" />
+        <action
+            android:id="@+id/action_sellerDetailItemScreen_to_sellerEditItemScreen"
+            app:destination="@id/sellerEditItemScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/sellerEditItemScreen"
+        android:name="com.example.beefy.ui.seller.selleredititemscreen.SellerEditItemScreen"
+        android:label="fragment_seller_edit_item_screen"
+        tools:layout="@layout/fragment_seller_edit_item_screen" >
+        <action
+            android:id="@+id/action_sellerEditItemScreen_to_sellerHomeScreen"
+            app:destination="@id/sellerHomeScreen"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/sellerHomeScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/sellerDetailCompleteTransactionScreen"
+        android:name="com.example.beefy.ui.seller.sellerdetailtransactionscreen.sellerdetailcompletetransactionscreen.SellerDetailCompleteTransactionScreen"
+        android:label="fragment_seller_detail_complete_transaction_screen"
+        tools:layout="@layout/fragment_seller_detail_complete_transaction_screen" />
+    <fragment
+        android:id="@+id/sellerDetailProcessTransactionDetail"
+        android:name="com.example.beefy.ui.seller.sellerdetailtransactionscreen.sellerdetailprocesstransactionscreen.SellerDetailProcessTransactionDetail"
+        android:label="fragment_seller_detail_process_transaction_detail"
+        tools:layout="@layout/fragment_seller_detail_process_transaction_detail" />
+    <fragment
+        android:id="@+id/sellerDetailWaitingTransactionScreen"
+        android:name="com.example.beefy.ui.seller.sellerdetailtransactionscreen.sellerdetailwaitingtransactionscreen.SellerDetailWaitingTransactionScreen"
+        android:label="fragment_seller_detail_waiting_transaction_screen"
+        tools:layout="@layout/fragment_seller_detail_waiting_transaction_screen" >
+        <action
+            android:id="@+id/action_sellerDetailWaitingTransactionScreen_to_sellerTransactionScreen"
+            app:destination="@id/sellerTransactionScreen"
+            app:popUpTo="@id/sellerTransactionScreen"
+            app:popUpToInclusive="true" />
+    </fragment>
+</navigation>

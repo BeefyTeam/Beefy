@@ -9,6 +9,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
+import com.example.beefy.R
 import com.example.beefy.databinding.FragmentRegisterBuyerInfoScreenBinding
 import com.example.beefy.ui.buyer.BuyerActivity
 
@@ -42,8 +44,7 @@ class RegisterBuyerInfoScreen : Fragment() {
         //todo
         binding.registerBuyerInfoConfirmAddressBtn.setOnClickListener {
             Toast.makeText(requireContext(), "SUCCESS REGISTER", Toast.LENGTH_SHORT).show()
-            requireActivity().startActivity(Intent(requireContext(), BuyerActivity::class.java))
-            requireActivity().finish()
+            findNavController().navigate(R.id.action_registerBuyerInfoScreen_to_loginScreenFragment)
         }
     }
 

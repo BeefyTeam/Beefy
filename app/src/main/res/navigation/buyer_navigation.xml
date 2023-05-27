@@ -49,6 +49,9 @@
         <action
             android:id="@+id/action_buyerProductDetailScreen_to_buyerCheckoutScreen"
             app:destination="@id/buyerCheckoutScreen" />
+        <action
+            android:id="@+id/action_buyerProductDetailScreen_to_buyerChatScreen"
+            app:destination="@id/buyerChatScreen" />
     </fragment>
     <fragment
         android:id="@+id/buyerCheckoutScreen"
@@ -86,6 +89,9 @@
         <action
             android:id="@+id/action_buyerStoreDtailScreen_to_buyerProductDetailScreen"
             app:destination="@id/buyerProductDetailScreen" />
+        <action
+            android:id="@+id/action_buyerStoreDtailScreen_to_buyerChatScreen"
+            app:destination="@id/buyerChatScreen" />
     </fragment>
     <fragment
         android:id="@+id/buyerScanHistoryScreen"
@@ -104,4 +110,23 @@
         android:name="com.example.beefy.ui.buyer.buyerorderdetailscreen.BuyerOrderDetailScreen"
         android:label="fragment_buyer_order_detail_screen"
         tools:layout="@layout/fragment_buyer_order_detail_screen" />
+    <fragment
+        android:id="@+id/buyerChatScreen"
+        android:name="com.example.beefy.ui.buyer.buyerchatscreen.BuyerChatScreen"
+        android:label="fragment_buyer_chat_screen"
+        tools:layout="@layout/fragment_buyer_chat_screen" >
+        <argument
+            android:name="otherUserId"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/buyerChatsListScreen"
+        android:name="com.example.beefy.ui.buyer.BuyerChatsListScreen.BuyerChatsListScreen"
+        android:label="fragment_buyer_chats_list_screen"
+        tools:layout="@layout/fragment_buyer_chats_list_screen" >
+        <action
+            android:id="@+id/action_buyerChatsListScreen_to_buyerChatScreen"
+            app:destination="@id/buyerChatScreen" />
+
+    </fragment>
 </navigation>

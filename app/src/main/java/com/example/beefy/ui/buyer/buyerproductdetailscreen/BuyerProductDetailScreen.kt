@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.beefy.R
 import com.example.beefy.databinding.FragmentBuyerProductDetailScreenBinding
@@ -16,8 +17,11 @@ class BuyerProductDetailScreen : Fragment() {
     private var _binding : FragmentBuyerProductDetailScreenBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var otherUserId : String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        otherUserId = "321"
     }
 
     override fun onCreateView(
@@ -62,6 +66,15 @@ class BuyerProductDetailScreen : Fragment() {
 
         binding.buyerProductScreenBotNavBarCheckoutBtn.setOnClickListener {
             it.findNavController().navigate(R.id.action_buyerProductDetailScreen_to_buyerCheckoutScreen)
+        }
+
+        binding.buyerProductDetailChatBtn.setOnClickListener {
+            val bundle = Bundle().apply {
+                putString("otherUserId", otherUserId)
+            }
+
+
+            findNavController().navigate(R.id.action_buyerProductDetailScreen_to_buyerChatScreen, bundle)
         }
 
     }

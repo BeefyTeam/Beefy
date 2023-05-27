@@ -1,5 +1,6 @@
 package com.example.beefy.ui.buyer.buyerhomescreen
 
+import android.Manifest
 import android.opengl.Visibility
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -17,12 +18,17 @@ import com.denzcoskun.imageslider.models.SlideModel
 import com.example.beefy.R
 import com.example.beefy.databinding.FragmentBuyerHomeScreenBinding
 import com.google.android.material.carousel.CarouselLayoutManager
+import pub.devrel.easypermissions.AppSettingsDialog
+import pub.devrel.easypermissions.EasyPermissions
 
 
 class BuyerHomeScreen : Fragment() {
 
-    private var _binding : FragmentBuyerHomeScreenBinding? = null
+    private var _binding: FragmentBuyerHomeScreenBinding? = null
     private val binding get() = _binding!!
+
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,15 +47,15 @@ class BuyerHomeScreen : Fragment() {
 
         val imageList = ArrayList<SlideModel>()
 
-        imageList.add(SlideModel("https://images.unsplash.com/photo-1607082349566-187342175e2f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80", ))
-        imageList.add(SlideModel("https://images.unsplash.com/photo-1607083206325-caf1edba7a0f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1177&q=80", ))
-        imageList.add(SlideModel("https://images.unsplash.com/photo-1546502208-81d149d52bd7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1173&q=80", ))
+        imageList.add(SlideModel("https://images.unsplash.com/photo-1607082349566-187342175e2f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"))
+        imageList.add(SlideModel("https://images.unsplash.com/photo-1607083206325-caf1edba7a0f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1177&q=80"))
+        imageList.add(SlideModel("https://images.unsplash.com/photo-1546502208-81d149d52bd7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1173&q=80"))
 
         binding.buyerHomeScreenTopImageSlider.setImageList(imageList, ScaleTypes.FIT)
 
 
 
-        binding.buyerHomeScreenSearchView.setOnQueryTextListener(object : OnQueryTextListener{
+        binding.buyerHomeScreenSearchView.setOnQueryTextListener(object : OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 Toast.makeText(requireContext(), query, Toast.LENGTH_SHORT).show()
                 findNavController().navigate(R.id.action_buyer_home_screen_to_buyerSearchScreen)
@@ -66,8 +72,9 @@ class BuyerHomeScreen : Fragment() {
         storeName.add("Anugrah Bersama")
         storeName.add("Budidaya daging")
         storeName.add("Daging Bersatu")
-        binding.buyerHomeScreenBestStoreRv.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        val checkStoreAdapter = BuyerHomeScreenCheckStoreAdapter(storeName){
+        binding.buyerHomeScreenBestStoreRv.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        val checkStoreAdapter = BuyerHomeScreenCheckStoreAdapter(storeName) {
             Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
         }
         binding.buyerHomeScreenBestStoreRv.adapter = checkStoreAdapter
@@ -79,13 +86,10 @@ class BuyerHomeScreen : Fragment() {
         imgList.add("https://cdn.idntimes.com/content-images/post/20211202/porterhouse2-ba1e93edc4eb3d376011a096c909a5f9.jpg")
 
         binding.buyerHomeScreenBestMeatRv.layoutManager = CarouselLayoutManager()
-        val bestMeatAdapter = BuyerHomeScreenBestMeatAdapter(imgList){
+        val bestMeatAdapter = BuyerHomeScreenBestMeatAdapter(imgList) {
             Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
         }
         binding.buyerHomeScreenBestMeatRv.adapter = bestMeatAdapter
-
-
-
 
     }
 
@@ -94,6 +98,8 @@ class BuyerHomeScreen : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
+
 
 
 }

@@ -27,7 +27,7 @@ class BuyerActivity : AppCompatActivity() {
         binding.buyerBottomNavigationView.setupWithNavController(navController)
 
         navController.addOnDestinationChangedListener{ _, destination, _ ->
-            if(destination.id == R.id.buyer_home_screen || destination.id == R.id.buyer_scan_screen || destination.id == R.id.buyer_profile_screen){
+            if(destination.id == R.id.buyer_home_screen || destination.id == R.id.buyer_scan_screen || destination.id == R.id.buyer_profile_screen || destination.id == R.id.buyerChatsListScreen){
                 binding.buyerBottomNavigationView.visibility = View.VISIBLE
             }else{
                 binding.buyerBottomNavigationView.visibility = View.GONE

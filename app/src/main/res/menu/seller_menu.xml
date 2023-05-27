@@ -9,6 +9,13 @@
         android:title="Transaksi"
         android:id="@+id/sellerTransactionScreen"
         android:icon="@drawable/baseline_sell_24"/>
+
+    <item
+        android:title="Pesan"
+        android:id="@+id/sellerChatsListScreen"
+        android:icon="@drawable/baseline_chat_24"
+        />
+
     <item
         android:title="Profil"
         android:id="@+id/sellerProfileScreen"

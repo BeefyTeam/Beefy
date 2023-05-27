@@ -23,7 +23,7 @@ class SellerActivity : AppCompatActivity() {
         binding.sellerBottomNavigationView.setupWithNavController(navController)
 
         navController.addOnDestinationChangedListener{_, destination, _ ->
-            if(destination.id == R.id.sellerHomeScreen|| destination.id == R.id.sellerTransactionScreen || destination.id == R.id.sellerProfileScreen){
+            if(destination.id == R.id.sellerHomeScreen|| destination.id == R.id.sellerTransactionScreen || destination.id == R.id.sellerProfileScreen || destination.id == R.id.sellerChatsListScreen){
                 binding.sellerBottomNavigationView.visibility = View.VISIBLE
             }else{
                 binding.sellerBottomNavigationView.visibility = View.GONE

@@ -19,8 +19,12 @@ class BuyerStoreDtailScreen : Fragment() {
     private var _binding : FragmentBuyerStoreDtailScreenBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var otherUserId : String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        otherUserId = "321"
     }
 
     override fun onCreateView(
@@ -47,6 +51,16 @@ class BuyerStoreDtailScreen : Fragment() {
             findNavController().navigate(R.id.action_buyerStoreDtailScreen_to_buyerProductDetailScreen)
         }
         binding.buyerStoreDetailRv.adapter = adapter
+
+        binding.buyerStoreDetailChatFAB.setOnClickListener {
+
+            val bundle = Bundle()
+
+            bundle.putString("otherUserId", otherUserId)
+
+            findNavController().navigate(R.id.action_buyerStoreDtailScreen_to_buyerChatScreen, bundle)
+
+        }
 
     }
 

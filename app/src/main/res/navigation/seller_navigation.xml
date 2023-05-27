@@ -91,4 +91,21 @@
             app:popUpTo="@id/sellerTransactionScreen"
             app:popUpToInclusive="true" />
     </fragment>
+    <fragment
+        android:id="@+id/sellerChatsListScreen"
+        android:name="com.example.beefy.ui.seller.sellerchatslistscreen.SellerChatsListScreen"
+        android:label="fragment_seller_chats_list_screen"
+        tools:layout="@layout/fragment_seller_chats_list_screen" >
+        <action
+            android:id="@+id/action_sellerChatsListScreen_to_sellerChatScreen"
+            app:destination="@id/sellerChatScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/sellerChatScreen"
+        android:name="com.example.beefy.ui.seller.sellerchatscreen.SellerChatScreen"
+        android:label="SellerChatScreen" >
+        <argument
+            android:name="otherUserId"
+            app:argType="string" />
+    </fragment>
 </navigation>

@@ -10,8 +10,16 @@
     <item
         android:id="@+id/buyer_scan_screen"
         android:enabled="true"
-        android:icon="@drawable/baseline_scanner_24"
+        android:icon="@drawable/baseline_camera_enhance_24"
         android:title="Pindai"/>
+
+    <item
+        android:id="@+id/buyerChatsListScreen"
+        android:enabled="true"
+        android:icon="@drawable/baseline_chat_24"
+        android:title="Pesan"/>
+
+
 
     <item
         android:id="@+id/buyer_profile_screen"

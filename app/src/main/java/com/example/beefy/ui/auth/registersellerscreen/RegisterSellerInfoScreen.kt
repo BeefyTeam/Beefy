@@ -15,6 +15,8 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.beefy.R
 import com.example.beefy.databinding.FragmentRegisterSellerInfoScreenBinding
+import com.example.beefy.utils.Resource
+import org.koin.android.ext.android.inject
 import java.util.Calendar
 
 
@@ -23,11 +25,16 @@ class RegisterSellerInfoScreen : Fragment() {
     private var _binding : FragmentRegisterSellerInfoScreenBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var idToko:String
+
+    private val registerSellerViewModel : RegisterSellerViewModel by inject()
+
     private var mHour: Int = 0
     private var mMinute: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        idToko = requireArguments().getString("id").toString()
     }
 
     override fun onCreateView(
@@ -41,18 +48,44 @@ class RegisterSellerInfoScreen : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setLoading(false)
         checkEmptyField()
         setupEditText()
         validateInput()
+        setupObserver()
         setupButton()
 
     }
 
+    private fun setupObserver(){
+        registerSellerViewModel.registerEditPenjual.observe(viewLifecycleOwner){
+            when(it){
+                is Resource.Error -> {
+                    setLoading(false)
+                    Toast.makeText(requireContext(), it.error, Toast.LENGTH_SHORT).show()
+                }
+
+                is Resource.Loading -> setLoading(true)
+
+                is Resource.Success -> {
+                    setLoading(false)
+                    Toast.makeText(requireContext(), it.data.message, Toast.LENGTH_SHORT).show()
+                    findNavController().navigate(R.id.action_registerSellerInfoScreen_to_loginScreenFragment)
+                }
+            }
+        }
+    }
+
     private fun setupButton(){
-        //todo
         binding.registerSellerConfirmDataBtn.setOnClickListener {
-            Toast.makeText(requireContext(), "SUCCESS", Toast.LENGTH_SHORT).show()
-            findNavController().navigate(R.id.action_registerSellerInfoScreen_to_loginScreenFragment)
+            registerSellerViewModel.editPenjual(
+                idToko,
+                binding.registerSellerInfoAddressTIET.text.toString(),
+                binding.registerSellerInfoOpenHourTIET.text.toString(),
+                binding.registerSellerInfoCloseHourTIET.text.toString(),
+                binding.registerSellerInfoPaymentMethodTIET.text.toString(),
+                binding.registerSellerInfoAccountTIET.text.toString()
+            )
         }
     }
 
@@ -213,6 +246,16 @@ class RegisterSellerInfoScreen : Fragment() {
         val paymentMethodItems = listOf("BCA", "Mandiri", "BNI")
         val adapter = ArrayAdapter(requireContext(), R.layout.payment_method_list_item, paymentMethodItems)
         (binding.registerSellerInfoPaymentMethodTIET as? AutoCompleteTextView)?.setAdapter(adapter)
+    }
+
+    private fun setLoading(boolean: Boolean){
+        binding.registerSellerInfoProgressbar.visibility = if(
+            boolean
+        ) {
+            View.VISIBLE
+        }else{
+            View.GONE
+        }
     }
 
 

@@ -8,12 +8,14 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.beefy.R
 import com.example.beefy.databinding.FragmentBuyerCompletePaymentScreenBinding
+import org.koin.android.ext.android.inject
 
 
 class BuyerCompletePaymentScreen : Fragment() {
 
     private var _binding : FragmentBuyerCompletePaymentScreenBinding? = null
     private val binding get() = _binding!!
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +31,11 @@ class BuyerCompletePaymentScreen : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        setupButton()
+    }
+
+    private fun setupButton(){
         binding.completePaymentOkBtn.setOnClickListener {
             findNavController().navigate(R.id.action_buyerCompletePaymentScreen_to_buyer_home_screen)
         }

@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -20,23 +21,32 @@ import com.example.beefy.utils.Message
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import org.koin.android.ext.android.inject
 
 
 class BuyerChatsListScreen : Fragment() {
 
-    private var _binding : FragmentBuyerChatsListScreenBinding? = null
+    private var _binding: FragmentBuyerChatsListScreenBinding? = null
     private val binding get() = _binding!!
 
+    private val buyerChatsListViewModel : BuyerChatsListViewModel by inject()
+
     private lateinit var db: FirebaseDatabase
+    private lateinit var messagesRef: DatabaseReference
+
+    private lateinit var currentUserId : String
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         db = Firebase.database
+        messagesRef = db.reference.child("messages")
+
     }
 
     override fun onCreateView(
@@ -50,22 +60,41 @@ class BuyerChatsListScreen : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val messagesRef = db.reference.child("messages")
-        val currentUserId = "123"
+        setupObserver()
+        setupAdapter()
 
 
 
-        val adapter = BuyerChatsListAdapter{
+
+
+
+
+
+
+    }
+
+    private fun setupObserver(){
+        buyerChatsListViewModel.getUserId().observe(viewLifecycleOwner){
+            currentUserId = it
+        }
+    }
+
+    private fun setupAdapter(){
+        val adapter = BuyerChatsListAdapter {
 
             val bundle = Bundle().apply {
+                putString("currentUserId", currentUserId)
                 putString("otherUserId", it)
             }
 
-            findNavController().navigate(R.id.action_buyerChatsListScreen_to_buyerChatScreen, bundle)
+            findNavController().navigate(
+                R.id.action_buyerChatsListScreen_to_buyerChatScreen,
+                bundle
+            )
         }
 
         binding.buyerChatsListRv.layoutManager = LinearLayoutManager(requireContext())
-        binding.buyerChatsListRv.addItemDecoration(DividerItemDecoration(requireContext(),1 ))
+        binding.buyerChatsListRv.addItemDecoration(DividerItemDecoration(requireContext(), 1))
         binding.buyerChatsListRv.adapter = adapter
 
         val query = messagesRef
@@ -73,7 +102,7 @@ class BuyerChatsListScreen : Fragment() {
 
         query.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                var list = mutableListOf<String>()
+                val list = mutableListOf<String>()
 
                 for (data in snapshot.children) {
                     val value = data.getValue(Message::class.java)
@@ -81,24 +110,19 @@ class BuyerChatsListScreen : Fragment() {
                     val receiverId = data.child("receiverId").value.toString()
                     val senderId = data.child("senderId").value.toString()
 
-
-                    if(receiverId.equals(currentUserId) ){
+                    if (receiverId.equals(currentUserId)) {
                         list.add(value?.senderId.toString())
                     }
-                    if(senderId.equals(currentUserId) ){
+                    if (senderId.equals(currentUserId)) {
                         list.add(value?.receiverId.toString())
                     }
-
-
                 }
 
-                if (list.isEmpty()){
-                    Log.e(TAG, "kosong: ", )
-                }else{
 
+                if (list.isEmpty()) {
+                    Log.e(TAG, "chat list screnn kosong ")
+                } else {
                     adapter.setData(list.distinct())
-
-
                 }
 
             }
@@ -106,16 +130,12 @@ class BuyerChatsListScreen : Fragment() {
             override fun onCancelled(error: DatabaseError) {
             }
         })
-
-
-
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
 
 
 }

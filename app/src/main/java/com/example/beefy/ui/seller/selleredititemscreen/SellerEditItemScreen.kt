@@ -1,10 +1,12 @@
 package com.example.beefy.ui.seller.selleredititemscreen
 
 import android.app.Activity
+import android.content.ContentValues
 import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,7 +18,16 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.beefy.R
 import com.example.beefy.databinding.FragmentSellerEditItemScreenBinding
+import com.example.beefy.utils.Resource
+import com.example.beefy.utils.uriToFile
 import com.github.dhaval2404.imagepicker.ImagePicker
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
+import org.koin.android.ext.android.inject
+import java.io.File
 
 
 class SellerEditItemScreen : Fragment() {
@@ -24,11 +35,18 @@ class SellerEditItemScreen : Fragment() {
     private var _binding : FragmentSellerEditItemScreenBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var idItem : String
+
     private var uri : Uri? = null
+
+    private var getFile : File? = null
+
+    private val sellerEditItemViewModel : SellerEditItemViewModel by inject()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        idItem = requireArguments().getInt("idItem").toString()
     }
 
     override fun onCreateView(
@@ -45,7 +63,33 @@ class SellerEditItemScreen : Fragment() {
         checkEmptyField()
         imageViewVisibility()
         validateInput()
+        setupObserver()
+        setupButton()
 
+
+    }
+
+    private fun setupObserver(){
+        sellerEditItemViewModel.edit.observe(viewLifecycleOwner){
+            when(it){
+                is Resource.Error -> {
+                    Toast.makeText(requireContext(), it.error, Toast.LENGTH_SHORT).show()
+                    Log.e(ContentValues.TAG, "editProduct: "+it.error, )
+                }
+
+                is Resource.Loading -> {
+
+                }
+
+                is Resource.Success ->{
+                    Toast.makeText(requireContext(), it.data.message, Toast.LENGTH_SHORT).show()
+                    findNavController().navigate(R.id.action_sellerEditItemScreen_to_sellerHomeScreen)
+                }
+            }
+        }
+    }
+
+    private fun setupButton(){
         binding.sellerEditItemAddImageBtn.setOnClickListener {
             ImagePicker.with(this)
                 .compress(1024)			//Final image size will be less than 1 MB(Optional)
@@ -56,10 +100,22 @@ class SellerEditItemScreen : Fragment() {
         }
 
         binding.sellerEditItemEditBtn.setOnClickListener {
-            Toast.makeText(requireContext(), "berhasil edit", Toast.LENGTH_SHORT).show()
-            findNavController().navigate(R.id.action_sellerEditItemScreen_to_sellerHomeScreen)
-        }
+            val file = getFile as File
+            val image = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
+            val imagePart: MultipartBody.Part = MultipartBody.Part.createFormData(
+                "file_image",
+                file.name,
+                image
+            )
 
+            sellerEditItemViewModel.editProduct(
+                idItem.toRequestBody("text/plain".toMediaType()),
+                binding.sellerEditItemNameTIET.text.toString().toRequestBody("text/plain".toMediaType()),
+                binding.sellerEditItemDescTIET.text.toString().toRequestBody("text/plain".toMediaType()),
+                binding.sellerEditItemPriceTIET.text.toString().toRequestBody("text/plain".toMediaType()),
+                imagePart
+            )
+        }
     }
 
     private val startForImageResult =
@@ -73,6 +129,8 @@ class SellerEditItemScreen : Fragment() {
 
                 checkEmptyField()
                 imageViewVisibility()
+
+                getFile = uriToFile(uri as Uri, requireContext())
 
                 Glide.with(requireContext()).load(uri).into(binding.sellerEditItemImageView)
             } else if (resultCode == ImagePicker.RESULT_ERROR) {

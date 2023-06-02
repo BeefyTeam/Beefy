@@ -22,6 +22,7 @@ import com.firebase.ui.database.SnapshotParser
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.Query
 import com.google.firebase.database.ValueEventListener
@@ -37,6 +38,7 @@ class BuyerChatScreen : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var db: FirebaseDatabase
+    private lateinit var messagesRef : DatabaseReference
 
     private lateinit var adapter: FirebaseMessageAdapter
 
@@ -45,9 +47,12 @@ class BuyerChatScreen : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        db = Firebase.database
 
-        currentUserId = "123"
+        db = Firebase.database
+        messagesRef = db.reference.child("messages")
+
+
+        currentUserId = requireArguments().getString("currentUserId").toString()
         otherUserId = requireArguments().getString("otherUserId").toString()
         Log.e(TAG, "otherUserId: " + otherUserId)
     }
@@ -64,12 +69,18 @@ class BuyerChatScreen : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val messagesRef = db.reference.child("messages")
 
         checkField()
         validateInput()
+        setupAdapter()
+        setupButton()
 
 
+
+
+    }
+
+    private fun setupAdapter(){
         var linearLayoutManager = LinearLayoutManager(requireContext())
         linearLayoutManager.stackFromEnd = true
         binding.buyerChatRv.layoutManager = linearLayoutManager
@@ -77,23 +88,20 @@ class BuyerChatScreen : Fragment() {
         val query = messagesRef
             .orderByChild("timestamp")
 
-        query.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-
-                for (data in snapshot.children) {
-                    val value = data.getValue(Message::class.java)
-
-
-                    Log.e(TAG, "onDataChange: ")
-
-                }
-
-
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-            }
-        })
+//        query.addValueEventListener(object : ValueEventListener {
+//            override fun onDataChange(snapshot: DataSnapshot) {
+//
+//                for (data in snapshot.children) {
+//                    val value = data.getValue(Message::class.java)
+//                    Log.e(TAG, "onDataChange: "+value)
+//                }
+//
+//
+//            }
+//
+//            override fun onCancelled(error: DatabaseError) {
+//            }
+//        })
 
 
         val options = FirebaseRecyclerOptions.Builder<Message>()
@@ -102,9 +110,9 @@ class BuyerChatScreen : Fragment() {
 
         adapter = FirebaseMessageAdapter(options, currentUserId, otherUserId)
         binding.buyerChatRv.adapter = adapter
+    }
 
-
-
+    private fun setupButton(){
         binding.buyerSendBtn.setOnClickListener {
             val message = Message(
                 id = generateId(),
@@ -127,20 +135,6 @@ class BuyerChatScreen : Fragment() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        adapter.startListening()
-    }
-
-    override fun onPause() {
-        adapter.stopListening()
-        super.onPause()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
 
     fun generateId(length: Int = 20): String { //ex: bwUIoWNCSQvPZh8xaFuz
         val alphaNumeric = ('a'..'z') + ('A'..'Z') + ('0'..'9')
@@ -157,7 +151,7 @@ class BuyerChatScreen : Fragment() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                binding.buyerSendBtn.isEnabled = !s.toString().isNullOrEmpty()
+                checkField()
             }
 
         })
@@ -165,6 +159,21 @@ class BuyerChatScreen : Fragment() {
 
     private fun checkField() {
         binding.buyerSendBtn.isEnabled = binding.buyerMessageEditText.text.isNotEmpty()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        adapter.startListening()
+    }
+
+    override fun onPause() {
+        adapter.stopListening()
+        super.onPause()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 

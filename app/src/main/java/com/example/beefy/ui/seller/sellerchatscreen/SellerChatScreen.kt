@@ -18,6 +18,7 @@ import com.example.beefy.utils.Message
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
@@ -31,6 +32,7 @@ class SellerChatScreen : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var db: FirebaseDatabase
+    private lateinit var messagesRef : DatabaseReference
 
     private lateinit var adapter: SellerChatScreenFirebaseAdapter
 
@@ -41,8 +43,9 @@ class SellerChatScreen : Fragment() {
         super.onCreate(savedInstanceState)
 
         db = Firebase.database
+        messagesRef = db.reference.child("messages")
 
-        currentUserId = "321"
+        currentUserId = requireArguments().getString("currentUserId").toString()
         otherUserId = requireArguments().getString("otherUserId").toString()
         Log.e(ContentValues.TAG, "otherUserId: "+ otherUserId, )
 
@@ -65,9 +68,15 @@ class SellerChatScreen : Fragment() {
 
         binding.sellerChatNameTv.text = currentUserId
 
-        val messagesRef = db.reference.child("messages")
+        setupAdapter()
+        setupButton()
 
 
+
+
+    }
+
+    private fun setupAdapter(){
         var linearLayoutManager = LinearLayoutManager(requireContext())
         linearLayoutManager.stackFromEnd = true
 
@@ -97,7 +106,9 @@ class SellerChatScreen : Fragment() {
 
         adapter = SellerChatScreenFirebaseAdapter(options, currentUserId, otherUserId)
         binding.SellerChatRv.adapter = adapter
+    }
 
+    private fun setupButton(){
         binding.sellerSendBtn.setOnClickListener {
             val message = Message(
                 id = generateId(),
@@ -116,7 +127,6 @@ class SellerChatScreen : Fragment() {
 
             binding.sellerMessageEditText.setText("")
         }
-
     }
 
     override fun onResume() {

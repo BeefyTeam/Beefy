@@ -28,13 +28,12 @@ class SplashScreen : AppCompatActivity() {
 
         splashScreen.setKeepOnScreenCondition { true }
 
-        splashScreenViewModel.checkToken().observe(this){
-            Log.e(TAG, "onCreate: $it", )
+        splashScreenViewModel.getUserType().observe(this){
             if(it.isNullOrEmpty()){
                 startActivity(Intent(this, AuthActivity::class.java))
                 finish()
             }else{
-                if(it.equals("123")){
+                if(it.equals("pembeli")){
                     startActivity(Intent(this, BuyerActivity::class.java))
                     finish()
                 }else{

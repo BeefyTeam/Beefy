@@ -37,15 +37,15 @@
             app:layout_constraintTop_toBottomOf="@+id/registerBuyerInfoTitleTv" />
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
             android:id="@+id/registerBuyerInfoNameTIL"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
             android:layout_width="324dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
+            android:hint="Nama Penerima"
             app:layout_constraintEnd_toEndOf="@+id/registerBuyerInfoSubTitleTv"
             app:layout_constraintStart_toStartOf="@+id/registerBuyerInfoSubTitleTv"
-            app:layout_constraintTop_toBottomOf="@+id/registerBuyerInfoSubTitleTv"
-            android:hint="Nama Penerima" >
+            app:layout_constraintTop_toBottomOf="@+id/registerBuyerInfoSubTitleTv">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/registerBuyerInfoNameTIET"
@@ -60,10 +60,10 @@
             android:layout_width="324dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
+            android:hint="Nomor Telepon"
             app:layout_constraintEnd_toEndOf="@+id/registerBuyerInfoNameTIL"
             app:layout_constraintStart_toStartOf="@+id/registerBuyerInfoNameTIL"
-            app:layout_constraintTop_toBottomOf="@+id/registerBuyerInfoNameTIL"
-            android:hint="Nomor Telepon">
+            app:layout_constraintTop_toBottomOf="@+id/registerBuyerInfoNameTIL">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/registerBuyerInfoPhoneNumberTIET"
@@ -79,10 +79,10 @@
             android:layout_width="324dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
+            android:hint="Label Alamat"
             app:layout_constraintEnd_toEndOf="@+id/registerBuyerInfoPhoneNumberTIL"
             app:layout_constraintStart_toStartOf="@+id/registerBuyerInfoPhoneNumberTIL"
-            app:layout_constraintTop_toBottomOf="@+id/registerBuyerInfoPhoneNumberTIL"
-            android:hint="Label Alamat">
+            app:layout_constraintTop_toBottomOf="@+id/registerBuyerInfoPhoneNumberTIL">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/registerBuyerInfoAddressLabelTIET"
@@ -97,10 +97,10 @@
             android:layout_width="324dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
+            android:hint="Alamat Lengkap"
             app:layout_constraintEnd_toEndOf="@+id/registerBuyerInfoAddressLabelTIL"
             app:layout_constraintStart_toStartOf="@+id/registerBuyerInfoAddressLabelTIL"
-            app:layout_constraintTop_toBottomOf="@+id/registerBuyerInfoAddressLabelTIL"
-            android:hint="Alamat Lengkap">
+            app:layout_constraintTop_toBottomOf="@+id/registerBuyerInfoAddressLabelTIL">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/registerBuyerInfoFullAddressTIET"
@@ -118,5 +118,17 @@
             app:layout_constraintEnd_toEndOf="@+id/registerBuyerInfoFullAddressTIL"
             app:layout_constraintStart_toStartOf="@+id/registerBuyerInfoFullAddressTIL"
             app:layout_constraintTop_toBottomOf="@+id/registerBuyerInfoFullAddressTIL" />
+
+        <ProgressBar
+            android:id="@+id/registerBuyerInfoProgressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

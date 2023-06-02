@@ -8,9 +8,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.beefy.R
 import com.example.beefy.databinding.FragmentRegisterBuyerBinding
+import com.example.beefy.utils.Resource
+import org.koin.android.ext.android.inject
 
 
 class RegisterBuyerScreen : Fragment() {
@@ -18,6 +22,7 @@ class RegisterBuyerScreen : Fragment() {
     private var _binding: FragmentRegisterBuyerBinding? = null
     private val binding get() = _binding!!
 
+    private val registerBuyerViewModel : RegisterBuyerViewModel by inject()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -33,9 +38,35 @@ class RegisterBuyerScreen : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setLoading(false)
         checkEmptyField()
         validateInput()
+        setupObserver()
         setupButton()
+    }
+
+    private fun setupObserver(){
+        registerBuyerViewModel.registerBuyer.observe(viewLifecycleOwner){
+            when(it){
+                is Resource.Error -> {
+                    setLoading(false)
+                    Toast.makeText(requireContext(), it.error, Toast.LENGTH_SHORT).show()
+                }
+
+                is Resource.Loading -> setLoading(true)
+
+                is Resource.Success -> {
+                    setLoading(false)
+                    Toast.makeText(requireContext(), it.data.message, Toast.LENGTH_SHORT).show()
+
+                    val bundle = Bundle()
+                    bundle.putString("id", it.data.idPembeli.toString())
+                    bundle.putString("nama", binding.registerBuyerNameTIET.text.toString())
+
+                    findNavController().navigate(R.id.action_registerBuyerScreen_to_registerBuyerUploadProfilePictureScreen, bundle)
+                }
+            }
+        }
     }
 
     private fun setupButton() {
@@ -45,7 +76,11 @@ class RegisterBuyerScreen : Fragment() {
         }
 
         binding.registerBuyerRegisterBtn.setOnClickListener {
-            it.findNavController().navigate(R.id.action_registerBuyerScreen_to_registerBuyerInfoScreen)
+            registerBuyerViewModel.registerBuyer(
+                binding.registerBuyerNameTIET.text.toString(),
+                binding.registerBuyerEmailTIET.text.toString(),
+                binding.registerBuyerPassworsTIET.text.toString()
+            )
         }
     }
 
@@ -117,6 +152,16 @@ class RegisterBuyerScreen : Fragment() {
                     binding.registerBuyerNameTIL.error == null &&
                     binding.registerBuyerEmailTIL.error == null &&
                     binding.registerBuyerPasswordTIL.error == null
+    }
+
+    private fun setLoading(boolean: Boolean){
+        binding.registerBuyerProgressBar.visibility = if(
+            boolean
+        ) {
+            View.VISIBLE
+        }else{
+            View.GONE
+        }
     }
 
 

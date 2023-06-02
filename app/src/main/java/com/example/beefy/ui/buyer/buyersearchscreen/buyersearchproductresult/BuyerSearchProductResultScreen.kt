@@ -1,15 +1,21 @@
 package com.example.beefy.ui.buyer.buyersearchscreen.buyersearchproductresult
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.beefy.R
 import com.example.beefy.databinding.FragmentBuyerSearchProductResultScreenBinding
+import com.example.beefy.ui.buyer.buyersearchscreen.BuyerSearchViewModel
+import koleton.api.loadSkeleton
+import org.koin.android.ext.android.inject
 
 
 class BuyerSearchProductResultScreen : Fragment() {
@@ -17,6 +23,7 @@ class BuyerSearchProductResultScreen : Fragment() {
     private var _binding : FragmentBuyerSearchProductResultScreenBinding? = null
     private val binding get() = _binding!!
 
+    private val buyerSearchViewModel : BuyerSearchViewModel by activityViewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -31,6 +38,15 @@ class BuyerSearchProductResultScreen : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+//        binding.buyerSearchProductResultScreenRv.loadSkeleton(R.layout.meat_card_item){
+//            itemCount(10)
+//        }a
+
+        buyerSearchViewModel.searchQuery.observe(viewLifecycleOwner){
+            Log.e(TAG, "onViewCreated: $it", )
+        }
+
 
         val itemList = ArrayList<String>()
         for (i in 0..20){
@@ -49,5 +65,7 @@ class BuyerSearchProductResultScreen : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+    
+
 
 }

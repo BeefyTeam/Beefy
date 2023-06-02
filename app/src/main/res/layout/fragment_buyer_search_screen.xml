@@ -12,13 +12,14 @@
         android:layout_width="match_parent">
 
         <SearchView
+            android:id="@+id/buyerSearchView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:iconifiedByDefault="false"
-            app:layout_scrollFlags="scroll|enterAlways"
             android:paddingStart="4dp"
             android:paddingEnd="4dp"
-            android:queryHint="Cari di Beefy" />
+            android:queryHint="Cari di Beefy"
+            app:layout_scrollFlags="scroll|enterAlways" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/buyerSearchTabs"

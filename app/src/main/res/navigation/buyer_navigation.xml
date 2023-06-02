@@ -41,6 +41,10 @@
         <action
             android:id="@+id/action_buyerSearchScreen_to_buyerStoreDtailScreen"
             app:destination="@id/buyerStoreDtailScreen" />
+        <argument
+            android:name="searchValue"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/buyerProductDetailScreen"
@@ -117,6 +121,9 @@
         tools:layout="@layout/fragment_buyer_chat_screen" >
         <argument
             android:name="otherUserId"
+            app:argType="string" />
+        <argument
+            android:name="currentUserId"
             app:argType="string" />
     </fragment>
     <fragment

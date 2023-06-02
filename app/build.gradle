@@ -109,5 +109,9 @@ dependencies {
     //easy permission
     implementation 'pub.devrel:easypermissions:3.0.0'
 
+    //skeleton view
+    implementation("com.ericktijerou.koleton:koleton:1.0.0-beta01")
+    implementation 'com.github.EudyContreras:Skeleton-Bones:1.4.5'
+
 
 }

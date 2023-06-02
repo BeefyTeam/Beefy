@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.beefy.R
 import com.example.beefy.databinding.FragmentBuyerCheckoutScreenBinding
+import org.koin.android.ext.android.inject
 
 
 class BuyerCheckoutScreen : Fragment() {
@@ -15,6 +16,7 @@ class BuyerCheckoutScreen : Fragment() {
     private var _binding : FragmentBuyerCheckoutScreenBinding? = null
     private val binding get() = _binding!!
 
+    private val buyerCheckoutViewModel : BuyerCheckoutViewModel by inject()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -30,10 +32,14 @@ class BuyerCheckoutScreen : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupButton()
+
+    }
+
+    private fun setupButton(){
         binding.buyerCheckoutPayBtn.setOnClickListener {
             findNavController().navigate(R.id.action_buyerCheckoutScreen_to_buyerUploadPaymentProofScreen)
         }
-
     }
 
     override fun onDestroyView() {

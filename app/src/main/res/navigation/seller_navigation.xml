@@ -58,6 +58,18 @@
         <action
             android:id="@+id/action_sellerDetailItemScreen_to_sellerEditItemScreen"
             app:destination="@id/sellerEditItemScreen" />
+        <argument
+            android:name="idItem"
+            app:argType="integer" />
+        <argument
+            android:name="namaBarang"
+            app:argType="string" />
+        <argument
+            android:name="deskripsi"
+            app:argType="string" />
+        <argument
+            android:name="harga"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/sellerEditItemScreen"
@@ -69,6 +81,9 @@
             app:destination="@id/sellerHomeScreen"
             app:launchSingleTop="true"
             app:popUpTo="@id/sellerHomeScreen" />
+        <argument
+            android:name="idItem"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/sellerDetailCompleteTransactionScreen"
@@ -106,6 +121,9 @@
         android:label="SellerChatScreen" >
         <argument
             android:name="otherUserId"
+            app:argType="string" />
+        <argument
+            android:name="currentUserId"
             app:argType="string" />
     </fragment>
 </navigation>

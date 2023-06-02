@@ -29,10 +29,10 @@
             android:id="@+id/registerSellerInfoSubTitleTv"
             style="@style/TextAppearance.Material3.TitleSmall"
             android:layout_width="0dp"
-            android:textColor="#79747E"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="Pastikan data terisi dengan benar ya!"
+            android:textColor="#79747E"
             app:layout_constraintEnd_toEndOf="@+id/registerSellerInfoTitleTv"
             app:layout_constraintStart_toStartOf="@+id/registerSellerInfoTitleTv"
             app:layout_constraintTop_toBottomOf="@+id/registerSellerInfoTitleTv" />
@@ -76,10 +76,10 @@
             android:layout_width="324dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
+            android:hint="Jam Operasinal Tutup"
             app:layout_constraintEnd_toEndOf="@+id/registerSellerInfoOpenHourTIL"
             app:layout_constraintStart_toStartOf="@+id/registerSellerInfoOpenHourTIL"
-            app:layout_constraintTop_toBottomOf="@+id/registerSellerInfoOpenHourTIL"
-            android:hint="Jam Operasinal Tutup" >
+            app:layout_constraintTop_toBottomOf="@+id/registerSellerInfoOpenHourTIL">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/registerSellerInfoCloseHourTIET"
@@ -94,16 +94,16 @@
             android:layout_width="324dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
+            android:hint="Metode Pembayaran"
             app:layout_constraintEnd_toEndOf="@+id/registerSellerInfoCloseHourTIL"
             app:layout_constraintStart_toStartOf="@+id/registerSellerInfoCloseHourTIL"
-            app:layout_constraintTop_toBottomOf="@+id/registerSellerInfoCloseHourTIL"
-            android:hint="Metode Pembayaran" >
+            app:layout_constraintTop_toBottomOf="@+id/registerSellerInfoCloseHourTIL">
 
             <AutoCompleteTextView
                 android:id="@+id/registerSellerInfoPaymentMethodTIET"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="none"/>
+                android:inputType="none" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -111,10 +111,10 @@
             android:layout_width="324dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
+            android:hint="Rekening"
             app:layout_constraintEnd_toEndOf="@+id/registerSellerInfoPaymentMethodTIL"
             app:layout_constraintStart_toStartOf="@+id/registerSellerInfoPaymentMethodTIL"
-            app:layout_constraintTop_toBottomOf="@+id/registerSellerInfoPaymentMethodTIL"
-            android:hint="Rekening" >
+            app:layout_constraintTop_toBottomOf="@+id/registerSellerInfoPaymentMethodTIL">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/registerSellerInfoAccountTIET"
@@ -131,5 +131,17 @@
             app:layout_constraintEnd_toEndOf="@+id/registerSellerInfoAccountTIL"
             app:layout_constraintStart_toStartOf="@+id/registerSellerInfoAccountTIL"
             app:layout_constraintTop_toBottomOf="@+id/registerSellerInfoAccountTIL" />
+
+        <ProgressBar
+            android:id="@+id/registerSellerInfoProgressbar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

@@ -21,7 +21,7 @@ class ApiConfig (private val dataStore: DataStore<Preferences>){
             .build()
 
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://story-api.dicoding.dev/v1/")
+            .baseUrl("https://beefy-backend-33n3233q4q-et.a.run.app/api/")
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()

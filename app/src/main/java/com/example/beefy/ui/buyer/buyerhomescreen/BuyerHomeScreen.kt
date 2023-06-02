@@ -1,8 +1,10 @@
 package com.example.beefy.ui.buyer.buyerhomescreen
 
 import android.Manifest
+import android.content.ContentValues.TAG
 import android.opengl.Visibility
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -17,7 +19,10 @@ import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
 import com.example.beefy.R
 import com.example.beefy.databinding.FragmentBuyerHomeScreenBinding
+import com.example.beefy.utils.Resource
 import com.google.android.material.carousel.CarouselLayoutManager
+import koleton.api.loadSkeleton
+import org.koin.android.ext.android.inject
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 
@@ -27,8 +32,7 @@ class BuyerHomeScreen : Fragment() {
     private var _binding: FragmentBuyerHomeScreenBinding? = null
     private val binding get() = _binding!!
 
-
-
+    private val buyerHomeScreenViewModel : BuyerHomeScreenViewModel by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,8 +61,11 @@ class BuyerHomeScreen : Fragment() {
 
         binding.buyerHomeScreenSearchView.setOnQueryTextListener(object : OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
+                val bundle = Bundle()
+                bundle.putString("searchValue", query)
+
                 Toast.makeText(requireContext(), query, Toast.LENGTH_SHORT).show()
-                findNavController().navigate(R.id.action_buyer_home_screen_to_buyerSearchScreen)
+                findNavController().navigate(R.id.action_buyer_home_screen_to_buyerSearchScreen, bundle)
                 return false
             }
 
@@ -90,6 +97,20 @@ class BuyerHomeScreen : Fragment() {
             Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
         }
         binding.buyerHomeScreenBestMeatRv.adapter = bestMeatAdapter
+
+
+        buyerHomeScreenViewModel.helloworld.observe(viewLifecycleOwner){
+            when(it){
+                is Resource.Success ->{
+                    Log.e(TAG, "onViewCreated: success" + it.data.message, )
+                }
+
+                is Resource.Error -> Log.e(TAG, "onViewCreated: error" + it.error, )
+
+                is Resource.Loading -> Log.e(TAG, "onViewCreated: loading", )
+            }
+        }
+
 
     }
 

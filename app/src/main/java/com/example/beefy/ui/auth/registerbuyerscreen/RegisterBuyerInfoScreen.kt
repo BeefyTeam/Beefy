@@ -13,6 +13,8 @@ import androidx.navigation.fragment.findNavController
 import com.example.beefy.R
 import com.example.beefy.databinding.FragmentRegisterBuyerInfoScreenBinding
 import com.example.beefy.ui.buyer.BuyerActivity
+import com.example.beefy.utils.Resource
+import org.koin.android.ext.android.inject
 
 
 class RegisterBuyerInfoScreen : Fragment() {
@@ -20,8 +22,14 @@ class RegisterBuyerInfoScreen : Fragment() {
     private var _binding : FragmentRegisterBuyerInfoScreenBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var id : String
+    private lateinit var nama : String
+
+    private val registerBuyerViewModel : RegisterBuyerViewModel by inject()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        id = requireArguments().getString("id").toString()
+        nama = requireArguments().getString("nama").toString()
     }
 
     override fun onCreateView(
@@ -35,16 +43,42 @@ class RegisterBuyerInfoScreen : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setLoading(false)
         checkEmptyField()
         validateInput()
+        setupObserver()
         setupButton()
     }
 
+    private fun setupObserver(){
+        registerBuyerViewModel.registerEditBuyer.observe(viewLifecycleOwner){
+            when(it){
+                is Resource.Error -> {
+                    setLoading(false)
+                    Toast.makeText(requireContext(), it.error, Toast.LENGTH_SHORT).show()
+                }
+
+                is Resource.Loading -> setLoading(true)
+
+                is Resource.Success -> {
+                    setLoading(false)
+                    Toast.makeText(requireContext(), it.data.message, Toast.LENGTH_SHORT).show()
+                    findNavController().navigate(R.id.action_registerBuyerInfoScreen_to_loginScreenFragment)
+                }
+            }
+        }
+    }
+
     private fun setupButton(){
-        //todo
         binding.registerBuyerInfoConfirmAddressBtn.setOnClickListener {
-            Toast.makeText(requireContext(), "SUCCESS REGISTER", Toast.LENGTH_SHORT).show()
-            findNavController().navigate(R.id.action_registerBuyerInfoScreen_to_loginScreenFragment)
+            registerBuyerViewModel.registerEditBuyer(
+                id,
+                binding.registerBuyerInfoFullAddressTIET.text.toString(),
+                binding.registerBuyerInfoNameTIET.text.toString(),
+                binding.registerBuyerInfoPhoneNumberTIET.text.toString(),
+                binding.registerBuyerInfoAddressLabelTIET.text.toString(),
+                nama
+            )
         }
     }
 
@@ -73,8 +107,8 @@ class RegisterBuyerInfoScreen : Fragment() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                binding.registerBuyerInfoPhoneNumberTIL.error = if(s.toString().isEmpty()){
-                    "Nomor telefon tidak boleh kosong"
+                binding.registerBuyerInfoPhoneNumberTIL.error = if(s.toString().length<8){
+                    "Nomor telefon tidak boleh kurang dari 8"
                 } else {
                     null
                 }
@@ -135,6 +169,15 @@ class RegisterBuyerInfoScreen : Fragment() {
                     binding.registerBuyerInfoFullAddressTIL.error == null
     }
 
+    private fun setLoading(boolean: Boolean){
+        binding.registerBuyerInfoProgressBar.visibility = if(
+            boolean
+        ) {
+            View.VISIBLE
+        }else{
+            View.GONE
+        }
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

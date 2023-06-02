@@ -40,13 +40,13 @@
         android:label="fragment_register_buyer"
         tools:layout="@layout/fragment_register_buyer" >
         <action
-            android:id="@+id/action_registerBuyerScreen_to_registerBuyerInfoScreen"
-            app:destination="@id/registerBuyerInfoScreen" />
-        <action
             android:id="@+id/action_registerBuyerScreen_to_loginScreenFragment"
             app:destination="@id/loginScreenFragment"
             app:launchSingleTop="true"
             app:popUpTo="@id/landingScreenFragment" />
+        <action
+            android:id="@+id/action_registerBuyerScreen_to_registerBuyerUploadProfilePictureScreen"
+            app:destination="@id/registerBuyerUploadProfilePictureScreen" />
     </fragment>
     <fragment
         android:id="@+id/registerBuyerInfoScreen"
@@ -58,6 +58,12 @@
             app:destination="@id/loginScreenFragment"
             app:launchSingleTop="true"
             app:popUpTo="@id/landingScreenFragment" />
+        <argument
+            android:name="id"
+            app:argType="string" />
+        <argument
+            android:name="nama"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/registerSellerScreen"
@@ -65,13 +71,13 @@
         android:label="fragment_register_seller_screen"
         tools:layout="@layout/fragment_register_seller_screen" >
         <action
-            android:id="@+id/action_registerSellerScreen_to_registerSellerInfoScreen"
-            app:destination="@id/registerSellerInfoScreen" />
-        <action
             android:id="@+id/action_registerSellerScreen_to_loginScreenFragment"
             app:destination="@id/loginScreenFragment"
             app:launchSingleTop="true"
             app:popUpTo="@id/landingScreenFragment" />
+        <action
+            android:id="@+id/action_registerSellerScreen_to_registerSellerUploadProfilePictureScreen"
+            app:destination="@id/registerSellerUploadProfilePictureScreen" />
     </fragment>
     <fragment
         android:id="@+id/registerSellerInfoScreen"
@@ -83,5 +89,35 @@
             app:destination="@id/loginScreenFragment"
             app:launchSingleTop="true"
             app:popUpTo="@id/landingScreenFragment" />
+        <argument
+            android:name="id"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerBuyerUploadProfilePictureScreen"
+        android:name="com.example.beefy.ui.auth.registerbuyerscreen.RegisterBuyerUploadProfilePictureScreen"
+        android:label="fragment_register_buyer_upload_profile_picture_screen"
+        tools:layout="@layout/fragment_register_buyer_upload_profile_picture_screen" >
+        <action
+            android:id="@+id/action_registerBuyerUploadProfilePictureScreen_to_registerBuyerInfoScreen"
+            app:destination="@id/registerBuyerInfoScreen" />
+        <argument
+            android:name="id"
+            app:argType="string" />
+        <argument
+            android:name="nama"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerSellerUploadProfilePictureScreen"
+        android:name="com.example.beefy.ui.auth.registersellerscreen.RegisterSellerUploadProfilePictureScreen"
+        android:label="fragment_register_seller_upload_profile_picture_screen"
+        tools:layout="@layout/fragment_register_seller_upload_profile_picture_screen" >
+        <action
+            android:id="@+id/action_registerSellerUploadProfilePictureScreen_to_registerSellerInfoScreen"
+            app:destination="@id/registerSellerInfoScreen" />
+        <argument
+            android:name="id"
+            app:argType="string" />
     </fragment>
 </navigation>

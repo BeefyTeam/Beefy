@@ -15,10 +15,12 @@ import com.example.beefy.databinding.FragmentSellerChatsListScreenBinding
 import com.example.beefy.utils.Message
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import org.koin.android.ext.android.inject
 
 
 class SellerChatsListScreen : Fragment() {
@@ -27,10 +29,15 @@ class SellerChatsListScreen : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var db: FirebaseDatabase
+    private lateinit var messagesRef : DatabaseReference
 
+    private lateinit var currentUserId : String
+
+    private val sellerChatsListViewModel : SellerChatsListViewModel by inject()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         db = Firebase.database
+        messagesRef = db.reference.child("messages")
     }
 
     override fun onCreateView(
@@ -44,11 +51,21 @@ class SellerChatsListScreen : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val messagesRef = db.reference.child("messages")
-        val currentUserId = "321"
+        setupObserver()
+        setupAdapter()
 
+    }
+
+    private fun setupObserver(){
+        sellerChatsListViewModel.getUserId().observe(viewLifecycleOwner){
+            currentUserId = it
+        }
+    }
+
+    private fun setupAdapter(){
         val adapter = SellerChatsListAdapter{
             val bundle = Bundle().apply {
+                putString("currentUserId", currentUserId)
                 putString("otherUserId", it)
             }
 
@@ -95,7 +112,6 @@ class SellerChatsListScreen : Fragment() {
             override fun onCancelled(error: DatabaseError) {
             }
         })
-
     }
 
     override fun onDestroyView() {

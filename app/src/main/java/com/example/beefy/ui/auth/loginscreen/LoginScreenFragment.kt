@@ -16,6 +16,7 @@ import com.example.beefy.R
 import com.example.beefy.databinding.FragmentLoginScreenBinding
 import com.example.beefy.ui.buyer.BuyerActivity
 import com.example.beefy.ui.seller.SellerActivity
+import com.example.beefy.utils.Resource
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -29,12 +30,8 @@ class LoginScreenFragment : Fragment() {
 
     private val loginScreenViewModel : LoginScreenViewModel by inject()
 
-    private lateinit var auth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        auth = Firebase.auth
-
     }
 
     override fun onCreateView(
@@ -48,40 +45,69 @@ class LoginScreenFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setLoading(false)
 
-        binding.loginScreenEmailTIET.setText("a@gmail.com")
-        binding.loginScreenPasswordTIET.setText("aaaaaaaa")
+        binding.loginScreenEmailTIET.setText("Budaya@gmail.com")
+        binding.loginScreenPasswordTIET.setText("12345678")
 
         checkEmptyField()
         validateInput()
         setupButton()
+        setupObserver()
+
 
     }
 
     private fun setupButton(){
-        //todo
         binding.loginScreenLoginBtn.setOnClickListener {
-            val token = "123"
             val email = binding.loginScreenEmailTIET.text.toString()
             val pass = binding.loginScreenPasswordTIET.text.toString()
 
-            loginScreenViewModel.saveToken(token)
-            Toast.makeText(requireContext(), "Ke halaman pembeli", Toast.LENGTH_SHORT).show()
-            requireActivity().startActivity(Intent(requireContext(), BuyerActivity::class.java))
-            requireActivity().finish()
-
-
-
-
+            loginScreenViewModel.login(email,pass)
         }
 
         binding.loginScreenForgetPasswordBtn.setOnClickListener {
-            val token = "321"
-            loginScreenViewModel.saveToken(token)
-            Toast.makeText(requireContext(), "Ke halaman penjual", Toast.LENGTH_SHORT).show()
-            requireActivity().startActivity(Intent(requireContext(), SellerActivity::class.java))
-            requireActivity().finish()
-//            Toast.makeText(requireContext(), "FORGET PASSWORD", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(),"aaa",Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun setupObserver(){
+        loginScreenViewModel.userLogin.observe(viewLifecycleOwner){
+            when(it){
+                is Resource.Success -> {
+                    setLoading(false)
+                    val response = it.data
+
+                    val idType = if(response.jenisAkun == "penjual"){
+                        response.idToko
+                    }else{
+                        response.idPembeli
+                    }
+
+
+                    loginScreenViewModel.saveUserPref(response.idUser.toString(), response.jenisAkun.toString(), idType.toString(),  response.access.toString(), response.refresh.toString())
+                    if(response.jenisAkun.equals("pembeli")){
+                        requireActivity().startActivity(Intent(requireContext(), BuyerActivity::class.java))
+                        requireActivity().finish()
+                    }else{
+                        requireActivity().startActivity(Intent(requireContext(), SellerActivity::class.java))
+                        requireActivity().finish()
+                    }
+
+
+                }
+
+                is Resource.Loading -> {
+                    setLoading(true)
+                }
+
+                is Resource.Error -> {
+                    setLoading(false)
+                    Toast.makeText(requireContext(), it.error, Toast.LENGTH_SHORT).show()
+                }
+
+
+            }
         }
     }
 
@@ -132,6 +158,17 @@ class LoginScreenFragment : Fragment() {
                     binding.loginScreenPasswordTIET.text.toString().isNotEmpty() &&
                     binding.loginScreenEmailTIL.error == null &&
                     binding.loginScreenPasswordTIL.error == null
+    }
+
+
+    private fun setLoading(boolean: Boolean){
+        binding.loginProgressBar.visibility = if(
+            boolean
+        ) {
+            View.VISIBLE
+        }else{
+            View.GONE
+        }
     }
 
     override fun onDestroyView() {

@@ -59,6 +59,12 @@ class UserPreference(private val dataStore: DataStore<Preferences>) {
             it[TOKEN_REFRESH_KEY] = user.tokenRefresh
         }
     }
+
+    suspend fun clearTokenAccess() {
+        dataStore.edit {
+            it[TOKEN_ACCESS_KEY] = ""
+        }
+    }
     suspend fun clear() {
         dataStore.edit {
             it.clear()

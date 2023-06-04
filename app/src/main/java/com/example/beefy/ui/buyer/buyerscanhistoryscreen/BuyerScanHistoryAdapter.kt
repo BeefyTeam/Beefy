@@ -4,13 +4,18 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.beefy.data.response.ScanMeatHistoryResponse
 import com.example.beefy.databinding.ScanHistoryItemBinding
+import com.example.beefy.utils.DateConverter
+import com.example.beefy.utils.DiffUtil
 
-class BuyerScanHistoryAdapter(private var items : ArrayList<String>, private val listener : (String) -> Unit) : RecyclerView.Adapter<BuyerScanHistoryAdapter.ViewHolder>() {
+class BuyerScanHistoryAdapter(private val listener : (ScanMeatHistoryResponse) -> Unit) : RecyclerView.Adapter<BuyerScanHistoryAdapter.ViewHolder>() {
+    private var items = emptyList<ScanMeatHistoryResponse>()
     class ViewHolder(val binding : ScanHistoryItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item : String){
-            Glide.with(binding.root.context).load(item).into(binding.scanHistoryItemImageView)
+        fun bind(item : ScanMeatHistoryResponse){
+            Glide.with(binding.root.context).load(item.gambarUrl).into(binding.scanHistoryItemImageView)
+            binding.scanHistoryItemDateTv.text = DateConverter(item.tanggal.toString())
         }
 
     }
@@ -30,6 +35,13 @@ class BuyerScanHistoryAdapter(private var items : ArrayList<String>, private val
 
         holder.itemView.setOnClickListener { listener(item) }
 
+    }
+
+    fun setData(data : List<ScanMeatHistoryResponse>){
+        val diffUtil = DiffUtil(items,data)
+        val diffResult = androidx.recyclerview.widget.DiffUtil.calculateDiff(diffUtil)
+        items = data
+        diffResult.dispatchUpdatesTo(this)
     }
 
 }

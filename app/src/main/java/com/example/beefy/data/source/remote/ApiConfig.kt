@@ -6,7 +6,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-
+import java.util.concurrent.TimeUnit
 
 
 class ApiConfig (private val dataStore: DataStore<Preferences>){
@@ -16,6 +16,9 @@ class ApiConfig (private val dataStore: DataStore<Preferences>){
         val loggingInterceptor = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
 
         val client = OkHttpClient.Builder()
+            .connectTimeout(10, TimeUnit.SECONDS) // Timeout untuk menghubungkan ke server
+            .readTimeout(30, TimeUnit.SECONDS) // Timeout untuk membaca respon dari server
+            .writeTimeout(30, TimeUnit.SECONDS) // Timeout untuk menulis permintaan ke server
             .addInterceptor(loggingInterceptor)
             .addInterceptor(AuthInterceptor(dataStore))
             .build()

@@ -13,3 +13,69 @@ data class EditBuyerResponse (
     @SerializedName("message" ) var message : String? = null
 
 )
+
+data class DetailBuyerResponse (
+    @SerializedName("nama"           ) var nama          : String?      = null,
+    @SerializedName("alamat_lengkap" ) var alamatLengkap : String?      = null,
+    @SerializedName("nama_penerima"  ) var namaPenerima  : String?      = null,
+    @SerializedName("nomor_telp"     ) var nomorTelp     : String?      = null,
+    @SerializedName("label_alamat"   ) var labelAlamat   : String?      = null,
+    @SerializedName("photo_profile"  ) var photoProfile  : String?      = null,
+    @SerializedName("user_account"   ) var userAccount   : UserAccount? = UserAccount()
+)
+
+data class UserAccount (
+    @SerializedName("id_account" ) var idAccount : Int?    = null,
+    @SerializedName("email"      ) var email     : String? = null
+)
+
+data class SearchStoreResponse (
+    @SerializedName("pk"                    ) var pk                  : Int?    = null,
+    @SerializedName("logo_toko"             ) var logoToko            : String? = null,
+    @SerializedName("nama_toko"             ) var namaToko            : String? = null,
+    @SerializedName("rekening"              ) var rekening            : String? = null,
+    @SerializedName("metode_pembayaran"     ) var metodePembayaran    : String? = null,
+    @SerializedName("alamat_lengkap"        ) var alamatLengkap       : String? = null,
+    @SerializedName("nomor_telp"            ) var nomorTelp           : String? = null,
+    @SerializedName("jam_operasional_buka"  ) var jamOperasionalBuka  : String? = null,
+    @SerializedName("jam_operasional_tutup" ) var jamOperasionalTutup : String? = null
+)
+
+data class NewOrderResponse (
+    @SerializedName("message"         ) var message        : String?         = null,
+    @SerializedName("id_order"        ) var idOrder        : Int?            = null,
+    @SerializedName("data_pembayaran" ) var dataPembayaran : DataPembayaran? = DataPembayaran()
+)
+
+data class DataPembayaran (
+
+    @SerializedName("bank"             ) var bank            : String? = null,
+    @SerializedName("nomor_rekening"   ) var nomorRekening   : String? = null,
+    @SerializedName("atas_nama"        ) var atasNama        : String? = null,
+    @SerializedName("total_pembayaran" ) var totalPembayaran : Int?    = null
+
+)
+
+data class UploadPaymentProofResponse (
+    @SerializedName("message" ) var message : String? = null
+)
+
+data class ScanMeatResponse (
+    @SerializedName("message" ) var message : String? = null,
+    @SerializedName("data"    ) var data    : ScanMeatDataResponse?   = ScanMeatDataResponse()
+)
+
+data class ScanMeatDataResponse (
+    @SerializedName("url_gambar"      ) var urlGambar      : String? = null,
+    @SerializedName("hasil"           ) var hasil          : String? = null,
+    @SerializedName("level_kesegaran" ) var levelKesegaran : String? = null,
+    @SerializedName("jenis"           ) var jenis          : String? = null
+)
+
+data class ScanMeatHistoryResponse (
+    @SerializedName("gambar_url"      ) var gambarUrl      : String?  = null,
+    @SerializedName("tanggal"         ) var tanggal        : String?  = null,
+    @SerializedName("segar"           ) var segar          : Boolean? = null,
+    @SerializedName("level_kesegaran" ) var levelKesegaran : Int?     = null,
+    @SerializedName("jenis"           ) var jenis          : String?  = null
+)

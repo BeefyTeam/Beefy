@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.beefy.R
 import com.example.beefy.databinding.FragmentBuyerChatScreenBinding
@@ -29,6 +30,8 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.runBlocking
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.Date
 
 
@@ -45,16 +48,15 @@ class BuyerChatScreen : Fragment() {
     private lateinit var currentUserId: String
     private lateinit var otherUserId: String
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         db = Firebase.database
         messagesRef = db.reference.child("messages")
 
-
         currentUserId = requireArguments().getString("currentUserId").toString()
         otherUserId = requireArguments().getString("otherUserId").toString()
-        Log.e(TAG, "otherUserId: " + otherUserId)
     }
 
     override fun onCreateView(
@@ -69,14 +71,10 @@ class BuyerChatScreen : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
+        setupAdapter()
         checkField()
         validateInput()
-        setupAdapter()
         setupButton()
-
-
-
 
     }
 
@@ -88,20 +86,20 @@ class BuyerChatScreen : Fragment() {
         val query = messagesRef
             .orderByChild("timestamp")
 
-//        query.addValueEventListener(object : ValueEventListener {
-//            override fun onDataChange(snapshot: DataSnapshot) {
-//
-//                for (data in snapshot.children) {
-//                    val value = data.getValue(Message::class.java)
-//                    Log.e(TAG, "onDataChange: "+value)
-//                }
-//
-//
-//            }
-//
-//            override fun onCancelled(error: DatabaseError) {
-//            }
-//        })
+        query.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+
+                for (data in snapshot.children) {
+                    val value = data.getValue(Message::class.java)
+                    Log.e(TAG, "onDataChange: "+value)
+                }
+
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+            }
+        })
 
 
         val options = FirebaseRecyclerOptions.Builder<Message>()

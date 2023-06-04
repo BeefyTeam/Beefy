@@ -1,19 +1,31 @@
 package com.example.beefy.ui.buyer.buyerscanhistoryscreen
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.beefy.R
 import com.example.beefy.databinding.FragmentBuyerScanHistoryScreenBinding
+import com.example.beefy.utils.Resource
+import koleton.api.hideSkeleton
+import koleton.api.loadSkeleton
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class BuyerScanHistoryScreen : Fragment() {
 
     private var _binding : FragmentBuyerScanHistoryScreenBinding? = null
     private val binding get() = _binding!!
+
+    private lateinit var adapter: BuyerScanHistoryAdapter
+
+    private val buyerScanHistoryViewModel : BuyerScanHistoryViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,17 +42,59 @@ class BuyerScanHistoryScreen : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val itemList = ArrayList<String>()
-        for (i in 0..20){
-            itemList.add("https://cdn.idntimes.com/content-images/post/20211202/striploin-steak-raw-beef-butchery-cut-white-table-top-view-249006-3611-90cff3e110751a704f06e897dd6e72fd.jpg")
+        setupAdapter()
+        setupObserver()
+
+
+    }
+
+    private fun setupObserver(){
+        buyerScanHistoryViewModel.scanHistory.observe(viewLifecycleOwner){
+            when(it){
+                is Resource.Loading -> {
+                    setLoading(true)
+                }
+
+                is Resource.Error -> {
+                    setLoading(false)
+                    Toast.makeText(requireContext(), it.error, Toast.LENGTH_SHORT).show()
+                    Log.e(TAG, "buyerscanhistory setupObserver: " + it.error, )
+                }
+
+                is Resource.Success -> {
+                    setLoading(false)
+                    adapter.setData(it.data)
+                    binding.buyerScanHistoryTotalCheckTv.text = "Total " + it.data.size.toString() + " cek"
+                }
+            }
         }
+    }
 
+    private fun setupAdapter(){
         binding.buyerScanHistoryRv.layoutManager = LinearLayoutManager(requireContext())
-        val adapter = BuyerScanHistoryAdapter(itemList){
+        adapter = BuyerScanHistoryAdapter{
+            val bundle = Bundle().apply {
+                putString("gambar", it.gambarUrl)
+                putString("hasil", it.segar.toString())
+                putString("levelKesegaran", it.levelKesegaran.toString() + "%")
+                putString("jenis", it.jenis)
+            }
 
+            findNavController().navigate(R.id.action_buyerScanHistoryScreen_to_buyerScanResultScreen, bundle)
         }
         binding.buyerScanHistoryRv.adapter = adapter
+    }
 
+    private fun setLoading(boolean: Boolean){
+        if (boolean){
+            binding.buyerScanHistoryTotalCheckTv.loadSkeleton()
+            binding.buyerScanHistoryRv.loadSkeleton(R.layout.scan_history_item){
+                itemCount(4)
+            }
+        }else{
+            binding.buyerScanHistoryTotalCheckTv.hideSkeleton()
+            binding.buyerScanHistoryRv.hideSkeleton()
+        }
     }
 
     override fun onDestroyView() {

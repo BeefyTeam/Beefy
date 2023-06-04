@@ -1,6 +1,8 @@
 package com.example.beefy.data.response
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
 data class EditPPPenjualResponse (
     @SerializedName("message"    ) var message   : String? = null,
@@ -10,6 +12,21 @@ data class EditPPPenjualResponse (
 data class EditPenjualResponse (
     @SerializedName("message"  ) var message  : String? = null,
 )
+
+data class DetailPenjualResponse (
+
+    @SerializedName("logo_toko"             ) var logoToko            : String?      = null,
+    @SerializedName("nama_toko"             ) var namaToko            : String?      = null,
+    @SerializedName("rekening"              ) var rekening            : String?      = null,
+    @SerializedName("metode_pembayaran"     ) var metodePembayaran    : String?      = null,
+    @SerializedName("alamat_lengkap"        ) var alamatLengkap       : String?      = null,
+    @SerializedName("nomor_telp"            ) var nomorTelp           : String?      = null,
+    @SerializedName("jam_operasional_buka"  ) var jamOperasionalBuka  : String?      = null,
+    @SerializedName("jam_operasional_tutup" ) var jamOperasionalTutup : String?      = null,
+    @SerializedName("user_account"          ) var userAccount         : UserAccount? = UserAccount()
+
+)
+
 
 data class Product (
 
@@ -44,4 +61,8 @@ data class SellerOrderProductResponse (
     @SerializedName("metode_pembayaran" ) var metodePembayaran : String? = null,
     @SerializedName("tanggal_order"     ) var tanggalOrder     : String? = null,
     @SerializedName("status"            ) var status           : String? = null
+)
+
+data class AcceptOrderResponse(
+    @SerializedName("message"  ) var message  : String? = null,
 )

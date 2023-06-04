@@ -1,15 +1,24 @@
 package com.example.beefy.ui.buyer.buyerproductdetailscreen
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.beefy.R
+import com.example.beefy.data.response.DetailPenjualResponse
 import com.example.beefy.databinding.FragmentBuyerProductDetailScreenBinding
+import com.example.beefy.utils.Resource
+import koleton.api.hideSkeleton
+import koleton.api.loadSkeleton
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class BuyerProductDetailScreen : Fragment() {
@@ -17,11 +26,24 @@ class BuyerProductDetailScreen : Fragment() {
     private var _binding : FragmentBuyerProductDetailScreenBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var otherUserId : String
+    private lateinit var idToko : String
+    private lateinit var idItem : String
+    private lateinit var namaBarang:String
+    private lateinit var harga:String
+    private lateinit var deskripsi:String
+    private lateinit var currentUserId : String
+
+    private val buyerProductDetailViewModel : BuyerProductDetailViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        otherUserId = "321"
+
+        idToko = requireArguments().getString("idToko").toString()
+        idItem = requireArguments().getString("idItem").toString()
+        namaBarang = requireArguments().getString("namaBarang").toString()
+        harga = requireArguments().getString("harga").toString()
+        deskripsi = requireArguments().getString("deskripsi").toString()
+
     }
 
     override fun onCreateView(
@@ -35,15 +57,58 @@ class BuyerProductDetailScreen : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initView()
+        setupObserver()
+        setupButton()
+
+
+    }
+
+    private fun initView(){
+        buyerProductDetailViewModel.getSellerProfile(idToko)
+    }
+    private fun setupObserver(){
+        buyerProductDetailViewModel.userId.observe(viewLifecycleOwner){
+            currentUserId = it
+        }
+
+        buyerProductDetailViewModel.sellerProfile.observe(viewLifecycleOwner){
+            when(it){
+                is Resource.Error -> {
+                    setLoading(true)
+                    Toast.makeText(requireContext(), it.error, Toast.LENGTH_SHORT).show()
+                    Log.e(TAG, "buyerproductdetailscreen setupObserver: "+it.error, )
+                }
+
+                is Resource.Loading -> {
+                    setLoading(true)
+                }
+
+                is Resource.Success -> {
+                    setLoading(false)
+                    setupView(it.data)
+                }
+
+            }
+        }
+    }
+
+    private fun setupView(detailPenjualResponse: DetailPenjualResponse){
+        //item
         val imgUrl = "https://cdn.idntimes.com/content-images/post/20211202/striploin-steak-raw-beef-butchery-cut-white-table-top-view-249006-3611-90cff3e110751a704f06e897dd6e72fd.jpg"
-        val storeUrl = "https://images.tokopedia.net/img/cache/215-square/GAnVPX/2023/2/10/c4ad6096-b419-4cb2-b0e1-0f3366950e4e.jpg"
-
-
         Glide.with(requireContext()).load(imgUrl).into(binding.buyerProductDetailImageView)
+        binding.buyerProductScreenTitleTv.text = namaBarang
+        binding.buyerProductDetailPriceTv.text = "Rp"+ harga
+        binding.buyerProductDetailDescTv.text = deskripsi
 
-        Glide.with(requireContext()).load(storeUrl).into(binding.buyerProductDetailScreenStoreCard.storeNameWithLocImageView)
 
+        //toko
+        Glide.with(binding.root).load(detailPenjualResponse.logoToko).into(binding.buyerProductDetailScreenStoreCard.storeNameWithLocImageView)
+        binding.buyerProductDetailScreenStoreCard.storeNameWithLocTitleTv.setText(detailPenjualResponse.namaToko)
+        binding.buyerProductDetailScreenStoreCard.storeNameWithLocLocationTv.setText(detailPenjualResponse.alamatLengkap)
+    }
 
+    private fun setupButton(){
         var count = 1
         binding.buyerProductScreenCountTv.text = count.toString()
 
@@ -65,18 +130,39 @@ class BuyerProductDetailScreen : Fragment() {
         }
 
         binding.buyerProductScreenBotNavBarCheckoutBtn.setOnClickListener {
-            it.findNavController().navigate(R.id.action_buyerProductDetailScreen_to_buyerCheckoutScreen)
+            val bundle = Bundle().apply {
+                putString("idToko", idToko)
+                putString("totalItem", count.toString())
+                putString("idBarang", idItem)
+                putString("namaBarang", namaBarang)
+                putString("harga", harga)
+            }
+            it.findNavController().navigate(R.id.action_buyerProductDetailScreen_to_buyerCheckoutScreen, bundle)
         }
 
         binding.buyerProductDetailChatBtn.setOnClickListener {
             val bundle = Bundle().apply {
-                putString("otherUserId", otherUserId)
+                putString("currentUserId", currentUserId)
+                putString("otherUserId", idToko)
             }
-
-
             findNavController().navigate(R.id.action_buyerProductDetailScreen_to_buyerChatScreen, bundle)
         }
 
+        binding.buyerProductDetailScreenStoreCard.root.setOnClickListener {
+            val bundle = Bundle().apply {
+                putString("currentUserId", currentUserId)
+                putString("idToko", idToko)
+            }
+            findNavController().navigate(R.id.action_buyerProductDetailScreen_to_buyerStoreDtailScreen, bundle)
+        }
+    }
+
+    private fun setLoading(boolean: Boolean){
+        if(boolean){
+            binding.buyerProductDetailLinearLayout.loadSkeleton()
+        }else{
+            binding.buyerProductDetailLinearLayout.hideSkeleton()
+        }
     }
 
     override fun onDestroyView() {

@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.beefy.R
+import com.example.beefy.data.response.Product
 import com.example.beefy.databinding.FragmentSellerDetailItemScreenBinding
 import com.example.beefy.utils.Resource
 import org.koin.android.ext.android.inject
@@ -25,6 +26,8 @@ class SellerDetailItemScreen : Fragment() {
     private lateinit var namaBarang:String
     private lateinit var harga:String
     private lateinit var deskripsi:String
+
+    private lateinit var product: Product
 
     private val sellerDetailItemViewModel : SellerDetailItemViewModel by inject()
     override fun onCreate(savedInstanceState: Bundle?) {

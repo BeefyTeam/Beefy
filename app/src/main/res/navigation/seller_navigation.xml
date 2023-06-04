@@ -35,7 +35,11 @@
         android:id="@+id/sellerProfileScreen"
         android:name="com.example.beefy.ui.seller.sellerprofilescreen.SellerProfileScreen"
         android:label="fragment_seller_profile_screen"
-        tools:layout="@layout/fragment_seller_profile_screen" />
+        tools:layout="@layout/fragment_seller_profile_screen" >
+        <action
+            android:id="@+id/action_sellerProfileScreen_to_sellerEditProfileScreen"
+            app:destination="@id/sellerEditProfileScreen" />
+    </fragment>
     <fragment
         android:id="@+id/sellerAddItemScreen"
         android:name="com.example.beefy.ui.seller.selleradditemscreen.SellerAddItemScreen"
@@ -125,5 +129,14 @@
         <argument
             android:name="currentUserId"
             app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/sellerEditProfileScreen"
+        android:name="com.example.beefy.ui.seller.sellereditprofilescreen.SellerEditProfileScreen"
+        android:label="fragment_seller_edit_profile_screen"
+        tools:layout="@layout/fragment_seller_edit_profile_screen" >
+        <action
+            android:id="@+id/action_sellerEditProfileScreen_to_sellerHomeScreen"
+            app:destination="@id/sellerHomeScreen" />
     </fragment>
 </navigation>

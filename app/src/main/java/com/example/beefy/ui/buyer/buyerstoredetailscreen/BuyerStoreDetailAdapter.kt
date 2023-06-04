@@ -4,14 +4,21 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.beefy.data.response.Product
 import com.example.beefy.databinding.MeatCardItemBinding
 import com.example.beefy.databinding.StoreDetailItemBinding
+import com.example.beefy.utils.DiffUtil
 
-class BuyerStoreDetailAdapter(private val items : ArrayList<String>, private val listener : (String) -> Unit) : RecyclerView.Adapter<BuyerStoreDetailAdapter.ViewHolder>() {
+class BuyerStoreDetailAdapter( private val listener : (Product) -> Unit) : RecyclerView.Adapter<BuyerStoreDetailAdapter.ViewHolder>() {
+    private var items = emptyList<Product>()
+
     class ViewHolder(val binding : MeatCardItemBinding):RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item : String){
-            Glide.with(binding.root.context).load(item).into(binding.meatCardItemImageView)
+        val imgUrl = "https://cdn.idntimes.com/content-images/post/20211202/striploin-steak-raw-beef-butchery-cut-white-table-top-view-249006-3611-90cff3e110751a704f06e897dd6e72fd.jpg"
+        fun bind(item : Product){
+            Glide.with(binding.root.context).load(imgUrl).into(binding.meatCardItemImageView)
+            binding.meatCardItemTitleTv.text = item.namaBarang
+            binding.meatCardItemPriceTv.text = "Rp" + item.harga
         }
 
     }
@@ -28,5 +35,12 @@ class BuyerStoreDetailAdapter(private val items : ArrayList<String>, private val
         val item = items[position]
         holder.bind(item)
         holder.itemView.setOnClickListener { listener(item) }
+    }
+
+    fun setData(data : List<Product>){
+        val diffUtil = DiffUtil(items, data)
+        val diffResult = androidx.recyclerview.widget.DiffUtil.calculateDiff(diffUtil)
+        items = data
+        diffResult.dispatchUpdatesTo(this)
     }
 }

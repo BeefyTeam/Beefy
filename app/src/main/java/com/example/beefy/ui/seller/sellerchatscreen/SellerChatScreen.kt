@@ -1,6 +1,7 @@
 package com.example.beefy.ui.seller.sellerchatscreen
 
 import android.content.ContentValues
+import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -84,6 +85,8 @@ class SellerChatScreen : Fragment() {
 
         val query = messagesRef
             .orderByChild("timestamp")
+
+
 
         query.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {

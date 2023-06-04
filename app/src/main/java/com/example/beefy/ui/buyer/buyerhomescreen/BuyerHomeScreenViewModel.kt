@@ -11,15 +11,6 @@ import kotlinx.coroutines.launch
 
 class BuyerHomeScreenViewModel(private val buyerRepository: BuyerRepository): ViewModel() {
 
-    private var _helloworld = MutableLiveData<Resource<HelloWorldResponse>>()
-    val helloworld get() = _helloworld
 
-    fun helloworld(){
-        viewModelScope.launch {
-            buyerRepository.helloWorld().collect(){
-                _helloworld.postValue(it)
-            }
-        }
-    }
 
 }

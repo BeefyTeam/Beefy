@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-kapt'
     id "androidx.navigation.safeargs"
     id 'com.google.gms.google-services'
+    id("kotlin-parcelize")
 }
 
 android {
@@ -61,6 +62,7 @@ dependencies {
 
     //glide
     implementation 'com.github.bumptech.glide:glide:4.15.1'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.13.0'
 
     //retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
@@ -112,6 +114,8 @@ dependencies {
     //skeleton view
     implementation("com.ericktijerou.koleton:koleton:1.0.0-beta01")
     implementation 'com.github.EudyContreras:Skeleton-Bones:1.4.5'
+
+    implementation 'joda-time:joda-time:2.10.10'
 
 
 }

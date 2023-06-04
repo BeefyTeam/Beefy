@@ -1,7 +1,10 @@
 package com.example.beefy.data.source.remote
 
+import com.example.beefy.data.response.AcceptOrderResponse
 import com.example.beefy.data.response.AddProductResponse
 import com.example.beefy.data.response.DeleteProductResponse
+import com.example.beefy.data.response.DetailBuyerResponse
+import com.example.beefy.data.response.DetailPenjualResponse
 import com.example.beefy.data.response.EditBuyerResponse
 import com.example.beefy.data.response.EditPPBuyerResponse
 import com.example.beefy.data.response.EditPPPenjualResponse
@@ -10,10 +13,15 @@ import com.example.beefy.data.response.EditProductResponse
 import com.example.beefy.data.response.Product
 import com.example.beefy.data.response.HelloWorldResponse
 import com.example.beefy.data.response.LoginResponse
+import com.example.beefy.data.response.NewOrderResponse
 import com.example.beefy.data.response.RefreshTokenResponse
 import com.example.beefy.data.response.RegisterBuyerResponse
 import com.example.beefy.data.response.RegisterPenjualResponse
+import com.example.beefy.data.response.ScanMeatHistoryResponse
+import com.example.beefy.data.response.ScanMeatResponse
+import com.example.beefy.data.response.SearchStoreResponse
 import com.example.beefy.data.response.SellerOrderProductResponse
+import com.example.beefy.data.response.UploadPaymentProofResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.DELETE
@@ -87,6 +95,11 @@ interface ApiServices {
         @Field("rekening") rekening:String
     ) : EditPenjualResponse
 
+    @GET("penjual/user/detail/{id_toko}")
+    suspend fun getDetailPenjual(
+        @Path("id_toko") idToko: Int
+    ) : DetailPenjualResponse
+
     @GET("penjual/get-products/{idToko}")
     suspend fun getProducts(
         @Path("idToko") idToko: Int
@@ -118,10 +131,27 @@ interface ApiServices {
     ) : DeleteProductResponse
 
     //orders penjual
-    @GET("order/order-in-waiting?id_toko={idToko}")
-    suspend fun sellerOrderWaiting(
-        @Query("idToko") idToko: Int
-    ) : SellerOrderProductResponse
+    @GET("order/order-in-waiting")
+    suspend fun sellerOrderInWaiting(
+        @Query("id_toko") idToko: Int
+    ) : List<SellerOrderProductResponse>
+
+    @GET("order/order-in-process")
+    suspend fun sellerOrderInProcess(
+        @Query("id_toko") idToko: Int
+    ) : List<SellerOrderProductResponse>
+
+    @GET("order/order-in-complete")
+    suspend fun sellerOrderInComplete(
+        @Query("id_toko") idToko: Int
+    ) : List<SellerOrderProductResponse>
+
+    @FormUrlEncoded
+    @POST("penjual/accept-order/")
+    suspend fun sellerAcceptOrder(
+        @Field("id_order") idOrder : Int
+    ) : AcceptOrderResponse
+
 
 
     //pembeli
@@ -146,7 +176,60 @@ interface ApiServices {
     ) : EditBuyerResponse
 
 
-    //orders
+    @GET("pembeli/user/detail/{idPembeli}")
+    suspend fun getDetailBuyer(
+        @Path("idPembeli") idPembeli: Int
+    ) : DetailBuyerResponse
+
+    @GET("pembeli/search-product/")
+    suspend fun searchProduct(
+        @Query("product_name") productName:String
+    ) : List<Product>
+
+    @GET("pembeli/search-toko/")
+    suspend fun searchStore(
+        @Query("toko_name") tokoName:String
+    ) : List<SearchStoreResponse>
+
+    @FormUrlEncoded
+    @POST("order/new-order/")
+    suspend fun addNewOrder(
+        @Field("ID_PEMBELI") idPembeli: Int,
+        @Field("ID_TOKO") idToko: Int,
+        @Field("ID_BARANG") idBarang : Int,
+        @Field("rekening") rekening: String,
+        @Field("catatan") catatan : String,
+        @Field("alamat_pengiriman") alamatPengiriman : String,
+        @Field("metode_pembayaran") metodePembayaran: String,
+        @Field("biaya_pengiriman") biayaPengiriman:Int,
+        @Field("total_harga") totalHarga:Int,
+        @Field("kode_unik") kodeUnik : Int,
+        @Field("total_barang") totalBarang : Int
+    ) : NewOrderResponse
+
+
+    @Multipart
+    @POST("order/upload-bukti/")
+    suspend fun uploadPaymentProof(
+        @Part("id_order") idOrder:RequestBody,
+        @Part file_image: MultipartBody.Part
+    ) : UploadPaymentProofResponse
+
+
+    @Multipart
+    @POST("pembeli/scan-meat/")
+    suspend fun scanMeat(
+        @Part("id_pembeli") idPembeli: RequestBody,
+        @Part file_image: MultipartBody.Part
+    ) : ScanMeatResponse
+
+    @GET("pembeli/scan-history/{idPembeli}")
+    suspend fun scanMeatHistory(
+        @Path("idPembeli") idPembeli: Int
+    ) : List<ScanMeatHistoryResponse>
+
+
+
 
 
 

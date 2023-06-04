@@ -1,64 +1,102 @@
 package com.example.beefy.ui.seller.sellerdetailtransactionscreen.sellerdetailcompletetransactionscreen
 
+import android.content.ContentValues
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.example.beefy.R
+import com.example.beefy.data.response.DetailBuyerResponse
+import com.example.beefy.databinding.FragmentSellerDetailCompleteTransactionScreenBinding
+import com.example.beefy.ui.seller.sellerdetailtransactionscreen.sellerdetailprocesstransactionscreen.SellerDetailProcessTransactionViewModel
+import com.example.beefy.utils.Resource
+import koleton.api.hideSkeleton
+import koleton.api.loadSkeleton
+import org.koin.android.ext.android.inject
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [SellerDetailCompleteTransactionScreen.newInstance] factory method to
- * create an instance of this fragment.
- */
 class SellerDetailCompleteTransactionScreen : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
+    private var _binding : FragmentSellerDetailCompleteTransactionScreenBinding? = null
+    private val binding get() = _binding!!
+
+    private lateinit var idProduk: String
+    private lateinit var idPembeli: String
+    private lateinit var idPembayaran: String
+
+    private val sellerDetailCompleteTransactionViewModel : SellerDetailProcessTransactionViewModel by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+
+        idProduk = requireArguments().getString("idProduk").toString()
+        idPembeli = requireArguments().getString("idPembeli").toString()
+        idPembayaran = requireArguments().getString("idPembayaran").toString()
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(
-            R.layout.fragment_seller_detail_complete_transaction_screen,
-            container,
-            false
-        )
+        _binding = FragmentSellerDetailCompleteTransactionScreenBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment SellerDetailCompleteTransactionScreen.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            SellerDetailCompleteTransactionScreen().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        initView()
+        setupObserver()
+    }
+
+    private fun initView(){
+        sellerDetailCompleteTransactionViewModel.getBuyerDetail(idPembeli.toInt())
+    }
+
+    private fun setupObserver(){
+        sellerDetailCompleteTransactionViewModel.buyerDetail.observe(viewLifecycleOwner){
+            when (it) {
+                is Resource.Loading -> {
+                    setLoading(true)
+                }
+
+                is Resource.Success -> {
+                    setLoading(false)
+                    setupView(it.data)
+                }
+
+                is Resource.Error -> {
+                    setLoading(false)
+                    Toast.makeText(requireContext(), it.error, Toast.LENGTH_SHORT).show()
+                    Log.e(ContentValues.TAG, "sellerDetailWaitingTransaction setupObserver: " + it.error)
                 }
             }
+        }
     }
+
+
+    private fun setupView(buyerDetail : DetailBuyerResponse){
+        binding.sellerDetailCompleteTransactionAddressCard.addressSellerViewAddressTv.text = buyerDetail.alamatLengkap
+        binding.sellerDetailCompleteTransactionAddressCard.addressSellerViewNameTv.text = buyerDetail.namaPenerima
+        binding.sellerDetailCompleteTransactionAddressCard.addressSellerViewPhoneNumberTv.text = buyerDetail.nomorTelp
+    }
+    private fun setLoading(boolean: Boolean) {
+        if (boolean) {
+            binding.sellerDetailCompleteTransactionLinearLayout.loadSkeleton()
+        } else {
+            binding.sellerDetailCompleteTransactionLinearLayout.hideSkeleton()
+        }
+    }
+
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+
+
 }

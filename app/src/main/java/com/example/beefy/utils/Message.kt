@@ -9,7 +9,5 @@ data class Message(
     val senderId: String? = null,
     val receiverId: String? = null,
     val timestamp: Long? = null
-){
-
-}
+)
 

@@ -47,7 +47,7 @@ class LoginScreenFragment : Fragment() {
 
         setLoading(false)
 
-        binding.loginScreenEmailTIET.setText("Budaya@gmail.com")
+        binding.loginScreenEmailTIET.setText("udin@gmail.com")
         binding.loginScreenPasswordTIET.setText("12345678")
 
         checkEmptyField()
@@ -117,7 +117,7 @@ class LoginScreenFragment : Fragment() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                binding.loginScreenEmailTIL.error = if(!Patterns.EMAIL_ADDRESS.matcher(s).matches()){
+                binding.loginScreenEmailTIL.error = if(!Patterns.EMAIL_ADDRESS.matcher(s.toString()).matches()){
                     "Format Email tidak valid"
                 } else {
                     null

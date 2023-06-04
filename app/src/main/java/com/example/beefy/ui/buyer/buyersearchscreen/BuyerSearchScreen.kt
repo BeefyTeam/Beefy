@@ -11,6 +11,7 @@ import android.widget.SearchView.OnQueryTextListener
 import androidx.lifecycle.lifecycleScope
 import com.example.beefy.R
 import com.example.beefy.databinding.FragmentBuyerSearchScreenBinding
+
 import com.example.beefy.ui.buyer.buyersearchscreen.buyersearchproductresult.BuyerSearchProductResultScreen
 import com.google.android.material.tabs.TabLayoutMediator
 import org.koin.android.ext.android.inject
@@ -23,14 +24,11 @@ class BuyerSearchScreen : Fragment() {
     private var _binding : FragmentBuyerSearchScreenBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var searchValue : String
 
     private val buyerSearchViewModel : BuyerSearchViewModel by activityViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        searchValue = requireArguments().getString("searchValue").toString()
     }
 
     override fun onCreateView(
@@ -44,12 +42,17 @@ class BuyerSearchScreen : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.buyerSearchView.setQuery(searchValue,false)
-        buyerSearchViewModel.setQuery(searchValue)
+        buyerSearchViewModel.searchQuery.observe(viewLifecycleOwner){
+            binding.buyerSearchView.setQuery(it, false)
+        }
+
+
 
         binding.buyerSearchView.setOnQueryTextListener(object: OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
                 buyerSearchViewModel.setQuery(query.toString())
+                buyerSearchViewModel.searchProduct(query.toString())
+                buyerSearchViewModel.searchStore(query.toString())
                 return false
             }
 

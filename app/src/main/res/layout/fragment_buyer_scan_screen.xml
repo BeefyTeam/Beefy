@@ -1,14 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.buyer.buyerscanscreen.BuyerScanScreen">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="scan" />
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/buyerScanTitleTv"
+            style="@style/TextAppearance.Material3.HeadlineSmall"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="32dp"
+            android:text="Yuk Pindai kesegaran daging mu"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/buyerScanImageView"
+            android:layout_width="275dp"
+            android:layout_height="275dp"
+            android:layout_marginTop="32dp"
+            android:src="@drawable/button_border"
+            app:layout_constraintEnd_toEndOf="@+id/buyerScanTitleTv"
+            app:layout_constraintStart_toStartOf="@+id/buyerScanTitleTv"
+            app:layout_constraintTop_toBottomOf="@+id/buyerScanTitleTv" />
+
+        <Button
+            android:id="@+id/buyerScanSlectPhotoBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="PILIH GAMBAR"
+            app:layout_constraintEnd_toEndOf="@+id/buyerScanImageView"
+            app:layout_constraintStart_toStartOf="@+id/buyerScanImageView"
+            app:layout_constraintTop_toBottomOf="@+id/buyerScanImageView" />
+
+        <Button
+            android:id="@+id/buyerScanBtn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="PINDAI"
+            app:layout_constraintEnd_toEndOf="@+id/buyerScanSlectPhotoBtn"
+            app:layout_constraintStart_toStartOf="@+id/buyerScanSlectPhotoBtn"
+            app:layout_constraintTop_toBottomOf="@+id/buyerScanSlectPhotoBtn" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ProgressBar
+        android:id="@+id/buyerScanProgressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone" />
 
 </FrameLayout>

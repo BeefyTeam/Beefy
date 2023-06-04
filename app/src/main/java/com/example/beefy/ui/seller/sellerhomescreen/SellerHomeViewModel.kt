@@ -30,8 +30,10 @@ class SellerHomeViewModel(private val userPrefRepository: UserPrefRepository, pr
     private fun getProducts(){
         viewModelScope.launch{
             userPrefRepository.getIdType().collect{
-                sellerRepository.getProducts(it.toInt()).collect{
-                    _products.postValue(it)
+                if(!it.isNullOrBlank()){
+                    sellerRepository.getProducts(it.toInt()).collect{
+                        _products.postValue(it)
+                    }
                 }
             }
         }

@@ -13,6 +13,7 @@ import com.example.beefy.ui.auth.registerbuyerscreen.RegisterBuyerViewModel
 import com.example.beefy.ui.auth.registersellerscreen.RegisterSellerViewModel
 import com.example.beefy.ui.auth.splashscreen.SplashScreenViewModel
 import com.example.beefy.ui.buyer.BuyerChatsListScreen.BuyerChatsListViewModel
+import com.example.beefy.ui.buyer.buyerchatscreen.BuyerChatViewModel
 import com.example.beefy.ui.buyer.buyercheckoutscreen.BuyerCheckoutViewModel
 import com.example.beefy.ui.buyer.buyerhomescreen.BuyerHomeScreenViewModel
 import com.example.beefy.ui.buyer.buyerorderdetailscreen.BuyerOrderDetailViewModel
@@ -23,8 +24,6 @@ import com.example.beefy.ui.buyer.buyerprofilescreen.BuyerProfileViewModel
 import com.example.beefy.ui.buyer.buyerscanhistoryscreen.BuyerScanHistoryViewModel
 import com.example.beefy.ui.buyer.buyerscanscreen.BuyerScanViewModel
 import com.example.beefy.ui.buyer.buyersearchscreen.BuyerSearchViewModel
-import com.example.beefy.ui.buyer.buyersearchscreen.buyersearchproductresult.BuyerSearchProductResultViewModel
-import com.example.beefy.ui.buyer.buyersearchscreen.buyersearchstoreresult.BuyerSearchStoreResultViewModel
 import com.example.beefy.ui.buyer.buyerstoredetailscreen.BuyerStoreDetailViewModel
 import com.example.beefy.ui.buyer.buyeruploadpaymentproofscreen.BuyerUploadPaymentProofViewModel
 import com.example.beefy.ui.seller.selleradditemscreen.SellerAddItemViewModel
@@ -34,6 +33,7 @@ import com.example.beefy.ui.seller.sellerdetailtransactionscreen.sellerdetailcom
 import com.example.beefy.ui.seller.sellerdetailtransactionscreen.sellerdetailprocesstransactionscreen.SellerDetailProcessTransactionViewModel
 import com.example.beefy.ui.seller.sellerdetailtransactionscreen.sellerdetailwaitingtransactionscreen.SellerDetailWaitingTransactionViewModel
 import com.example.beefy.ui.seller.selleredititemscreen.SellerEditItemViewModel
+import com.example.beefy.ui.seller.sellereditprofilescreen.SellerEditProfileViewModel
 import com.example.beefy.ui.seller.sellerhomescreen.SellerHomeViewModel
 import com.example.beefy.ui.seller.sellerprofilescreen.SellerProfileViewModel
 import com.example.beefy.ui.seller.sellertransactionscreen.sellercompletetransactionscreen.SellerCompleteTransactionViewModel
@@ -72,34 +72,34 @@ val viewModelModule = module {
 
     //buyer
     viewModel { BuyerHomeScreenViewModel(get()) }
-    viewModel { BuyerProfileViewModel(get()) }
+    viewModel { BuyerProfileViewModel(get(),get()) }
     viewModel { BuyerChatsListViewModel(get())}
-    viewModel { BuyerCheckoutViewModel(get())}
+    viewModel { BuyerCheckoutViewModel(get(), get(), get())}
     viewModel { BuyerOrderDetailViewModel(get())}
     viewModel { BuyerOrderStatusOnProcessViewModel(get())}
     viewModel { BuyerOrderStatusCompleteViewModel(get())}
-    viewModel { BuyerProductDetailViewModel(get())}
-    viewModel { BuyerScanHistoryViewModel(get())}
-    viewModel { BuyerScanViewModel(get())}
-    viewModel { BuyerSearchStoreResultViewModel(get())}
-    viewModel { BuyerSearchProductResultViewModel(get()) }
-    viewModel { BuyerStoreDetailViewModel(get()) }
+    viewModel { BuyerProductDetailViewModel(get(), get())}
+    viewModel { BuyerScanHistoryViewModel(get(), get())}
+    viewModel { BuyerScanViewModel(get(),get())}
+    viewModel { BuyerStoreDetailViewModel(get(), get()) }
     viewModel { BuyerUploadPaymentProofViewModel(get()) }
     viewModel { BuyerSearchViewModel(get()) }
+    viewModel { BuyerChatViewModel(get()) }
 
 
     //seller
-    viewModel { SellerChatsListViewModel(get()) }
+    viewModel { SellerChatsListViewModel(get(),get()) }
     viewModel { SellerAddItemViewModel(get(),get()) }
     viewModel { SellerDetailItemViewModel(get()) }
-    viewModel { SellerDetailCompleteTransactionViewModel(get()) }
-    viewModel { SellerDetailProcessTransactionViewModel(get()) }
-    viewModel { SellerDetailWaitingTransactionViewModel(get()) }
+    viewModel { SellerDetailCompleteTransactionViewModel(get(),get()) }
+    viewModel { SellerDetailProcessTransactionViewModel(get(),get()) }
+    viewModel { SellerDetailWaitingTransactionViewModel(get(),get()) }
     viewModel { SellerEditItemViewModel(get()) }
+    viewModel { SellerEditProfileViewModel(get(), get()) }
     viewModel { SellerHomeViewModel(get(),get()) }
-    viewModel { SellerProfileViewModel(get()) }
-    viewModel { SellerCompleteTransactionViewModel(get()) }
-    viewModel { SellerProcessTransactionViewModel(get()) }
-    viewModel { SellerWaitingTransactionViewModel(get()) }
+    viewModel { SellerProfileViewModel(get(),get()) }
+    viewModel { SellerCompleteTransactionViewModel(get(),get()) }
+    viewModel { SellerProcessTransactionViewModel(get(),get()) }
+    viewModel { SellerWaitingTransactionViewModel(get(),get()) }
 
 }

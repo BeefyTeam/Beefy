@@ -19,10 +19,12 @@ import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
 import com.example.beefy.R
 import com.example.beefy.databinding.FragmentBuyerHomeScreenBinding
+import com.example.beefy.ui.buyer.buyersearchscreen.BuyerSearchViewModel
 import com.example.beefy.utils.Resource
 import com.google.android.material.carousel.CarouselLayoutManager
 import koleton.api.loadSkeleton
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 
@@ -33,6 +35,8 @@ class BuyerHomeScreen : Fragment() {
     private val binding get() = _binding!!
 
     private val buyerHomeScreenViewModel : BuyerHomeScreenViewModel by inject()
+
+    private val buyerSearchViewModel : BuyerSearchViewModel by activityViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,11 +65,11 @@ class BuyerHomeScreen : Fragment() {
 
         binding.buyerHomeScreenSearchView.setOnQueryTextListener(object : OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                val bundle = Bundle()
-                bundle.putString("searchValue", query)
+                buyerSearchViewModel.setQuery(query.toString())
+                buyerSearchViewModel.searchProduct(query.toString())
+                buyerSearchViewModel.searchStore(query.toString())
 
-                Toast.makeText(requireContext(), query, Toast.LENGTH_SHORT).show()
-                findNavController().navigate(R.id.action_buyer_home_screen_to_buyerSearchScreen, bundle)
+                findNavController().navigate(R.id.action_buyer_home_screen_to_buyerSearchScreen)
                 return false
             }
 
@@ -99,17 +103,7 @@ class BuyerHomeScreen : Fragment() {
         binding.buyerHomeScreenBestMeatRv.adapter = bestMeatAdapter
 
 
-        buyerHomeScreenViewModel.helloworld.observe(viewLifecycleOwner){
-            when(it){
-                is Resource.Success ->{
-                    Log.e(TAG, "onViewCreated: success" + it.data.message, )
-                }
 
-                is Resource.Error -> Log.e(TAG, "onViewCreated: error" + it.error, )
-
-                is Resource.Loading -> Log.e(TAG, "onViewCreated: loading", )
-            }
-        }
 
 
     }

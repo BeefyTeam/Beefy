@@ -7,6 +7,7 @@
     tools:context=".ui.buyer.buyerprofilescreen.BuyerProfileScreen">
 
     <LinearLayout
+        android:id="@+id/buyerProfileLinearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -24,33 +25,33 @@
             style="@style/TextAppearance.Material3.HeadlineLarge"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:gravity="center"
-            android:text="Budi"
-            android:layout_marginTop="8dp"/>
+            android:text="Budi" />
 
         <TextView
             android:id="@+id/buyerProfileEmailTv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:gravity="center"
-            android:text="budi@gmail.com"
-            android:layout_marginTop="8dp"/>
+            android:text="budi@gmail.com" />
 
         <Button
             android:id="@+id/buyerProfileEditProfileBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Ubah Profil"
-            android:layout_marginTop="8dp"/>
+            android:layout_marginTop="8dp"
+            android:text="Ubah Profil" />
 
         <TextView
             android:id="@+id/buyerProfileMyActivityTv"
             style="@style/TextAppearance.Material3.TitleMedium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Aktivitas saya"
-            android:layout_marginTop="24dp"/>
+            android:layout_marginTop="24dp"
+            android:text="Aktivitas saya" />
 
         <Button
             android:id="@+id/buyerProfileScanHistoryBtn"
@@ -62,8 +63,8 @@
         <com.google.android.material.divider.MaterialDivider
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:dividerInsetStart="8dp"
-            app:dividerInsetEnd="8dp"/>
+            app:dividerInsetEnd="8dp"
+            app:dividerInsetStart="8dp" />
 
         <Button
             android:id="@+id/buyerProfileOrderStatusBtn"
@@ -78,8 +79,8 @@
             style="@style/TextAppearance.Material3.TitleMedium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Umum"
-            android:layout_marginTop="24dp"/>
+            android:layout_marginTop="24dp"
+            android:text="Umum" />
 
         <Button
             android:id="@+id/buyerProfileSettingBtn"
@@ -91,8 +92,8 @@
         <com.google.android.material.divider.MaterialDivider
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:dividerInsetStart="8dp"
-            app:dividerInsetEnd="8dp" />
+            app:dividerInsetEnd="8dp"
+            app:dividerInsetStart="8dp" />
 
         <Button
             android:id="@+id/buyerProfileFeedbackBtn"

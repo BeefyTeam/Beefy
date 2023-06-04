@@ -1,13 +1,16 @@
 package com.example.beefy.data.repository
 
 import android.util.Log
+import com.example.beefy.data.response.AcceptOrderResponse
 import com.example.beefy.data.response.AddProductResponse
 import com.example.beefy.data.response.DeleteProductResponse
+import com.example.beefy.data.response.DetailPenjualResponse
 import com.example.beefy.data.response.EditPPPenjualResponse
 import com.example.beefy.data.response.EditPenjualResponse
 import com.example.beefy.data.response.EditProductResponse
 import com.example.beefy.data.response.ErrorResponse
 import com.example.beefy.data.response.Product
+import com.example.beefy.data.response.SellerOrderProductResponse
 import com.example.beefy.data.source.remote.ApiServices
 import com.example.beefy.utils.Resource
 import com.google.gson.Gson
@@ -120,6 +123,81 @@ class SellerRepository(
                 emit(Resource.Success(response))
             }catch (e: HttpException) {
                 Log.e("SellerRepository", "deleteProducts HttpException: " + e.message)
+                emit(Resource.Error(getError(e)))
+            }
+        }
+    }
+
+    suspend fun sellerGetOrderInWaiting(
+        idToko: Int
+    ) : Flow<Resource<List<SellerOrderProductResponse>>>{
+        return flow {
+            emit(Resource.Loading)
+            try {
+                val response = apiServices.sellerOrderInWaiting(idToko)
+                emit(Resource.Success(response))
+            }catch (e: HttpException) {
+                Log.e("SellerRepository", "OrderInWaiting HttpException: " + e.message)
+                emit(Resource.Error(getError(e)))
+            }
+        }
+    }
+
+    suspend fun sellerGetOrderInProcess(
+        idToko: Int
+    ) : Flow<Resource<List<SellerOrderProductResponse>>>{
+        return flow {
+            emit(Resource.Loading)
+            try {
+                val response = apiServices.sellerOrderInProcess(idToko)
+                emit(Resource.Success(response))
+            }catch (e: HttpException) {
+                Log.e("SellerRepository", "OrderInProcess HttpException: " + e.message)
+                emit(Resource.Error(getError(e)))
+            }
+        }
+    }
+
+    suspend fun sellerGetOrderInComplete(
+        idToko: Int
+    ) : Flow<Resource<List<SellerOrderProductResponse>>>{
+        return flow {
+            emit(Resource.Loading)
+            try {
+                val response = apiServices.sellerOrderInComplete(idToko)
+                emit(Resource.Success(response))
+            }catch (e: HttpException) {
+                Log.e("SellerRepository", "OrderInComplete HttpException: " + e.message)
+                emit(Resource.Error(getError(e)))
+            }
+        }
+    }
+
+    suspend fun sellerAcceptOrder(
+        idOrder: Int
+    ) : Flow<Resource<AcceptOrderResponse>>{
+        return flow {
+            emit(Resource.Loading)
+            try {
+                val response = apiServices.sellerAcceptOrder(idOrder)
+                emit(Resource.Success(response))
+            }catch (e: HttpException) {
+                Log.e("SellerRepository", "acceptorder HttpException: " + e.message)
+                emit(Resource.Error(getError(e)))
+            }
+        }
+    }
+
+    suspend fun getDetailPenjual(
+        idToko: Int
+    ) : Flow<Resource<DetailPenjualResponse>>{
+        return flow {
+            emit(Resource.Loading)
+            try {
+                val response = apiServices.getDetailPenjual(idToko)
+                emit(Resource.Success(response))
+            }catch (e: HttpException) {
+                Log.e("SellerRepository", "getDEtailPenjual HttpException: " + e.message)
                 emit(Resource.Error(getError(e)))
             }
         }

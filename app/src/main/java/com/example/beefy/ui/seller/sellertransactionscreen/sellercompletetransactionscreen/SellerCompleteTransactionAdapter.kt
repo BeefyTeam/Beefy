@@ -4,13 +4,19 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.beefy.data.response.SellerOrderProductResponse
 import com.example.beefy.databinding.OrderStatusCardItemBinding
 import com.example.beefy.ui.buyer.buyerorderstatusscreen.buyerorderstatusonprocess.BuyerOrderStatusOnProcessAdapter
+import com.example.beefy.utils.DateConverter
+import com.example.beefy.utils.DiffUtil
 
-class SellerCompleteTransactionAdapter (private val items : ArrayList<String>, private val listener : (String) -> Unit) : RecyclerView.Adapter<SellerCompleteTransactionAdapter.ViewHolder>() {
+class SellerCompleteTransactionAdapter ( private val listener : (SellerOrderProductResponse) -> Unit) : RecyclerView.Adapter<SellerCompleteTransactionAdapter.ViewHolder>() {
+    private var items = emptyList<SellerOrderProductResponse>()
     class ViewHolder(val binding : OrderStatusCardItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(items: String){
-            Glide.with(binding.root.context).load(items).into(binding.orderStatusCardImageView)
+        val imgUrl = "https://cdn.idntimes.com/content-images/post/20211202/striploin-steak-raw-beef-butchery-cut-white-table-top-view-249006-3611-90cff3e110751a704f06e897dd6e72fd.jpg"
+        fun bind(items: SellerOrderProductResponse){
+            binding.orderStatusCardDateTv.text = DateConverter(items.tanggalOrder.toString())
+            Glide.with(binding.root.context).load(imgUrl).into(binding.orderStatusCardImageView)
         }
 
     }
@@ -29,5 +35,13 @@ class SellerCompleteTransactionAdapter (private val items : ArrayList<String>, p
         holder.bind(item)
 
         holder.itemView.setOnClickListener { listener(item) }
+    }
+
+    fun setData(data : List<SellerOrderProductResponse>){
+        val diffUtil = DiffUtil(items, data)
+        val diffResult = androidx.recyclerview.widget.DiffUtil.calculateDiff(diffUtil)
+        items = data
+        diffResult.dispatchUpdatesTo(this)
+
     }
 }

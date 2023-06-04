@@ -1,6 +1,7 @@
 package com.example.beefy.ui.seller.sellerchatslistscreen
 
 import android.content.ContentValues
+import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -31,6 +32,8 @@ class SellerChatsListScreen : Fragment() {
     private lateinit var db: FirebaseDatabase
     private lateinit var messagesRef : DatabaseReference
 
+    private lateinit var adapter: SellerChatsListAdapter
+
     private lateinit var currentUserId : String
 
     private val sellerChatsListViewModel : SellerChatsListViewModel by inject()
@@ -51,19 +54,25 @@ class SellerChatsListScreen : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupObserver()
         setupAdapter()
+        setupObserver()
 
     }
 
     private fun setupObserver(){
         sellerChatsListViewModel.getUserId().observe(viewLifecycleOwner){
             currentUserId = it
+            Log.e(TAG, "curentuserid: $currentUserId ", )
+
+        }
+
+        sellerChatsListViewModel.userList.observe(viewLifecycleOwner){
+            adapter.setData(it)
         }
     }
 
     private fun setupAdapter(){
-        val adapter = SellerChatsListAdapter{
+        adapter = SellerChatsListAdapter{
             val bundle = Bundle().apply {
                 putString("currentUserId", currentUserId)
                 putString("otherUserId", it)
@@ -102,9 +111,8 @@ class SellerChatsListScreen : Fragment() {
                 if (list.isEmpty()){
                     Log.e(ContentValues.TAG, "kosong: ", )
                 }else{
-
-                    adapter.setData(list.distinct())
-
+                    Log.e(TAG, "onDataChange: "+ list.distinct(), )
+                    sellerChatsListViewModel.getUsername(list.distinct())
                 }
 
             }

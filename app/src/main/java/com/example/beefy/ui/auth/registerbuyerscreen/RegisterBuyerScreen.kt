@@ -109,7 +109,7 @@ class RegisterBuyerScreen : Fragment() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 binding.registerBuyerEmailTIL.error =
-                    if (!Patterns.EMAIL_ADDRESS.matcher(s).matches()) {
+                    if (!Patterns.EMAIL_ADDRESS.matcher(s.toString()).matches()) {
                         "Format Email tidak valid"
                     } else {
                         null

@@ -16,5 +16,6 @@ class UserPrefRepository(
 
     suspend fun saveUserPref(user : UserPreferenceClass) = userPreference.saveUserPref(user)
 
+    suspend fun clearTokenAccess() = userPreference.clearTokenAccess()
     suspend fun clearPref() = userPreference.clear()
 }

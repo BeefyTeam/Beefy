@@ -8,8 +8,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.bumptech.glide.Glide
 import com.example.beefy.R
 import com.example.beefy.data.response.DetailBuyerResponse
+import com.example.beefy.data.response.DetailOrderResponse
 import com.example.beefy.databinding.FragmentSellerDetailCompleteTransactionScreenBinding
 import com.example.beefy.ui.seller.sellerdetailtransactionscreen.sellerdetailprocesstransactionscreen.SellerDetailProcessTransactionViewModel
 import com.example.beefy.utils.Resource
@@ -26,6 +28,7 @@ class SellerDetailCompleteTransactionScreen : Fragment() {
     private lateinit var idProduk: String
     private lateinit var idPembeli: String
     private lateinit var idPembayaran: String
+    private lateinit var gambar:String
 
     private val sellerDetailCompleteTransactionViewModel : SellerDetailProcessTransactionViewModel by inject()
 
@@ -35,6 +38,7 @@ class SellerDetailCompleteTransactionScreen : Fragment() {
         idProduk = requireArguments().getString("idProduk").toString()
         idPembeli = requireArguments().getString("idPembeli").toString()
         idPembayaran = requireArguments().getString("idPembayaran").toString()
+        gambar = requireArguments().getString("gambar").toString()
     }
 
     override fun onCreateView(
@@ -54,6 +58,7 @@ class SellerDetailCompleteTransactionScreen : Fragment() {
 
     private fun initView(){
         sellerDetailCompleteTransactionViewModel.getBuyerDetail(idPembeli.toInt())
+        sellerDetailCompleteTransactionViewModel.getDetailOrder(idPembayaran.toInt())
     }
 
     private fun setupObserver(){
@@ -75,6 +80,37 @@ class SellerDetailCompleteTransactionScreen : Fragment() {
                 }
             }
         }
+
+        sellerDetailCompleteTransactionViewModel.detailOrder.observe(viewLifecycleOwner){
+            when (it) {
+                is Resource.Loading -> {
+                    setLoading(true)
+                }
+
+                is Resource.Success -> {
+                    setLoading(false)
+                    setupOrderView(it.data)
+                }
+
+                is Resource.Error -> {
+                    setLoading(false)
+                    Toast.makeText(requireContext(), it.error, Toast.LENGTH_SHORT).show()
+                    Log.e(ContentValues.TAG, "sellerDetailWaitingTransaction detail ordersetupObserver: " + it.error)
+                }
+            }
+        }
+
+    }
+
+    private fun setupOrderView(detailOrderResponse: DetailOrderResponse){
+        binding.sellerDetailCompleteTransactionItemCard.meatDatePriceCardNoteItemPriceTv.text = detailOrderResponse.DetailRincian?.totalHarga.toString()
+        binding.sellerDetailCompleteTransactionItemCard.meatDatePriceNoteCardItem.text = detailOrderResponse.Barang?.catatan
+        binding.sellerDetailCompleteTransactionItemCard.meatDatePriceNoteCardDateTv.text = detailOrderResponse.Barang?.tanggalPesanan
+        Glide.with(binding.root).load(gambar).into(binding.sellerDetailCompleteTransactionItemCard.meatDatePriceCardItemImageView)
+        binding.sellerDetailCompleteTransactionItemCard.meatDatePriceNoteCardItemCountTv.text = detailOrderResponse.Barang?.totalBarang.toString()
+        binding.sellerDetailCompleteTransactionItemCard.meatDatePriceNoteItemTitleTv.text = detailOrderResponse.Barang?.namaBarang
+
+        Glide.with(binding.root).load(detailOrderResponse.BuktiPembayaran).into(binding.sellerDetailCompleteTransactionPaymentProofImageView)
     }
 
 

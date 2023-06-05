@@ -73,7 +73,7 @@ val viewModelModule = module {
     //buyer
     viewModel { BuyerHomeScreenViewModel(get()) }
     viewModel { BuyerProfileViewModel(get(),get()) }
-    viewModel { BuyerChatsListViewModel(get())}
+    viewModel { BuyerChatsListViewModel(get(),get())}
     viewModel { BuyerCheckoutViewModel(get(), get(), get())}
     viewModel { BuyerOrderDetailViewModel(get())}
     viewModel { BuyerOrderStatusOnProcessViewModel(get())}

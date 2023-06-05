@@ -29,6 +29,9 @@ class BuyerStoreDtailScreen : Fragment() {
 
     private lateinit var currentUserId : String
     private lateinit var otherUserId : String
+    private lateinit var idAkunPenjual : String
+    private lateinit var namaAkunPenjual : String
+
 
     private lateinit var adapter: BuyerStoreDetailAdapter
 
@@ -75,6 +78,8 @@ class BuyerStoreDtailScreen : Fragment() {
         buyerStoreDetailViewModel.userDetail.observe(viewLifecycleOwner){
             when(it){
                 is Resource.Success -> {
+                    idAkunPenjual = it.data.userAccount?.idAccount.toString()
+                    namaAkunPenjual = it.data.namaToko.toString()
                     setLoading(false)
                     setupView(it.data)
                 }
@@ -137,8 +142,9 @@ class BuyerStoreDtailScreen : Fragment() {
     private fun setupButton(){
         binding.buyerStoreDetailChatFAB.setOnClickListener {
             val bundle = Bundle()
-            bundle.putString("currentUserId", "4")
-            bundle.putString("otherUserId", otherUserId)
+            bundle.putString("currentUserId", currentUserId)
+            bundle.putString("otherUserId", idAkunPenjual)
+            bundle.putString("namaAkunPenjual", namaAkunPenjual)
 
             findNavController().navigate(R.id.action_buyerStoreDtailScreen_to_buyerChatScreen, bundle)
         }

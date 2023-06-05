@@ -2,6 +2,7 @@ package com.example.beefy.ui.seller.selleredititemscreen
 
 import android.app.Activity
 import android.content.ContentValues
+import android.content.ContentValues.TAG
 import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
@@ -14,13 +15,16 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.beefy.R
 import com.example.beefy.databinding.FragmentSellerEditItemScreenBinding
 import com.example.beefy.utils.Resource
+import com.example.beefy.utils.downloadImageAsTempFile
 import com.example.beefy.utils.uriToFile
 import com.github.dhaval2404.imagepicker.ImagePicker
+import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -36,6 +40,10 @@ class SellerEditItemScreen : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var idItem : String
+    private lateinit var namaBarang:String
+    private lateinit var harga:String
+    private lateinit var deskripsi:String
+    private lateinit var gambar:String
 
     private var uri : Uri? = null
 
@@ -47,6 +55,10 @@ class SellerEditItemScreen : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         idItem = requireArguments().getInt("idItem").toString()
+        gambar = requireArguments().getString("gambar").toString()
+        namaBarang = requireArguments().getString("namaBarang").toString()
+        harga = requireArguments().getString("harga").toString()
+        deskripsi = requireArguments().getString("deskripsi").toString()
     }
 
     override fun onCreateView(
@@ -60,28 +72,46 @@ class SellerEditItemScreen : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        checkEmptyField()
-        imageViewVisibility()
+
+        setupView()
+//        imageViewVisibility()
         validateInput()
+        checkEmptyField()
         setupObserver()
         setupButton()
 
 
+
+    }
+
+    private fun setupView(){
+
+
+        val imgUrl = gambar
+        lifecycleScope.launch {
+            getFile = downloadImageAsTempFile(requireContext(), imgUrl)
+        }
+        Glide.with(binding.root).load(gambar).into(binding.sellerEditItemImageView)
+        binding.sellerEditItemNameTIET.setText(namaBarang)
+        binding.sellerEditItemPriceTIET.setText(harga)
+        binding.sellerEditItemDescTIET.setText(deskripsi)
     }
 
     private fun setupObserver(){
         sellerEditItemViewModel.edit.observe(viewLifecycleOwner){
             when(it){
                 is Resource.Error -> {
+                    setLoading(false)
                     Toast.makeText(requireContext(), it.error, Toast.LENGTH_SHORT).show()
                     Log.e(ContentValues.TAG, "editProduct: "+it.error, )
                 }
 
                 is Resource.Loading -> {
-
+                    setLoading(true)
                 }
 
                 is Resource.Success ->{
+                    setLoading(false)
                     Toast.makeText(requireContext(), it.data.message, Toast.LENGTH_SHORT).show()
                     findNavController().navigate(R.id.action_sellerEditItemScreen_to_sellerHomeScreen)
                 }
@@ -90,6 +120,9 @@ class SellerEditItemScreen : Fragment() {
     }
 
     private fun setupButton(){
+
+
+
         binding.sellerEditItemAddImageBtn.setOnClickListener {
             ImagePicker.with(this)
                 .compress(1024)			//Final image size will be less than 1 MB(Optional)
@@ -127,12 +160,14 @@ class SellerEditItemScreen : Fragment() {
                 //Image Uri will not be null for RESULT_OK
                 uri = data?.data!!
 
-                checkEmptyField()
-                imageViewVisibility()
+//                imageViewVisibility()
 
                 getFile = uriToFile(uri as Uri, requireContext())
 
                 Glide.with(requireContext()).load(uri).into(binding.sellerEditItemImageView)
+
+                checkEmptyField()
+
             } else if (resultCode == ImagePicker.RESULT_ERROR) {
                 Toast.makeText(requireContext(), ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
             } else {
@@ -142,10 +177,10 @@ class SellerEditItemScreen : Fragment() {
 
     private fun checkEmptyField(){
         binding.sellerEditItemEditBtn.isEnabled =
-            uri!=null &&
+            getFile!=null &&
                     binding.sellerEditItemNameTIET.text.toString().isNotEmpty() &&
                     binding.sellerEditItemDescTIET.text.toString().isNotEmpty() &&
-                    binding.sellerEditItemPriceTIET.toString().isNotEmpty() &&
+                    binding.sellerEditItemPriceTIET.text.toString().isNotEmpty() &&
                     binding.sellerEditItemNameTIL.error == null &&
                     binding.sellerEditItemDescTIL.error == null &&
                     binding.sellerEditItemPriceTIL.error == null
@@ -201,19 +236,21 @@ class SellerEditItemScreen : Fragment() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                validateInput()
+                checkEmptyField()
             }
 
         })
     }
 
-    private fun imageViewVisibility(){
-        if(uri==null){
-            binding.sellerEditItemImageView.visibility = View.GONE
-        }else{
-            binding.sellerEditItemImageView.visibility = View.VISIBLE
+    private fun setLoading(boolean : Boolean){
+        if(boolean){
+            binding.sellerEditItemprogressBar.visibility = View.VISIBLE
+        } else {
+            binding.sellerEditItemprogressBar.visibility = View.GONE
         }
     }
+
+
 
     override fun onDestroyView() {
         super.onDestroyView()

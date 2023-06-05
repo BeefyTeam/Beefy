@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.beefy.R
 import com.example.beefy.databinding.FragmentSellerChatsListScreenBinding
 import com.example.beefy.utils.Message
+import com.example.beefy.utils.Resource
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -21,6 +22,8 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import koleton.api.hideSkeleton
+import koleton.api.loadSkeleton
 import org.koin.android.ext.android.inject
 
 
@@ -62,12 +65,25 @@ class SellerChatsListScreen : Fragment() {
     private fun setupObserver(){
         sellerChatsListViewModel.getUserId().observe(viewLifecycleOwner){
             currentUserId = it
-            Log.e(TAG, "curentuserid: $currentUserId ", )
 
         }
 
-        sellerChatsListViewModel.userList.observe(viewLifecycleOwner){
-            adapter.setData(it)
+        sellerChatsListViewModel.buyerChatList.observe(viewLifecycleOwner){
+            when(it){
+                is Resource.Success-> {
+                    setLoading(false)
+                    adapter.setData(it.data)
+                }
+
+                is Resource.Loading -> {
+                    setLoading(true)
+                }
+
+                is Resource.Error -> {
+
+                }
+
+            }
         }
     }
 
@@ -75,7 +91,8 @@ class SellerChatsListScreen : Fragment() {
         adapter = SellerChatsListAdapter{
             val bundle = Bundle().apply {
                 putString("currentUserId", currentUserId)
-                putString("otherUserId", it)
+                putString("otherUserId", it.userAccount?.idAccount.toString())
+                putString("namaAkunPembeli", it.nama)
             }
 
             findNavController().navigate(R.id.action_sellerChatsListScreen_to_sellerChatScreen, bundle)
@@ -112,7 +129,7 @@ class SellerChatsListScreen : Fragment() {
                     Log.e(ContentValues.TAG, "kosong: ", )
                 }else{
                     Log.e(TAG, "onDataChange: "+ list.distinct(), )
-                    sellerChatsListViewModel.getUsername(list.distinct())
+                    sellerChatsListViewModel.getBuyerChatList(list.distinct())
                 }
 
             }
@@ -120,6 +137,16 @@ class SellerChatsListScreen : Fragment() {
             override fun onCancelled(error: DatabaseError) {
             }
         })
+    }
+
+    private fun setLoading(boolean: Boolean){
+        if(boolean){
+            binding.sellerChatsListRv.loadSkeleton(R.layout.message_chat_list_item){
+                itemCount(4)
+            }
+        }else{
+            binding.sellerChatsListRv.hideSkeleton()
+        }
     }
 
     override fun onDestroyView() {

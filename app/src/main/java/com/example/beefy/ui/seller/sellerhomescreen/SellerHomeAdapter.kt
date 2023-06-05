@@ -11,11 +11,10 @@ import com.example.beefy.utils.DiffUtil
 class SellerHomeAdapter(private val listener : (Product) -> Unit) : RecyclerView.Adapter<SellerHomeAdapter.ViewHolder>() {
     private var items = emptyList<Product>()
     class ViewHolder(val binding : MeatCardItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        val imgUrl = "https://cdn.idntimes.com/content-images/post/20211202/striploin-steak-raw-beef-butchery-cut-white-table-top-view-249006-3611-90cff3e110751a704f06e897dd6e72fd.jpg"
         fun bind (item:Product){
             binding.meatCardItemTitleTv.text = item.namaBarang
             binding.meatCardItemPriceTv.text = "Rp"+item.harga.toString()
-            Glide.with(binding.root.context).load(imgUrl).into(binding.meatCardItemImageView)
+            Glide.with(binding.root.context).load(item.gambar).into(binding.meatCardItemImageView)
         }
 
     }

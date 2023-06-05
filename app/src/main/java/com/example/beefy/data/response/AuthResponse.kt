@@ -8,7 +8,7 @@ data class ErrorResponse (
     )
 
 data class LoginResponse (
-    @SerializedName("id_user"    ) var idUser    : Int?    = null,
+    @SerializedName("id_account"    ) var idUser    : Int?    = null,
     @SerializedName("jenis_akun" ) var jenisAkun : String? = null,
     @SerializedName("id_pembeli" ) var idPembeli : Int?    = null,
     @SerializedName("id_toko" ) var idToko : Int?    = null,

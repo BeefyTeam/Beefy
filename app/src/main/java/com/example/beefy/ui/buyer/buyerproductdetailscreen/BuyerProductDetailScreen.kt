@@ -33,6 +33,9 @@ class BuyerProductDetailScreen : Fragment() {
     private lateinit var deskripsi:String
     private lateinit var currentUserId : String
 
+    private lateinit var idAkunPenjual : String
+    private lateinit var namaAkunPenjual : String
+
     private val buyerProductDetailViewModel : BuyerProductDetailViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -85,6 +88,8 @@ class BuyerProductDetailScreen : Fragment() {
                 }
 
                 is Resource.Success -> {
+                    idAkunPenjual = it.data.userAccount?.idAccount.toString()
+                    namaAkunPenjual = it.data.namaToko.toString()
                     setLoading(false)
                     setupView(it.data)
                 }
@@ -143,7 +148,8 @@ class BuyerProductDetailScreen : Fragment() {
         binding.buyerProductDetailChatBtn.setOnClickListener {
             val bundle = Bundle().apply {
                 putString("currentUserId", currentUserId)
-                putString("otherUserId", idToko)
+                putString("otherUserId", idAkunPenjual)
+                putString("namaAkunPenjual", namaAkunPenjual)
             }
             findNavController().navigate(R.id.action_buyerProductDetailScreen_to_buyerChatScreen, bundle)
         }

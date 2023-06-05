@@ -26,13 +26,13 @@ class SellerDetailItemScreen : Fragment() {
     private lateinit var namaBarang:String
     private lateinit var harga:String
     private lateinit var deskripsi:String
-
-    private lateinit var product: Product
+    private lateinit var gambar:String
 
     private val sellerDetailItemViewModel : SellerDetailItemViewModel by inject()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         idItem = requireArguments().getInt("idItem").toString()
+        gambar = requireArguments().getString("gambar").toString()
         namaBarang = requireArguments().getString("namaBarang").toString()
         harga = requireArguments().getString("harga").toString()
         deskripsi = requireArguments().getString("deskripsi").toString()
@@ -55,7 +55,7 @@ class SellerDetailItemScreen : Fragment() {
 
     }
     private fun setupView(){
-        Glide.with(requireContext()).load("https://cdn.idntimes.com/content-images/post/20211202/striploin-steak-raw-beef-butchery-cut-white-table-top-view-249006-3611-90cff3e110751a704f06e897dd6e72fd.jpg").into(binding.sellerDetailItemImageView)
+        Glide.with(requireContext()).load(gambar).into(binding.sellerDetailItemImageView)
         binding.sellerDetailItemNameTv.text = namaBarang
         binding.sellerDetailItemDescTv.text = deskripsi
         binding.sellerDetailItemPriceTv.text = "Rp$harga"
@@ -87,7 +87,11 @@ class SellerDetailItemScreen : Fragment() {
 
         binding.sellerDetailItemEditItemBtn.setOnClickListener {
             val bundle = Bundle()
-            bundle.putInt("idItem", idItem.toInt())
+            bundle.putInt("idItem", idItem.toString().toInt())
+            bundle.putString("gambar", gambar)
+            bundle.putString("namaBarang", namaBarang)
+            bundle.putString("deskripsi", deskripsi)
+            bundle.putString("harga", harga)
 
             findNavController().navigate(R.id.action_sellerDetailItemScreen_to_sellerEditItemScreen, bundle)
         }

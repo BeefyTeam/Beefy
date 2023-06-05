@@ -77,6 +77,7 @@ class SellerHomeScreen : Fragment() {
         adapter = SellerHomeAdapter{
             val bundle = Bundle()
             bundle.putInt("idItem", it.pk.toString().toInt())
+            bundle.putString("gambar", it.gambar)
             bundle.putString("namaBarang", it.namaBarang)
             bundle.putString("deskripsi", it.deskripsi)
             bundle.putString("harga", it.harga.toString())

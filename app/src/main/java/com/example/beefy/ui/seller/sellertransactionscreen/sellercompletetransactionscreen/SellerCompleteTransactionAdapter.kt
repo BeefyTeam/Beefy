@@ -13,10 +13,11 @@ import com.example.beefy.utils.DiffUtil
 class SellerCompleteTransactionAdapter ( private val listener : (SellerOrderProductResponse) -> Unit) : RecyclerView.Adapter<SellerCompleteTransactionAdapter.ViewHolder>() {
     private var items = emptyList<SellerOrderProductResponse>()
     class ViewHolder(val binding : OrderStatusCardItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        val imgUrl = "https://cdn.idntimes.com/content-images/post/20211202/striploin-steak-raw-beef-butchery-cut-white-table-top-view-249006-3611-90cff3e110751a704f06e897dd6e72fd.jpg"
         fun bind(items: SellerOrderProductResponse){
+            binding.orderStatusCardTitleTv.text = items.IDBARANG?.namaBarang
+            binding.orderStatusCardTotalItemTv.text = items.totalBarang.toString()
             binding.orderStatusCardDateTv.text = DateConverter(items.tanggalOrder.toString())
-            Glide.with(binding.root.context).load(imgUrl).into(binding.orderStatusCardImageView)
+            Glide.with(binding.root.context).load(items.IDBARANG?.gambar).into(binding.orderStatusCardImageView)
         }
 
     }

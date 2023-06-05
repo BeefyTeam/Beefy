@@ -38,7 +38,6 @@ class BuyerProductDetailViewModel(private val userPrefRepository: UserPrefReposi
         viewModelScope.launch {
             userPrefRepository.getUserId().collect{
                 _userId.value = it
-                Log.e(ContentValues.TAG, "getMyId: $it", )
             }
         }
     }

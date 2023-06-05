@@ -47,6 +47,7 @@ class BuyerChatScreen : Fragment() {
 
     private lateinit var currentUserId: String
     private lateinit var otherUserId: String
+    private lateinit var namaAkunPenjual : String
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,6 +58,7 @@ class BuyerChatScreen : Fragment() {
 
         currentUserId = requireArguments().getString("currentUserId").toString()
         otherUserId = requireArguments().getString("otherUserId").toString()
+        namaAkunPenjual = requireArguments().getString("namaAkunPenjual").toString()
     }
 
     override fun onCreateView(
@@ -71,12 +73,16 @@ class BuyerChatScreen : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.buyerChatNameTv.text = namaAkunPenjual
+
         setupAdapter()
         checkField()
         validateInput()
         setupButton()
 
     }
+
+
 
     private fun setupAdapter(){
         var linearLayoutManager = LinearLayoutManager(requireContext())

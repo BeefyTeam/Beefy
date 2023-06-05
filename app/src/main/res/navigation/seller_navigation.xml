@@ -74,6 +74,9 @@
         <argument
             android:name="harga"
             app:argType="string" />
+        <argument
+            android:name="gambar"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/sellerEditItemScreen"
@@ -88,6 +91,18 @@
         <argument
             android:name="idItem"
             app:argType="integer" />
+        <argument
+            android:name="namaBarang"
+            app:argType="string" />
+        <argument
+            android:name="deskripsi"
+            app:argType="string" />
+        <argument
+            android:name="harga"
+            app:argType="string" />
+        <argument
+            android:name="gambar"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/sellerDetailCompleteTransactionScreen"
@@ -128,6 +143,9 @@
             app:argType="string" />
         <argument
             android:name="currentUserId"
+            app:argType="string" />
+        <argument
+            android:name="namaAkunPembeli"
             app:argType="string" />
     </fragment>
     <fragment

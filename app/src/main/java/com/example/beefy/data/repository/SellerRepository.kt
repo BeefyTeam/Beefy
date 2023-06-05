@@ -1,9 +1,11 @@
 package com.example.beefy.data.repository
 
+import android.content.ContentValues.TAG
 import android.util.Log
 import com.example.beefy.data.response.AcceptOrderResponse
 import com.example.beefy.data.response.AddProductResponse
 import com.example.beefy.data.response.DeleteProductResponse
+import com.example.beefy.data.response.DetailOrderResponse
 import com.example.beefy.data.response.DetailPenjualResponse
 import com.example.beefy.data.response.EditPPPenjualResponse
 import com.example.beefy.data.response.EditPenjualResponse
@@ -24,23 +26,23 @@ class SellerRepository(
     private val apiServices: ApiServices
 ) {
 
-    suspend fun editPPPenjual(
+    suspend fun addPPPenjual(
         idToko: RequestBody,
         fileImage : MultipartBody.Part,
     ) : Flow<Resource<EditPPPenjualResponse>> {
         return flow {
             emit(Resource.Loading)
             try {
-                val response = apiServices.editPPPenjual("Bearer DAFTAR", idToko, fileImage)
+                val response = apiServices.addPPPenjual("Bearer DAFTAR", idToko, fileImage)
                 emit(Resource.Success(response))
             }catch (e: HttpException) {
-                Log.e("SellerRepository", "edit PP penjual HttpException: " + e.message)
+                Log.e("SellerRepository", "add PP penjual HttpException: " + e.message)
                 emit(Resource.Error(getError(e)))
             }
         }
     }
 
-    suspend fun editPenjual(
+    suspend fun addDetailPenjual(
         idToko: String,
         alamatLengkap:String,
         jamBuka:String,
@@ -51,7 +53,43 @@ class SellerRepository(
         return flow {
             emit(Resource.Loading)
             try {
-                val response = apiServices.editPenjual("Bearer DAFTAR", idToko, alamatLengkap, jamBuka, jamTutup, metodePembayaran, rekening)
+                val response = apiServices.addDetailPenjual("Bearer DAFTAR", idToko, alamatLengkap, jamBuka, jamTutup, metodePembayaran, rekening)
+                emit(Resource.Success(response))
+            }catch (e: HttpException) {
+                Log.e("SellerRepository", "add penjual HttpException: " + e.message)
+                emit(Resource.Error(getError(e)))
+            }
+        }
+    }
+
+    suspend fun editPPPenjual(
+        idToko: RequestBody,
+        fileImage : MultipartBody.Part,
+    ) : Flow<Resource<EditPPPenjualResponse>> {
+        return flow {
+            emit(Resource.Loading)
+            try {
+                val response = apiServices.editPPPenjual(idToko, fileImage)
+                emit(Resource.Success(response))
+            }catch (e: HttpException) {
+                Log.e("SellerRepository", "edit PP penjual HttpException: " + e.message)
+                emit(Resource.Error(getError(e)))
+            }
+        }
+    }
+
+    suspend fun editDetailPenjual(
+        idToko: String,
+        alamatLengkap:String,
+        jamBuka:String,
+        jamTutup:String,
+        metodePembayaran:String,
+        rekening:String
+    ) : Flow<Resource<EditPenjualResponse>> {
+        return flow {
+            emit(Resource.Loading)
+            try {
+                val response = apiServices.editDetailPenjual(idToko, alamatLengkap, jamBuka, jamTutup, metodePembayaran, rekening)
                 emit(Resource.Success(response))
             }catch (e: HttpException) {
                 Log.e("SellerRepository", "edit penjual HttpException: " + e.message)
@@ -59,6 +97,7 @@ class SellerRepository(
             }
         }
     }
+
 
     suspend fun getProducts(
         idToko: Int
@@ -188,6 +227,23 @@ class SellerRepository(
         }
     }
 
+    suspend fun getDetailOrder(
+        idOrder: Int
+    ) : Flow<Resource<DetailOrderResponse>>{
+        return flow {
+            emit(Resource.Loading)
+            try {
+                val response = apiServices.getDetailOrder(idOrder)
+                emit(Resource.Success(response))
+            }catch (e: HttpException) {
+                Log.e("SellerRepository", "getDetailorder HttpException: " + e.message)
+                emit(Resource.Error(getError(e)))
+            }
+        }
+    }
+
+
+
     suspend fun getDetailPenjual(
         idToko: Int
     ) : Flow<Resource<DetailPenjualResponse>>{
@@ -198,6 +254,29 @@ class SellerRepository(
                 emit(Resource.Success(response))
             }catch (e: HttpException) {
                 Log.e("SellerRepository", "getDEtailPenjual HttpException: " + e.message)
+                emit(Resource.Error(getError(e)))
+            }
+        }
+    }
+
+    suspend fun getDetailPenjualByIdAccount(
+        idAccount: List<String>
+    ) : Flow<Resource<List<DetailPenjualResponse>>>{
+        return flow {
+            emit(Resource.Loading)
+            try {
+                var list = mutableListOf<DetailPenjualResponse>()
+
+                idAccount.forEach {
+                    val response = apiServices.getDetailPenjualByIdAccount(it.toInt())
+                    list.add(response)
+                }
+
+                Log.e(TAG, "getDetailPenjualByIdAccount: "+ list, )
+
+                emit(Resource.Success(list))
+            }catch (e: HttpException) {
+                Log.e("SellerRepository", "getDEtailPenjualByIdAccount HttpException: " + e.message)
                 emit(Resource.Error(getError(e)))
             }
         }

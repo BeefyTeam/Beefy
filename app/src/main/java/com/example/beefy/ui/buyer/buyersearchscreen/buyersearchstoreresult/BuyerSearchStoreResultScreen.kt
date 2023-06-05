@@ -77,7 +77,6 @@ class BuyerSearchStoreResultScreen : Fragment() {
         adapter = BuyerSearchStoreResultScreenAdapter{
             val bundle = Bundle()
             bundle.putString("idToko", it.pk.toString())
-            bundle.putString("currentUserId", "4")
             findNavController().navigate(R.id.action_buyerSearchScreen_to_buyerStoreDtailScreen, bundle)
         }
         binding.buyerSearchStoreResultRv.adapter = adapter

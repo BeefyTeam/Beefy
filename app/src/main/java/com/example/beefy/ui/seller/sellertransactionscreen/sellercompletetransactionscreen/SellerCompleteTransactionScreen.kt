@@ -58,6 +58,7 @@ class SellerCompleteTransactionScreen : Fragment() {
             bundle.putString("idProduk", it.IDBARANG.toString())
             bundle.putString("idPembeli", it.IDPEMBELI.toString())
             bundle.putString("idPembayaran", it.IDPEMBAYARAN.toString())
+            bundle.putString("gambar", it.IDBARANG?.gambar.toString())
             findNavController().navigate(R.id.action_sellerTransactionScreen_to_sellerDetailCompleteTransactionScreen, bundle)
         }
         binding.sellerCompleteTransactionRv.adapter = adapter

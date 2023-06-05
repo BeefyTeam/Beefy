@@ -4,14 +4,17 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.beefy.data.response.Product
 import com.example.beefy.databinding.BestMeatItemBinding
+import com.example.beefy.utils.DiffUtil
 
-class BuyerHomeScreenBestMeatAdapter(private val items : ArrayList<String>, private val listener : (String) -> Unit) : RecyclerView.Adapter<BuyerHomeScreenBestMeatAdapter.ViewHolder>() {
+class BuyerHomeScreenBestMeatAdapter(private val listener : (Product) -> Unit) : RecyclerView.Adapter<BuyerHomeScreenBestMeatAdapter.ViewHolder>() {
+    private var items = emptyList<Product>()
     class ViewHolder(val binding : BestMeatItemBinding): RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item : String){
-            Glide.with(binding.root.context).load(item).into(binding.carouselImageView)
-            binding.carouselTextView.text = item
+        fun bind(item : Product){
+            Glide.with(binding.root.context).load(item.gambar).into(binding.carouselImageView)
+            binding.carouselTextView.text = item.namaBarang
         }
 
     }
@@ -28,5 +31,12 @@ class BuyerHomeScreenBestMeatAdapter(private val items : ArrayList<String>, priv
         val item = items[position]
         holder.bind(item)
         holder.itemView.setOnClickListener { listener(item) }
+    }
+
+    fun setData(data : List<Product>){
+        val diffUtil = DiffUtil(items,data)
+        val diffResult = androidx.recyclerview.widget.DiffUtil.calculateDiff(diffUtil)
+        items = data
+        diffResult.dispatchUpdatesTo(this)
     }
 }

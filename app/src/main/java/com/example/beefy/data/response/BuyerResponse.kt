@@ -15,6 +15,7 @@ data class EditBuyerResponse (
 )
 
 data class DetailBuyerResponse (
+    @SerializedName("id_pembeli"               ) var idPembeli              : Int?         = null,
     @SerializedName("nama"           ) var nama          : String?      = null,
     @SerializedName("alamat_lengkap" ) var alamatLengkap : String?      = null,
     @SerializedName("nama_penerima"  ) var namaPenerima  : String?      = null,
@@ -78,4 +79,16 @@ data class ScanMeatHistoryResponse (
     @SerializedName("segar"           ) var segar          : Boolean? = null,
     @SerializedName("level_kesegaran" ) var levelKesegaran : Int?     = null,
     @SerializedName("jenis"           ) var jenis          : String?  = null
+)
+
+data class TrendingStoreResponse (
+    @SerializedName("pk"                    ) var pk                  : Int?    = null,
+    @SerializedName("logo_toko"             ) var logoToko            : String? = null,
+    @SerializedName("nama_toko"             ) var namaToko            : String? = null,
+    @SerializedName("rekening"              ) var rekening            : String? = null,
+    @SerializedName("metode_pembayaran"     ) var metodePembayaran    : String? = null,
+    @SerializedName("alamat_lengkap"        ) var alamatLengkap       : String? = null,
+    @SerializedName("nomor_telp"            ) var nomorTelp           : String? = null,
+    @SerializedName("jam_operasional_buka"  ) var jamOperasionalBuka  : String? = null,
+    @SerializedName("jam_operasional_tutup" ) var jamOperasionalTutup : String? = null
 )

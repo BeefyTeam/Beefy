@@ -13,16 +13,10 @@ import com.example.beefy.data.response.EditPPPenjualResponse
 import com.example.beefy.data.response.EditPenjualResponse
 import com.example.beefy.utils.Resource
 import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
-import retrofit2.http.Multipart
 
 class SellerEditProfileViewModel(
     private val userPrefRepository: UserPrefRepository,
@@ -74,7 +68,7 @@ class SellerEditProfileViewModel(
         viewModelScope.launch {
             sellerRepository.editPPPenjual(token.toRequestBody("text/plain".toMediaType()), image)
                 .collect {
-                    _sellerEditPPPenjual.postValue(it)
+                    _sellerEditPPPenjual.value = it
                 }
 
         }
@@ -88,7 +82,7 @@ class SellerEditProfileViewModel(
         rekening: String
     ) {
         viewModelScope.launch {
-            sellerRepository.editPenjual(
+            sellerRepository.editDetailPenjual(
                 token,
                 alamatLengkap,
                 jamBuka,
@@ -96,7 +90,7 @@ class SellerEditProfileViewModel(
                 metodePembayaran,
                 rekening
             ).collect {
-                _sellerEditPenjual.postValue(it)
+                _sellerEditPenjual.value = it
             }
 
         }
@@ -110,9 +104,31 @@ class SellerEditProfileViewModel(
         metodePembayaran: String,
         rekening: String
     ) {
-        editPPPenjual(image)
-        editPenjual(alamatLengkap, jamBuka, jamTutup, metodePembayaran, rekening)
+        viewModelScope.launch {
+            val editPPJob = async { editPPPenjual(image) }
+            val editPenjualJob = async { editPenjual(alamatLengkap, jamBuka, jamTutup, metodePembayaran, rekening) }
+
+            // Menunggu kedua pekerjaan selesai
+            val editPPResult = editPPJob.await()
+            val editPenjualResult = editPenjualJob.await()
+
+            Log.e(TAG, "confirmEditProfile: " + editPPResult, )
+
+            // Lakukan penanganan hasil dari masing-masing pekerjaan
+//            handleEditPPResult(editPPResult)
+//            handleEditPenjualResult(editPenjualResult)
+
+        }
 
     }
+
+    fun handleEditPPResult(result: Resource<EditPPPenjualResponse>) {
+
+    }
+
+    fun handleEditPenjualResult(result: Resource<EditPenjualResponse>) {
+
+    }
+
 
 }

@@ -86,6 +86,7 @@ class LoginScreenFragment : Fragment() {
 
 
                     loginScreenViewModel.saveUserPref(response.idUser.toString(), response.jenisAkun.toString(), idType.toString(),  response.access.toString(), response.refresh.toString())
+                    Log.e(TAG, "login: id_account = ${response.idUser} ", )
                     if(response.jenisAkun.equals("pembeli")){
                         requireActivity().startActivity(Intent(requireContext(), BuyerActivity::class.java))
                         requireActivity().finish()

@@ -10,7 +10,6 @@ import com.example.beefy.data.response.EditPPPenjualResponse
 import com.example.beefy.data.response.EditPenjualResponse
 import com.example.beefy.data.response.RegisterPenjualResponse
 import com.example.beefy.utils.Resource
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -36,7 +35,7 @@ class RegisterSellerViewModel(private val authRepository: AuthRepository, privat
 
     fun editPPPenjual(idToko: RequestBody, fileImage : MultipartBody.Part,) {
         viewModelScope.launch {
-            sellerRepository.editPPPenjual(idToko, fileImage).collect{
+            sellerRepository.addPPPenjual(idToko, fileImage).collect{
                 _registerAddPPPenjual.postValue(it)
             }
         }
@@ -44,7 +43,7 @@ class RegisterSellerViewModel(private val authRepository: AuthRepository, privat
 
     fun editPenjual(idToko: String, alamatLengkap:String, jamBuka:String, jamTutup:String, metodePembayaran:String, rekening:String) {
         viewModelScope.launch {
-            sellerRepository.editPenjual(idToko, alamatLengkap, jamBuka, jamTutup, metodePembayaran, rekening).collect{
+            sellerRepository.addDetailPenjual(idToko, alamatLengkap, jamBuka, jamTutup, metodePembayaran, rekening).collect{
                 _registerEditPenjual.postValue(it)
             }
         }

@@ -18,6 +18,7 @@ import com.example.beefy.R
 import com.example.beefy.databinding.FragmentBuyerChatsListScreenBinding
 import com.example.beefy.ui.buyer.buyerchatscreen.FirebaseMessageAdapter
 import com.example.beefy.utils.Message
+import com.example.beefy.utils.Resource
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -26,6 +27,8 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import koleton.api.hideSkeleton
+import koleton.api.loadSkeleton
 import org.koin.android.ext.android.inject
 
 
@@ -40,6 +43,8 @@ class BuyerChatsListScreen : Fragment() {
     private lateinit var messagesRef: DatabaseReference
 
     private lateinit var currentUserId : String
+
+    private lateinit var adapter: BuyerChatsListAdapter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,28 +68,39 @@ class BuyerChatsListScreen : Fragment() {
         setupObserver()
         setupAdapter()
 
-
-
-
-
-
-
-
-
     }
 
     private fun setupObserver(){
         buyerChatsListViewModel.getUserId().observe(viewLifecycleOwner){
             currentUserId = it
         }
+
+        buyerChatsListViewModel.sellerChatList.observe(viewLifecycleOwner){
+            when(it){
+                is Resource.Success-> {
+                    setLoading(false)
+                    adapter.setData(it.data)
+                }
+
+                is Resource.Loading -> {
+                    setLoading(true)
+                }
+
+                is Resource.Error -> {
+
+                }
+
+            }
+        }
     }
 
     private fun setupAdapter(){
-        val adapter = BuyerChatsListAdapter {
+        adapter = BuyerChatsListAdapter {
 
             val bundle = Bundle().apply {
                 putString("currentUserId", currentUserId)
-                putString("otherUserId", it)
+                putString("otherUserId", it.userAccount?.idAccount.toString())
+                putString("namaAkunPenjual", it.namaToko)
             }
 
             findNavController().navigate(
@@ -122,7 +138,8 @@ class BuyerChatsListScreen : Fragment() {
                 if (list.isEmpty()) {
                     Log.e(TAG, "chat list screnn kosong ")
                 } else {
-                    adapter.setData(list.distinct())
+                    buyerChatsListViewModel.getSellerChatList(list.distinct())
+//                    adapter.setData(list.distinct())
                 }
 
             }
@@ -130,6 +147,16 @@ class BuyerChatsListScreen : Fragment() {
             override fun onCancelled(error: DatabaseError) {
             }
         })
+    }
+
+    private fun setLoading(boolean: Boolean){
+        if(boolean){
+            binding.buyerChatsListRv.loadSkeleton(R.layout.message_chat_list_item){
+                itemCount(4)
+            }
+        }else{
+            binding.buyerChatsListRv.hideSkeleton()
+        }
     }
 
     override fun onDestroyView() {

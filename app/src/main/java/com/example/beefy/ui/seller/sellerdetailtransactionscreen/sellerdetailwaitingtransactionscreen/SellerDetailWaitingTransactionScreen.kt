@@ -9,8 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.example.beefy.R
 import com.example.beefy.data.response.DetailBuyerResponse
+import com.example.beefy.data.response.DetailOrderResponse
 import com.example.beefy.databinding.FragmentSellerDetailWaitingTransactionScreenBinding
 import com.example.beefy.utils.Resource
 import koleton.api.hideSkeleton
@@ -26,6 +28,7 @@ class SellerDetailWaitingTransactionScreen : Fragment() {
     private lateinit var idProduk: String
     private lateinit var idPembeli: String
     private lateinit var idPembayaran: String
+    private lateinit var gambar:String
 
     private val sellerDetailWaitingTransactionViewModel: SellerDetailWaitingTransactionViewModel by inject()
 
@@ -34,6 +37,8 @@ class SellerDetailWaitingTransactionScreen : Fragment() {
         idProduk = requireArguments().getString("idProduk").toString()
         idPembeli = requireArguments().getString("idPembeli").toString()
         idPembayaran = requireArguments().getString("idPembayaran").toString()
+        gambar = requireArguments().getString("gambar").toString()
+
     }
 
     override fun onCreateView(
@@ -64,13 +69,13 @@ class SellerDetailWaitingTransactionScreen : Fragment() {
 
                 is Resource.Success -> {
                     setLoading(false)
-                    setupView(it.data)
+                    setupShippingView(it.data)
                 }
 
                 is Resource.Error -> {
                     setLoading(false)
                     Toast.makeText(requireContext(), it.error, Toast.LENGTH_SHORT).show()
-                    Log.e(TAG, "sellerDetailWaitingTransaction setupObserver: " + it.error)
+                    Log.e(TAG, "sellerDetailWaitingTransaction buyer detail setupObserver: " + it.error)
                 }
             }
         }
@@ -87,10 +92,40 @@ class SellerDetailWaitingTransactionScreen : Fragment() {
 
                 is Resource.Error -> {
                     Toast.makeText(requireContext(), it.error, Toast.LENGTH_SHORT).show()
-                    Log.e(TAG, "sellerDetailWaitingTransaction setupObserver: " + it.error)
+                    Log.e(TAG, "sellerDetailWaitingTransaction accept order setupObserver: " + it.error)
                 }
             }
         }
+
+        sellerDetailWaitingTransactionViewModel.detailOrder.observe(viewLifecycleOwner){
+            when (it) {
+                is Resource.Loading -> {
+                    setLoading(true)
+                }
+
+                is Resource.Success -> {
+                    setLoading(false)
+                    setupOrderView(it.data)
+                }
+
+                is Resource.Error -> {
+                    setLoading(false)
+                    Toast.makeText(requireContext(), it.error, Toast.LENGTH_SHORT).show()
+                    Log.e(TAG, "sellerDetailWaitingTransaction detail ordersetupObserver: " + it.error)
+                }
+            }
+        }
+    }
+
+    private fun setupOrderView(detailOrderResponse: DetailOrderResponse){
+        binding.sellerDetailWaitingTransactionItemCard.meatDatePriceCardNoteItemPriceTv.text = detailOrderResponse.DetailRincian?.totalHarga.toString()
+        binding.sellerDetailWaitingTransactionItemCard.meatDatePriceNoteCardItem.text = detailOrderResponse.Barang?.catatan
+        binding.sellerDetailWaitingTransactionItemCard.meatDatePriceNoteCardDateTv.text = detailOrderResponse.Barang?.tanggalPesanan
+        Glide.with(binding.root).load(gambar).into(binding.sellerDetailWaitingTransactionItemCard.meatDatePriceCardItemImageView)
+        binding.sellerDetailWaitingTransactionItemCard.meatDatePriceNoteCardItemCountTv.text = detailOrderResponse.Barang?.totalBarang.toString()
+        binding.sellerDetailWaitingTransactionItemCard.meatDatePriceNoteItemTitleTv.text = detailOrderResponse.Barang?.namaBarang
+
+        Glide.with(binding.root).load(detailOrderResponse.BuktiPembayaran).into(binding.sellerDetailWaitingTransactionPaymentProofImageView)
     }
 
     private fun setupButton() {
@@ -101,9 +136,10 @@ class SellerDetailWaitingTransactionScreen : Fragment() {
 
     private fun initView() {
         sellerDetailWaitingTransactionViewModel.getBuyerDetail(idPembeli.toInt())
+        sellerDetailWaitingTransactionViewModel.getDetailOrder(idPembayaran.toInt())
     }
 
-    private fun setupView(buyerDetail : DetailBuyerResponse){
+    private fun setupShippingView(buyerDetail : DetailBuyerResponse){
         binding.sellerDetailWaitingTransactionAddressCard.addressSellerViewAddressTv.text = buyerDetail.alamatLengkap
         binding.sellerDetailWaitingTransactionAddressCard.addressSellerViewNameTv.text = buyerDetail.namaPenerima
         binding.sellerDetailWaitingTransactionAddressCard.addressSellerViewPhoneNumberTv.text = buyerDetail.nomorTelp

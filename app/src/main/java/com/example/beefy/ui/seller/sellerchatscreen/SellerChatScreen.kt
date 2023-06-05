@@ -39,6 +39,7 @@ class SellerChatScreen : Fragment() {
 
     private lateinit var currentUserId : String
     private lateinit var otherUserId : String
+    private lateinit var namaAkunPembeli : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +49,7 @@ class SellerChatScreen : Fragment() {
 
         currentUserId = requireArguments().getString("currentUserId").toString()
         otherUserId = requireArguments().getString("otherUserId").toString()
+        namaAkunPembeli = requireArguments().getString("namaAkunPembeli").toString()
         Log.e(ContentValues.TAG, "otherUserId: "+ otherUserId, )
 
     }
@@ -67,7 +69,7 @@ class SellerChatScreen : Fragment() {
         validateInput()
         checkField()
 
-        binding.sellerChatNameTv.text = currentUserId
+        binding.sellerChatNameTv.text = namaAkunPembeli
 
         setupAdapter()
         setupButton()
@@ -153,7 +155,7 @@ class SellerChatScreen : Fragment() {
     }
 
     private fun validateInput() {
-        binding.sellerSendBtn.addTextChangedListener(object : TextWatcher {
+        binding.sellerMessageEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
@@ -162,7 +164,7 @@ class SellerChatScreen : Fragment() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                binding.sellerSendBtn.isEnabled = !s.toString().isNullOrEmpty()
+                checkField()
             }
 
         })

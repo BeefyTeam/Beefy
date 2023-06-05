@@ -12,6 +12,12 @@
         <action
             android:id="@+id/action_buyer_home_screen_to_buyerSearchScreen"
             app:destination="@id/buyerSearchScreen" />
+        <action
+            android:id="@+id/action_buyer_home_screen_to_buyerProductDetailScreen"
+            app:destination="@id/buyerProductDetailScreen" />
+        <action
+            android:id="@+id/action_buyer_home_screen_to_buyerStoreDtailScreen"
+            app:destination="@id/buyerStoreDtailScreen" />
     </fragment>
     <fragment
         android:id="@+id/buyer_profile_screen"
@@ -148,9 +154,6 @@
         <argument
             android:name="idToko"
             app:argType="string" />
-        <argument
-            android:name="currentUserId"
-            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/buyerScanHistoryScreen"
@@ -183,6 +186,9 @@
             app:argType="string" />
         <argument
             android:name="currentUserId"
+            app:argType="string" />
+        <argument
+            android:name="namaAkunPenjual"
             app:argType="string" />
     </fragment>
     <fragment

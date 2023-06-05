@@ -4,6 +4,7 @@ import com.example.beefy.data.response.AcceptOrderResponse
 import com.example.beefy.data.response.AddProductResponse
 import com.example.beefy.data.response.DeleteProductResponse
 import com.example.beefy.data.response.DetailBuyerResponse
+import com.example.beefy.data.response.DetailOrderResponse
 import com.example.beefy.data.response.DetailPenjualResponse
 import com.example.beefy.data.response.EditBuyerResponse
 import com.example.beefy.data.response.EditPPBuyerResponse
@@ -21,6 +22,7 @@ import com.example.beefy.data.response.ScanMeatHistoryResponse
 import com.example.beefy.data.response.ScanMeatResponse
 import com.example.beefy.data.response.SearchStoreResponse
 import com.example.beefy.data.response.SellerOrderProductResponse
+import com.example.beefy.data.response.TrendingStoreResponse
 import com.example.beefy.data.response.UploadPaymentProofResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -77,7 +79,7 @@ interface ApiServices {
     //penjual
     @Multipart
     @POST("penjual/edit-pp-penjual/")
-    suspend fun editPPPenjual(
+    suspend fun addPPPenjual(
         @Header("Authorization") token: String,
         @Part("id_toko") idToko : RequestBody,
         @Part file_image: MultipartBody.Part,
@@ -85,7 +87,7 @@ interface ApiServices {
 
     @FormUrlEncoded
     @POST("penjual/edit-penjual/")
-    suspend fun editPenjual(
+    suspend fun addDetailPenjual(
         @Header("Authorization") token: String,
         @Field("id_toko") idToko : String,
         @Field("alamat_lengkap") alamatLengkap : String,
@@ -95,9 +97,32 @@ interface ApiServices {
         @Field("rekening") rekening:String
     ) : EditPenjualResponse
 
-    @GET("penjual/user/detail/{id_toko}")
+    @Multipart
+    @POST("penjual/edit-pp-penjual/")
+    suspend fun editPPPenjual(
+        @Part("id_toko") idToko : RequestBody,
+        @Part file_image: MultipartBody.Part,
+    ) : EditPPPenjualResponse
+
+    @FormUrlEncoded
+    @POST("penjual/edit-penjual/")
+    suspend fun editDetailPenjual(
+        @Field("id_toko") idToko : String,
+        @Field("alamat_lengkap") alamatLengkap : String,
+        @Field("jam_operasional_buka") jamBuka : String,
+        @Field("jam_operasional_tutup") jamTutup : String,
+        @Field("metode_pembayaran") metodePembayaran:String,
+        @Field("rekening") rekening:String
+    ) : EditPenjualResponse
+
+    @GET("penjual/user/detail/by-id-toko/{id_toko}")
     suspend fun getDetailPenjual(
         @Path("id_toko") idToko: Int
+    ) : DetailPenjualResponse
+
+    @GET("penjual/user/detail/by-id-account/{id_account}")
+    suspend fun getDetailPenjualByIdAccount(
+        @Path("id_account") idAccount: Int
     ) : DetailPenjualResponse
 
     @GET("penjual/get-products/{idToko}")
@@ -131,12 +156,12 @@ interface ApiServices {
     ) : DeleteProductResponse
 
     //orders penjual
-    @GET("order/order-in-waiting")
+    @GET("order/order-in-waiting/")
     suspend fun sellerOrderInWaiting(
         @Query("id_toko") idToko: Int
     ) : List<SellerOrderProductResponse>
 
-    @GET("order/order-in-process")
+    @GET("order/order-in-process/")
     suspend fun sellerOrderInProcess(
         @Query("id_toko") idToko: Int
     ) : List<SellerOrderProductResponse>
@@ -152,12 +177,17 @@ interface ApiServices {
         @Field("id_order") idOrder : Int
     ) : AcceptOrderResponse
 
+    @GET("order/detail/{idOrder}")
+    suspend fun getDetailOrder(
+        @Path("idOrder") idOrder:Int
+    ) : DetailOrderResponse
+
 
 
     //pembeli
     @Multipart
     @POST("pembeli/edit-pp-pembeli/")
-    suspend fun editPPBuyer(
+    suspend fun addPPBuyer(
         @Header("Authorization") token: String,
         @Part("id_pembeli") idBuyer : RequestBody,
         @Part file_image: MultipartBody.Part,
@@ -165,7 +195,7 @@ interface ApiServices {
 
     @FormUrlEncoded
     @POST("pembeli/edit-pembeli/")
-    suspend fun editBuyer(
+    suspend fun addDetailBuyer(
         @Header("Authorization") token: String,
         @Field("id_pembeli") idPembeli:String,
         @Field("alamat_lengkap") alamatLengkap : String,
@@ -175,10 +205,33 @@ interface ApiServices {
         @Field("nama") nama : String,
     ) : EditBuyerResponse
 
+    @Multipart
+    @POST("pembeli/edit-pp-pembeli/")
+    suspend fun editPPBuyer(
+        @Part("id_pembeli") idBuyer : RequestBody,
+        @Part file_image: MultipartBody.Part,
+    ) : EditPPBuyerResponse
 
-    @GET("pembeli/user/detail/{idPembeli}")
+    @FormUrlEncoded
+    @POST("pembeli/edit-pembeli/")
+    suspend fun editDetailBuyer(
+        @Field("id_pembeli") idPembeli:String,
+        @Field("alamat_lengkap") alamatLengkap : String,
+        @Field("nama_penerima") namaPenerima : String,
+        @Field("nomor_telepon") nomorTelepon : String,
+        @Field("label_alamat") labelAlamat : String,
+        @Field("nama") nama : String,
+    ) : EditBuyerResponse
+
+
+    @GET("pembeli/user/detail/by-id-pembeli/{idPembeli}")
     suspend fun getDetailBuyer(
         @Path("idPembeli") idPembeli: Int
+    ) : DetailBuyerResponse
+
+    @GET("pembeli/user/detail/by-id-account/{id_account}")
+    suspend fun getDetailPembeliByIdAccount(
+        @Path("id_account") idAccount: Int
     ) : DetailBuyerResponse
 
     @GET("pembeli/search-product/")
@@ -227,6 +280,12 @@ interface ApiServices {
     suspend fun scanMeatHistory(
         @Path("idPembeli") idPembeli: Int
     ) : List<ScanMeatHistoryResponse>
+
+    @GET("pembeli/get-trending-store")
+    suspend fun getTrendingStore() : List<TrendingStoreResponse>
+
+    @GET("pembeli/get-trending-product")
+    suspend fun getTrendingProduct() : List<Product>
 
 
 

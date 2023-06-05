@@ -73,6 +73,7 @@ class SellerEditProfileScreen : Fragment() {
         validateInput()
         setupEditText()
         setupObserver()
+
         setupButton()
 
     }
@@ -87,26 +88,15 @@ class SellerEditProfileScreen : Fragment() {
                 image
             )
 
-
-//            sellerEditProfileViewModel.editPPPenjual(imagePart)
-//            sellerEditProfileViewModel.editPenjual(
-//                binding.sellerEditProfileInfoAddressTIET.text.toString(),
-//                binding.sellerEditProfileInfoOpenHourTIET.text.toString(),
-//                binding.sellerEditProfileInfoCloseHourTIET.text.toString(),
-//                binding.sellerEditProfileInfoPaymentMethodTIET.text.toString(),
-//                binding.sellerEditProfileInfoAccountTIET.text.toString()
-//
-//            )
-
-//            sellerEditProfileViewModel.confirmEditProfile(
-//                imagePart,
-//                binding.sellerEditProfileInfoAddressTIET.text.toString(),
-//                binding.sellerEditProfileInfoOpenHourTIET.text.toString(),
-//                binding.sellerEditProfileInfoCloseHourTIET.text.toString(),
-//                binding.sellerEditProfileInfoPaymentMethodTIET.text.toString(),
-//                binding.sellerEditProfileInfoAccountTIET.text.toString()
-//            )
-//            findNavController().navigate(R.id.action_sellerEditProfileScreen_to_sellerHomeScreen)
+            sellerEditProfileViewModel.confirmEditProfile(
+                imagePart,
+                binding.sellerEditProfileInfoAddressTIET.text.toString(),
+                binding.sellerEditProfileInfoOpenHourTIET.text.toString(),
+                binding.sellerEditProfileInfoCloseHourTIET.text.toString(),
+                binding.sellerEditProfileInfoPaymentMethodTIET.text.toString(),
+                binding.sellerEditProfileInfoAccountTIET.text.toString()
+            )
+            findNavController().navigate(R.id.action_sellerEditProfileScreen_to_sellerHomeScreen)
 
         }
 
@@ -184,6 +174,11 @@ class SellerEditProfileScreen : Fragment() {
     private fun setupView(detailPenjualResponse: DetailPenjualResponse){
         val imgUrl = detailPenjualResponse.logoToko.toString()
 
+        lifecycleScope.launch {
+            getFile = downloadImageAsTempFile(requireContext(), imgUrl)
+
+
+        }
 
         Glide.with(binding.root).load(imgUrl).into(binding.sellerEditProfileUploadProfilePictureImageView)
         binding.sellerEditProfileInfoAddressTIET.setText(detailPenjualResponse.alamatLengkap)
@@ -192,9 +187,9 @@ class SellerEditProfileScreen : Fragment() {
         binding.sellerEditProfileInfoPaymentMethodTIET.setText(detailPenjualResponse.metodePembayaran)
         binding.sellerEditProfileInfoAccountTIET.setText(detailPenjualResponse.rekening)
 
-        lifecycleScope.launch {
-            getFile = downloadImageAsTempFile(requireContext(), imgUrl)
-        }
+
+
+
 
     }
 
@@ -219,6 +214,8 @@ class SellerEditProfileScreen : Fragment() {
                 getFile = uriToFile(uri as Uri, requireContext())
 
                 Glide.with(requireContext()).load(uri).into(binding.sellerEditProfileUploadProfilePictureImageView)
+
+                checkEmptyField()
             } else if (resultCode == ImagePicker.RESULT_ERROR) {
                 Toast.makeText(requireContext(), ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
             } else {
@@ -321,6 +318,7 @@ class SellerEditProfileScreen : Fragment() {
 
     private fun checkEmptyField(){
         binding.sellerEditProfileConfirmBtn.isEnabled =
+            getFile !=null &&
             binding.sellerEditProfileInfoAddressTIET.text.toString().isNotEmpty() &&
                     binding.sellerEditProfileInfoOpenHourTIET.text.toString().isNotEmpty() &&
                     binding.sellerEditProfileInfoCloseHourTIET.text.toString().isNotEmpty() &&
@@ -380,9 +378,9 @@ class SellerEditProfileScreen : Fragment() {
             timePickerDialog.show()
         }
 
-        val paymentMethodItems = listOf("BCA", "Mandiri", "BNI")
-        val adapter = ArrayAdapter(requireContext(), R.layout.payment_method_list_item, paymentMethodItems)
-        (binding.sellerEditProfileInfoPaymentMethodTIET as? AutoCompleteTextView)?.setAdapter(adapter)
+//        val paymentMethodItems = listOf("BCA", "Mandiri", "BNI")
+//        val adapter = ArrayAdapter(requireContext(), R.layout.payment_method_list_item, paymentMethodItems)
+//        (binding.sellerEditProfileInfoPaymentMethodTIET as? AutoCompleteTextView)?.setAdapter(adapter)
     }
 
     override fun onDestroyView() {

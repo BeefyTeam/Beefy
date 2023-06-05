@@ -6,22 +6,23 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.beefy.data.response.PaidOrderResponse
 import com.example.beefy.data.response.SellerOrderProductResponse
 import com.example.beefy.databinding.OrderStatusCardItemBinding
 import com.example.beefy.ui.buyer.buyerorderstatusscreen.buyerorderstatusonprocess.BuyerOrderStatusOnProcessAdapter
 import com.example.beefy.utils.DateConverter
 import com.example.beefy.utils.DiffUtil
 
-class SellerWaitingTransactionAdapter (private val listener : (SellerOrderProductResponse) -> Unit) : RecyclerView.Adapter<SellerWaitingTransactionAdapter.ViewHolder>() {
-    private var items = emptyList<SellerOrderProductResponse>()
+class SellerWaitingTransactionAdapter (private val listener : (PaidOrderResponse) -> Unit) : RecyclerView.Adapter<SellerWaitingTransactionAdapter.ViewHolder>() {
+    private var items = emptyList<PaidOrderResponse>()
 
     class ViewHolder(val binding : OrderStatusCardItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(items: SellerOrderProductResponse){
-            binding.orderStatusCardTitleTv.text = items.IDBARANG?.namaBarang
-            binding.orderStatusCardTotalItemTv.text = items.totalBarang.toString()
-            binding.orderStatusCardDateTv.text = DateConverter(items.tanggalOrder.toString())
-            Glide.with(binding.root.context).load(items.IDBARANG?.gambar).into(binding.orderStatusCardImageView)
+        fun bind(items: PaidOrderResponse){
+            binding.orderStatusCardTitleTv.text = items.FKOrder?.IDBARANG?.namaBarang
+            binding.orderStatusCardTotalItemTv.text = items.FKOrder?.totalBarang.toString() + " Barang"
+            binding.orderStatusCardDateTv.text = DateConverter(items.FKOrder?.tanggalOrder.toString())
+            Glide.with(binding.root.context).load(items.FKOrder?.IDBARANG?.gambar).into(binding.orderStatusCardImageView)
         }
 
     }
@@ -42,7 +43,7 @@ class SellerWaitingTransactionAdapter (private val listener : (SellerOrderProduc
         holder.itemView.setOnClickListener { listener(item) }
     }
 
-    fun setData(data : List<SellerOrderProductResponse>){
+    fun setData(data : List<PaidOrderResponse>){
         val diffUtil = DiffUtil(items, data)
         val diffResult = androidx.recyclerview.widget.DiffUtil.calculateDiff(diffUtil)
         items = data

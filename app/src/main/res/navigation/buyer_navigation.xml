@@ -30,6 +30,9 @@
         <action
             android:id="@+id/action_buyer_profile_screen_to_buyerOrderStatusScreen"
             app:destination="@id/buyerOrderStatusScreen" />
+        <action
+            android:id="@+id/action_buyer_profile_screen_to_buyerEditProfileScreen"
+            app:destination="@id/buyerEditProfileScreen" />
     </fragment>
     <fragment
         android:id="@+id/buyer_scan_screen"
@@ -168,14 +171,18 @@
         android:name="com.example.beefy.ui.buyer.buyerorderstatusscreen.BuyerOrderStatusScreen"
         android:label="BuyerOrderStatusScreen" >
         <action
-            android:id="@+id/action_buyerOrderStatusScreen_to_buyerOrderDetailScreen"
-            app:destination="@id/buyerOrderDetailScreen" />
+            android:id="@+id/action_buyerOrderStatusScreen_to_buyerOrderDetailUnpaidScreen"
+            app:destination="@id/buyerOrderDetailUnpaidScreen" />
+        <action
+            android:id="@+id/action_buyerOrderStatusScreen_to_buyerOrderDetailOnProcessScreen"
+            app:destination="@id/buyerOrderDetailOnProcessScreen" />
+        <action
+            android:id="@+id/action_buyerOrderStatusScreen_to_buyerOrderDetailCompleteScreen"
+            app:destination="@id/buyerOrderDetailCompleteScreen" />
+        <action
+            android:id="@+id/action_buyerOrderStatusScreen_to_buyerOrderDetailPaidScreen"
+            app:destination="@id/buyerOrderDetailPaidScreen" />
     </fragment>
-    <fragment
-        android:id="@+id/buyerOrderDetailScreen"
-        android:name="com.example.beefy.ui.buyer.buyerorderdetailscreen.BuyerOrderDetailScreen"
-        android:label="fragment_buyer_order_detail_screen"
-        tools:layout="@layout/fragment_buyer_order_detail_screen" />
     <fragment
         android:id="@+id/buyerChatScreen"
         android:name="com.example.beefy.ui.buyer.buyerchatscreen.BuyerChatScreen"
@@ -216,6 +223,97 @@
             app:argType="string" />
         <argument
             android:name="jenis"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/buyerEditProfileScreen"
+        android:name="com.example.beefy.ui.buyer.buyereditprofilescreen.BuyerEditProfileScreen"
+        android:label="fragment_buyer_edit_profile_screen"
+        tools:layout="@layout/fragment_buyer_edit_profile_screen" >
+        <action
+            android:id="@+id/action_buyerEditProfileScreen_to_buyer_home_screen"
+            app:destination="@id/buyer_home_screen" />
+    </fragment>
+    <fragment
+        android:id="@+id/buyerOrderDetailUnpaidScreen"
+        android:name="com.example.beefy.ui.buyer.buyerorderdetailscreen.buyerorderdetailunpaid.BuyerOrderDetailUnpaidScreen"
+        android:label="fragment_buyer_order_detail_unpaid_screen"
+        tools:layout="@layout/fragment_buyer_order_detail_unpaid_screen" >
+
+        <action
+            android:id="@+id/action_buyerOrderDetailUnpaidScreen_to_buyer_home_screen"
+            app:destination="@id/buyer_home_screen" />
+        <action
+            android:id="@+id/action_buyerOrderDetailUnpaidScreen_to_buyerStoreDtailScreen"
+            app:destination="@id/buyerStoreDtailScreen" />
+        <argument
+            android:name="idOrder"
+            app:argType="string" />
+        <argument
+            android:name="idToko"
+            app:argType="string" />
+        <argument
+            android:name="imgUrl"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/buyerOrderDetailOnProcessScreen"
+        android:name="com.example.beefy.ui.buyer.buyerorderdetailscreen.buyerorderdetailonprocess.BuyerOrderDetailOnProcessScreen"
+        android:label="fragment_buyer_order_detail_on_process_screen"
+        tools:layout="@layout/fragment_buyer_order_detail_on_process_screen" >
+        <argument
+            android:name="idOrder"
+            app:argType="string" />
+        <argument
+            android:name="idToko"
+            app:argType="string" />
+        <argument
+            android:name="imgUrl"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_buyerOrderDetailOnProcessScreen_to_buyer_home_screen"
+            app:destination="@id/buyer_home_screen" />
+        <action
+            android:id="@+id/action_buyerOrderDetailOnProcessScreen_to_buyerStoreDtailScreen"
+            app:destination="@id/buyerStoreDtailScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/buyerOrderDetailCompleteScreen"
+        android:name="com.example.beefy.ui.buyer.buyerorderdetailscreen.buyerorderdetailcomplete.BuyerOrderDetailCompleteScreen"
+        android:label="fragment_buyer_order_detail_complete_screen"
+        tools:layout="@layout/fragment_buyer_order_detail_complete_screen" >
+        <argument
+            android:name="idOrder"
+            app:argType="string" />
+        <argument
+            android:name="idToko"
+            app:argType="string" />
+        <argument
+            android:name="imgUrl"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_buyerOrderDetailCompleteScreen_to_buyer_home_screen"
+            app:destination="@id/buyer_home_screen" />
+        <action
+            android:id="@+id/action_buyerOrderDetailCompleteScreen_to_buyerStoreDtailScreen"
+            app:destination="@id/buyerStoreDtailScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/buyerOrderDetailPaidScreen"
+        android:name="com.example.beefy.ui.buyer.buyerorderdetailscreen.buyerorderdetailpaid.BuyerOrderDetailPaidScreen"
+        android:label="fragment_buyer_order_detail_paid_screen"
+        tools:layout="@layout/fragment_buyer_order_detail_paid_screen" >
+        <action
+            android:id="@+id/action_buyerOrderDetailPaidScreen_to_buyerStoreDtailScreen"
+            app:destination="@id/buyerStoreDtailScreen" />
+        <argument
+            android:name="idOrder"
+            app:argType="string" />
+        <argument
+            android:name="idToko"
+            app:argType="string" />
+        <argument
+            android:name="imgUrl"
             app:argType="string" />
     </fragment>
 </navigation>

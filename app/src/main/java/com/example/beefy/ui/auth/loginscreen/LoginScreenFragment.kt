@@ -47,8 +47,11 @@ class LoginScreenFragment : Fragment() {
 
         setLoading(false)
 
-        binding.loginScreenEmailTIET.setText("udin@gmail.com")
-        binding.loginScreenPasswordTIET.setText("12345678")
+//        binding.loginScreenEmailTIET.setText("Budaya@gmail.co")
+//        binding.loginScreenPasswordTIET.setText("aaaaaaaa")
+
+//        binding.loginScreenEmailTIET.setText("Udin@gmail.com")
+//        binding.loginScreenPasswordTIET.setText("12345678")
 
         checkEmptyField()
         validateInput()

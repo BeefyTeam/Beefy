@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.beefy.R
 import com.example.beefy.data.response.DetailBuyerResponse
@@ -30,7 +31,11 @@ class SellerDetailCompleteTransactionScreen : Fragment() {
     private lateinit var idPembayaran: String
     private lateinit var gambar:String
 
-    private val sellerDetailCompleteTransactionViewModel : SellerDetailProcessTransactionViewModel by inject()
+    private lateinit var myId:String
+    private lateinit var idAkunPembeli : String
+    private lateinit var namaAkunPembeli : String
+
+    private val sellerDetailCompleteTransactionViewModel : SellerDetailCompleteTransactionViewModel by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +59,7 @@ class SellerDetailCompleteTransactionScreen : Fragment() {
 
         initView()
         setupObserver()
+        setupButton()
     }
 
     private fun initView(){
@@ -61,7 +67,25 @@ class SellerDetailCompleteTransactionScreen : Fragment() {
         sellerDetailCompleteTransactionViewModel.getDetailOrder(idPembayaran.toInt())
     }
 
+    private fun setupButton(){
+        binding.sellerDetailCompleteChatFAB.setOnClickListener {
+            val bundle = Bundle().apply {
+                putString("currentUserId", myId)
+                putString("otherUserId", idAkunPembeli)
+                putString("namaAkunPembeli", namaAkunPembeli)
+            }
+
+            findNavController().navigate(R.id.action_sellerDetailCompleteTransactionScreen_to_sellerChatScreen, bundle)
+        }
+    }
+
+
     private fun setupObserver(){
+
+        sellerDetailCompleteTransactionViewModel.userId.observe(viewLifecycleOwner){
+            myId = it
+        }
+
         sellerDetailCompleteTransactionViewModel.buyerDetail.observe(viewLifecycleOwner){
             when (it) {
                 is Resource.Loading -> {
@@ -118,6 +142,9 @@ class SellerDetailCompleteTransactionScreen : Fragment() {
         binding.sellerDetailCompleteTransactionAddressCard.addressSellerViewAddressTv.text = buyerDetail.alamatLengkap
         binding.sellerDetailCompleteTransactionAddressCard.addressSellerViewNameTv.text = buyerDetail.namaPenerima
         binding.sellerDetailCompleteTransactionAddressCard.addressSellerViewPhoneNumberTv.text = buyerDetail.nomorTelp
+
+        namaAkunPembeli = buyerDetail.nama.toString()
+        idAkunPembeli = buyerDetail.userAccount?.idAccount.toString()
     }
     private fun setLoading(boolean: Boolean) {
         if (boolean) {

@@ -4,13 +4,21 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.beefy.data.response.BuyerOrderProductResponse
+import com.example.beefy.data.response.UnpaidOrderResponse
 import com.example.beefy.databinding.OrderStatusCardItemBinding
 import com.example.beefy.ui.buyer.buyerorderstatusscreen.buyerorderstatuscomplete.BuyerOrderStatusCompleteAdapter
+import com.example.beefy.utils.DateConverter
+import com.example.beefy.utils.DiffUtil
 
-class BuyerOrderStatusOnProcessAdapter (private val items : ArrayList<String>, private val listener : (String) -> Unit) : RecyclerView.Adapter<BuyerOrderStatusOnProcessAdapter.ViewHolder>() {
+class BuyerOrderStatusOnProcessAdapter (private val listener : (BuyerOrderProductResponse) -> Unit) : RecyclerView.Adapter<BuyerOrderStatusOnProcessAdapter.ViewHolder>() {
+    private var items = emptyList<BuyerOrderProductResponse>()
     class ViewHolder(val binding : OrderStatusCardItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(items: String){
-            Glide.with(binding.root.context).load(items).into(binding.orderStatusCardImageView)
+        fun bind(item: BuyerOrderProductResponse){
+            Glide.with(binding.root.context).load(item.IDBARANG?.gambar).into(binding.orderStatusCardImageView)
+            binding.orderStatusCardTitleTv.text = item.IDBARANG?.namaBarang
+            binding.orderStatusCardTotalItemTv.text = item.totalBarang.toString() + " Barang"
+            binding.orderStatusCardDateTv.text = DateConverter(item.tanggalOrder.toString())
         }
 
     }
@@ -29,5 +37,12 @@ class BuyerOrderStatusOnProcessAdapter (private val items : ArrayList<String>, p
         holder.bind(item)
 
         holder.itemView.setOnClickListener { listener(item) }
+    }
+
+    fun setData(data : List<BuyerOrderProductResponse>){
+        val diffUtil = DiffUtil(items,data)
+        val diffResult = androidx.recyclerview.widget.DiffUtil.calculateDiff(diffUtil)
+        items = data
+        diffResult.dispatchUpdatesTo(this)
     }
 }

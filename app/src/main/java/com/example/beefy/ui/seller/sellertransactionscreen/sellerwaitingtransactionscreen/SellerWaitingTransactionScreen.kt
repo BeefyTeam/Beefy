@@ -54,10 +54,9 @@ class SellerWaitingTransactionScreen : Fragment() {
         binding.sellerWaitingTransactionRv.layoutManager = LinearLayoutManager(requireContext())
         adapter = SellerWaitingTransactionAdapter{
             val bundle = Bundle()
-            bundle.putString("idProduk", it.IDBARANG.toString())
-            bundle.putString("idPembeli", it.IDPEMBELI.toString())
-            bundle.putString("idPembayaran", it.IDPEMBAYARAN.toString())
-            bundle.putString("gambar", it.IDBARANG?.gambar.toString())
+            bundle.putString("idPembeli", it.FKOrder?.IDPEMBELI.toString())
+            bundle.putString("idPembayaran", it.FKOrder?.IDPEMBAYARAN.toString())
+            bundle.putString("gambar", it.FKOrder?.IDBARANG?.gambar)
             findNavController().navigate(R.id.action_sellerTransactionScreen_to_sellerDetailWaitingTransactionScreen, bundle)
         }
         binding.sellerWaitingTransactionRv.adapter = adapter

@@ -36,9 +36,15 @@ class BuyerOrderStatusScreen : Fragment() {
         TabLayoutMediator(binding.buyerOrderStatusTabs, binding.buyerOrderStatusViewPager){tab, pos ->
             when(pos){
                 0 -> {
-                    tab.text = "Diproses"
+                    tab.text = "Menunggu pembayaran"
                 }
                 1-> {
+                    tab.text = "Menunggu Konfirmasi"
+                }
+                2-> {
+                    tab.text = "Diproses"
+                }
+                3 -> {
                     tab.text = "Selesai"
                 }
             }

@@ -24,17 +24,19 @@ class SellerDetailProcessTransactionDetail : Fragment() {
     private var _binding : FragmentSellerDetailProcessTransactionDetailBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var idProduk: String
     private lateinit var idPembeli: String
     private lateinit var idPembayaran: String
     private lateinit var gambar:String
+
+    private lateinit var myId:String
+    private lateinit var idAkunPembeli : String
+    private lateinit var namaAkunPembeli : String
 
     private val sellerDetailProcessTransactionViewModel : SellerDetailProcessTransactionViewModel by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        idProduk = requireArguments().getString("idProduk").toString()
         idPembeli = requireArguments().getString("idPembeli").toString()
         idPembayaran = requireArguments().getString("idPembayaran").toString()
         gambar = requireArguments().getString("gambar").toString()
@@ -53,6 +55,7 @@ class SellerDetailProcessTransactionDetail : Fragment() {
 
         initView()
         setupObserver()
+        setupButton()
     }
 
     private fun initView(){
@@ -60,7 +63,23 @@ class SellerDetailProcessTransactionDetail : Fragment() {
         sellerDetailProcessTransactionViewModel.getDetailOrder(idPembayaran.toInt())
     }
 
+    private fun setupButton(){
+        binding.sellerDetailProcessChatFAB.setOnClickListener {
+            val bundle = Bundle().apply {
+                putString("currentUserId", myId)
+                putString("otherUserId", idAkunPembeli)
+                putString("namaAkunPembeli", namaAkunPembeli)
+            }
+
+            findNavController().navigate(R.id.action_sellerDetailProcessTransactionDetail_to_sellerChatScreen, bundle)
+        }
+    }
+
     private fun setupObserver(){
+        sellerDetailProcessTransactionViewModel.userId.observe(viewLifecycleOwner){
+            myId = it
+        }
+
         sellerDetailProcessTransactionViewModel.buyerDetail.observe(viewLifecycleOwner){
             when (it) {
                 is Resource.Loading -> {
@@ -114,6 +133,9 @@ class SellerDetailProcessTransactionDetail : Fragment() {
         binding.sellerDetailProcessTransactionAddressCard.addressSellerViewAddressTv.text = buyerDetail.alamatLengkap
         binding.sellerDetailProcessTransactionAddressCard.addressSellerViewNameTv.text = buyerDetail.namaPenerima
         binding.sellerDetailProcessTransactionAddressCard.addressSellerViewPhoneNumberTv.text = buyerDetail.nomorTelp
+
+        namaAkunPembeli = buyerDetail.nama.toString()
+        idAkunPembeli = buyerDetail.userAccount?.idAccount.toString()
     }
 
     private fun setLoading(boolean: Boolean) {

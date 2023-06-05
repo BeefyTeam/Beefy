@@ -15,10 +15,16 @@ import com.example.beefy.ui.auth.splashscreen.SplashScreenViewModel
 import com.example.beefy.ui.buyer.BuyerChatsListScreen.BuyerChatsListViewModel
 import com.example.beefy.ui.buyer.buyerchatscreen.BuyerChatViewModel
 import com.example.beefy.ui.buyer.buyercheckoutscreen.BuyerCheckoutViewModel
+import com.example.beefy.ui.buyer.buyereditprofilescreen.BuyerEditProfileViewModel
 import com.example.beefy.ui.buyer.buyerhomescreen.BuyerHomeScreenViewModel
-import com.example.beefy.ui.buyer.buyerorderdetailscreen.BuyerOrderDetailViewModel
+import com.example.beefy.ui.buyer.buyerorderdetailscreen.buyerorderdetailcomplete.BuyerOrderDetailCompleteViewModel
+import com.example.beefy.ui.buyer.buyerorderdetailscreen.buyerorderdetailonprocess.BuyerOrderDetailOnProcessViewModel
+import com.example.beefy.ui.buyer.buyerorderdetailscreen.buyerorderdetailpaid.BuyerOrderDetailPaidViewModel
+import com.example.beefy.ui.buyer.buyerorderdetailscreen.buyerorderdetailunpaid.BuyerOrderDetailUnpaidViewModel
 import com.example.beefy.ui.buyer.buyerorderstatusscreen.buyerorderstatuscomplete.BuyerOrderStatusCompleteViewModel
 import com.example.beefy.ui.buyer.buyerorderstatusscreen.buyerorderstatusonprocess.BuyerOrderStatusOnProcessViewModel
+import com.example.beefy.ui.buyer.buyerorderstatusscreen.buyerorderstatuspaid.BuyerOrderStatusPaidViewModel
+import com.example.beefy.ui.buyer.buyerorderstatusscreen.buyerorderstatuswaitingpayment.BuyerOrderStatusUnpaidViewModel
 import com.example.beefy.ui.buyer.buyerproductdetailscreen.BuyerProductDetailViewModel
 import com.example.beefy.ui.buyer.buyerprofilescreen.BuyerProfileViewModel
 import com.example.beefy.ui.buyer.buyerscanhistoryscreen.BuyerScanHistoryViewModel
@@ -75,9 +81,14 @@ val viewModelModule = module {
     viewModel { BuyerProfileViewModel(get(),get()) }
     viewModel { BuyerChatsListViewModel(get(),get())}
     viewModel { BuyerCheckoutViewModel(get(), get(), get())}
-    viewModel { BuyerOrderDetailViewModel(get())}
-    viewModel { BuyerOrderStatusOnProcessViewModel(get())}
-    viewModel { BuyerOrderStatusCompleteViewModel(get())}
+    viewModel { BuyerOrderDetailPaidViewModel(get())}
+    viewModel { BuyerOrderDetailUnpaidViewModel(get(),get())}
+    viewModel { BuyerOrderDetailOnProcessViewModel(get())}
+    viewModel { BuyerOrderDetailCompleteViewModel(get())}
+    viewModel { BuyerOrderStatusOnProcessViewModel(get(),get())}
+    viewModel { BuyerOrderStatusCompleteViewModel(get(),get())}
+    viewModel { BuyerOrderStatusUnpaidViewModel(get(),get())}
+    viewModel { BuyerOrderStatusPaidViewModel(get(),get())}
     viewModel { BuyerProductDetailViewModel(get(), get())}
     viewModel { BuyerScanHistoryViewModel(get(), get())}
     viewModel { BuyerScanViewModel(get(),get())}
@@ -85,15 +96,16 @@ val viewModelModule = module {
     viewModel { BuyerUploadPaymentProofViewModel(get()) }
     viewModel { BuyerSearchViewModel(get()) }
     viewModel { BuyerChatViewModel(get()) }
+    viewModel { BuyerEditProfileViewModel(get(), get()) }
 
 
     //seller
     viewModel { SellerChatsListViewModel(get(),get()) }
     viewModel { SellerAddItemViewModel(get(),get()) }
     viewModel { SellerDetailItemViewModel(get()) }
-    viewModel { SellerDetailCompleteTransactionViewModel(get(),get()) }
-    viewModel { SellerDetailProcessTransactionViewModel(get(),get()) }
-    viewModel { SellerDetailWaitingTransactionViewModel(get(),get()) }
+    viewModel { SellerDetailCompleteTransactionViewModel(get(),get(),get()) }
+    viewModel { SellerDetailProcessTransactionViewModel(get(),get(),get()) }
+    viewModel { SellerDetailWaitingTransactionViewModel(get(), get(),get()) }
     viewModel { SellerEditItemViewModel(get()) }
     viewModel { SellerEditProfileViewModel(get(), get()) }
     viewModel { SellerHomeViewModel(get(),get()) }

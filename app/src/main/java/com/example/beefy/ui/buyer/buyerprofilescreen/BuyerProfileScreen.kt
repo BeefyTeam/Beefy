@@ -81,6 +81,10 @@ class BuyerProfileScreen : Fragment() {
     }
 
     private fun setupButton(){
+        binding.buyerProfileEditProfileBtn.setOnClickListener {
+            findNavController().navigate(R.id.action_buyer_profile_screen_to_buyerEditProfileScreen)
+        }
+
         binding.buyerProfileOrderStatusBtn.setOnClickListener {
             findNavController().navigate(R.id.action_buyer_profile_screen_to_buyerOrderStatusScreen)
         }

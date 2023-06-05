@@ -18,7 +18,7 @@ class SellerProcessTransactionAdapter (private val listener : (SellerOrderProduc
 
         fun bind(items: SellerOrderProductResponse){
             binding.orderStatusCardTitleTv.text = items.IDBARANG?.namaBarang
-            binding.orderStatusCardTotalItemTv.text = items.totalBarang.toString()
+            binding.orderStatusCardTotalItemTv.text = items.totalBarang.toString() + " Barang"
             binding.orderStatusCardDateTv.text = DateConverter(items.tanggalOrder.toString())
             Glide.with(binding.root.context).load(items.IDBARANG?.gambar).into(binding.orderStatusCardImageView)
         }

@@ -108,12 +108,20 @@
         android:id="@+id/sellerDetailCompleteTransactionScreen"
         android:name="com.example.beefy.ui.seller.sellerdetailtransactionscreen.sellerdetailcompletetransactionscreen.SellerDetailCompleteTransactionScreen"
         android:label="fragment_seller_detail_complete_transaction_screen"
-        tools:layout="@layout/fragment_seller_detail_complete_transaction_screen" />
+        tools:layout="@layout/fragment_seller_detail_complete_transaction_screen" >
+        <action
+            android:id="@+id/action_sellerDetailCompleteTransactionScreen_to_sellerChatScreen"
+            app:destination="@id/sellerChatScreen" />
+    </fragment>
     <fragment
         android:id="@+id/sellerDetailProcessTransactionDetail"
         android:name="com.example.beefy.ui.seller.sellerdetailtransactionscreen.sellerdetailprocesstransactionscreen.SellerDetailProcessTransactionDetail"
         android:label="fragment_seller_detail_process_transaction_detail"
-        tools:layout="@layout/fragment_seller_detail_process_transaction_detail" />
+        tools:layout="@layout/fragment_seller_detail_process_transaction_detail" >
+        <action
+            android:id="@+id/action_sellerDetailProcessTransactionDetail_to_sellerChatScreen"
+            app:destination="@id/sellerChatScreen" />
+    </fragment>
     <fragment
         android:id="@+id/sellerDetailWaitingTransactionScreen"
         android:name="com.example.beefy.ui.seller.sellerdetailtransactionscreen.sellerdetailwaitingtransactionscreen.SellerDetailWaitingTransactionScreen"
@@ -124,6 +132,9 @@
             app:destination="@id/sellerTransactionScreen"
             app:popUpTo="@id/sellerTransactionScreen"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_sellerDetailWaitingTransactionScreen_to_sellerChatScreen"
+            app:destination="@id/sellerChatScreen" />
     </fragment>
     <fragment
         android:id="@+id/sellerChatsListScreen"

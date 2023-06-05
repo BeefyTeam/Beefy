@@ -74,7 +74,7 @@ data class IDBARANG (
 )
 
 data class AcceptOrderResponse(
-    @SerializedName("message"  ) var message  : String? = null,
+    @SerializedName("message" ) var message : String? = null
 )
 
 

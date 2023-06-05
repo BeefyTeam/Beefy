@@ -15,7 +15,7 @@ class SellerCompleteTransactionAdapter ( private val listener : (SellerOrderProd
     class ViewHolder(val binding : OrderStatusCardItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(items: SellerOrderProductResponse){
             binding.orderStatusCardTitleTv.text = items.IDBARANG?.namaBarang
-            binding.orderStatusCardTotalItemTv.text = items.totalBarang.toString()
+            binding.orderStatusCardTotalItemTv.text = items.totalBarang.toString() + " Barang"
             binding.orderStatusCardDateTv.text = DateConverter(items.tanggalOrder.toString())
             Glide.with(binding.root.context).load(items.IDBARANG?.gambar).into(binding.orderStatusCardImageView)
         }

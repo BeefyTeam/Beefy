@@ -2,6 +2,8 @@ package com.example.beefy.data.source.remote
 
 import com.example.beefy.data.response.AcceptOrderResponse
 import com.example.beefy.data.response.AddProductResponse
+import com.example.beefy.data.response.BuyerOrderProductResponse
+import com.example.beefy.data.response.CompleteOrder
 import com.example.beefy.data.response.DeleteProductResponse
 import com.example.beefy.data.response.DetailBuyerResponse
 import com.example.beefy.data.response.DetailOrderResponse
@@ -15,6 +17,7 @@ import com.example.beefy.data.response.Product
 import com.example.beefy.data.response.HelloWorldResponse
 import com.example.beefy.data.response.LoginResponse
 import com.example.beefy.data.response.NewOrderResponse
+import com.example.beefy.data.response.PaidOrderResponse
 import com.example.beefy.data.response.RefreshTokenResponse
 import com.example.beefy.data.response.RegisterBuyerResponse
 import com.example.beefy.data.response.RegisterPenjualResponse
@@ -23,6 +26,7 @@ import com.example.beefy.data.response.ScanMeatResponse
 import com.example.beefy.data.response.SearchStoreResponse
 import com.example.beefy.data.response.SellerOrderProductResponse
 import com.example.beefy.data.response.TrendingStoreResponse
+import com.example.beefy.data.response.UnpaidOrderResponse
 import com.example.beefy.data.response.UploadPaymentProofResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -156,6 +160,11 @@ interface ApiServices {
     ) : DeleteProductResponse
 
     //orders penjual
+    @GET("order/order-sudah-bayar/")
+    suspend fun sellerPaidOrder(
+        @Query("id_toko") idToko: Int
+    ) : List<PaidOrderResponse>
+
     @GET("order/order-in-waiting/")
     suspend fun sellerOrderInWaiting(
         @Query("id_toko") idToko: Int
@@ -197,10 +206,10 @@ interface ApiServices {
     @POST("pembeli/edit-pembeli/")
     suspend fun addDetailBuyer(
         @Header("Authorization") token: String,
-        @Field("id_pembeli") idPembeli:String,
+        @Field("id_pembeli") idPembeli:Int,
         @Field("alamat_lengkap") alamatLengkap : String,
         @Field("nama_penerima") namaPenerima : String,
-        @Field("nomor_telepon") nomorTelepon : String,
+        @Field("nomor_telp") nomorTelepon : String,
         @Field("label_alamat") labelAlamat : String,
         @Field("nama") nama : String,
     ) : EditBuyerResponse
@@ -215,12 +224,12 @@ interface ApiServices {
     @FormUrlEncoded
     @POST("pembeli/edit-pembeli/")
     suspend fun editDetailBuyer(
-        @Field("id_pembeli") idPembeli:String,
+        @Field("id_pembeli") idPembeli:Int,
         @Field("alamat_lengkap") alamatLengkap : String,
         @Field("nama_penerima") namaPenerima : String,
-        @Field("nomor_telepon") nomorTelepon : String,
+        @Field("nomor_telp") nomorTelepon : String,
         @Field("label_alamat") labelAlamat : String,
-        @Field("nama") nama : String,
+        @Field("nama") nama : String
     ) : EditBuyerResponse
 
 
@@ -269,6 +278,27 @@ interface ApiServices {
     ) : UploadPaymentProofResponse
 
 
+    @GET("order/order-belum-bayar/")
+    suspend fun buyerUnpaidOrder(
+        @Query("id_pembeli") idPembeli: Int
+    ) : List<UnpaidOrderResponse>
+
+    @GET("order/order-sudah-bayar/")
+    suspend fun buyerPaidOrder(
+        @Query("id_pembeli") idPembeli: Int
+    ) : List<PaidOrderResponse>
+
+    @GET("order/order-in-process/")
+    suspend fun buyerOrderInProcess(
+        @Query("id_pembeli") idPembeli: Int
+    ) : List<BuyerOrderProductResponse>
+
+    @GET("order/order-in-complete")
+    suspend fun buyerOrderInComplete(
+        @Query("id_pembeli") idPembeli: Int
+    ) : List<BuyerOrderProductResponse>
+
+
     @Multipart
     @POST("pembeli/scan-meat/")
     suspend fun scanMeat(
@@ -287,6 +317,11 @@ interface ApiServices {
     @GET("pembeli/get-trending-product")
     suspend fun getTrendingProduct() : List<Product>
 
+    @FormUrlEncoded
+    @POST("pembeli/accept-order-complete/")
+    suspend fun acceptOrderComplete(
+        @Field("id_order") idOrder: Int
+    ) : CompleteOrder
 
 
 

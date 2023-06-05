@@ -40,12 +40,6 @@ class RegisterSellerScreen : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-        binding.registerSellerStoreNameTIET.setText("a")
-        binding.registerSellerEmailTIET.setText("a@gmail.co")
-        binding.registerSellerPhoneNumberTIET.setText("1111111111")
-        binding.registerSellerPasswordTIET.setText("aaaaaaaa")
-
         setLoading(false)
         checkEmptyField()
         validateInput()

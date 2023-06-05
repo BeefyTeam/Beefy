@@ -3,15 +3,11 @@ package com.example.beefy.data.response
 import com.google.gson.annotations.SerializedName
 
 data class EditPPBuyerResponse (
-
     @SerializedName("message" ) var message : String? = null
-
 )
 
 data class EditBuyerResponse (
-
     @SerializedName("message" ) var message : String? = null
-
 )
 
 data class DetailBuyerResponse (
@@ -92,3 +88,61 @@ data class TrendingStoreResponse (
     @SerializedName("jam_operasional_buka"  ) var jamOperasionalBuka  : String? = null,
     @SerializedName("jam_operasional_tutup" ) var jamOperasionalTutup : String? = null
 )
+
+data class BuyerOrderProductResponse (
+    @SerializedName("pk"                ) var pk               : Int?      = null,
+    @SerializedName("ID_PEMBAYARAN"     ) var IDPEMBAYARAN     : Int?      = null,
+    @SerializedName("ID_PEMBELI"        ) var IDPEMBELI        : Int?      = null,
+    @SerializedName("ID_TOKO"           ) var IDTOKO           : Int?      = null,
+    @SerializedName("ID_BARANG"         ) var IDBARANG         : IDBARANG? = IDBARANG(),
+    @SerializedName("total_barang"      ) var totalBarang      : Int?      = null,
+    @SerializedName("catatan"           ) var catatan          : String?   = null,
+    @SerializedName("alamat_pengiriman" ) var alamatPengiriman : String?   = null,
+    @SerializedName("metode_pembayaran" ) var metodePembayaran : String?   = null,
+    @SerializedName("tanggal_order"     ) var tanggalOrder     : String?   = null,
+    @SerializedName("status"            ) var status           : String?   = null
+)
+
+data class UnpaidOrderResponse (
+
+    @SerializedName("bukti_bayar"      ) var buktiBayar      : String?  = null,
+    @SerializedName("rekening"         ) var rekening        : String?  = null,
+    @SerializedName("total_harga"      ) var totalHarga      : Int?     = null,
+    @SerializedName("biaya_pengiriman" ) var biayaPengiriman : Int?     = null,
+    @SerializedName("kode_unik"        ) var kodeUnik        : Int?     = null,
+    @SerializedName("FK_Order"         ) var FKOrder         : FKOrder? = FKOrder(),
+    @SerializedName("status"           ) var status          : String?  = null
+
+)
+
+data class PaidOrderResponse (
+
+    @SerializedName("bukti_bayar"      ) var buktiBayar      : String?  = null,
+    @SerializedName("rekening"         ) var rekening        : String?  = null,
+    @SerializedName("total_harga"      ) var totalHarga      : Int?     = null,
+    @SerializedName("biaya_pengiriman" ) var biayaPengiriman : Int?     = null,
+    @SerializedName("kode_unik"        ) var kodeUnik        : Int?     = null,
+    @SerializedName("FK_Order"         ) var FKOrder         : FKOrder? = FKOrder(),
+    @SerializedName("status"           ) var status          : String?  = null
+
+)
+
+data class FKOrder (
+    @SerializedName("pk"                ) var pk               : Int?      = null,
+    @SerializedName("ID_PEMBAYARAN"     ) var IDPEMBAYARAN     : Int?      = null,
+    @SerializedName("ID_PEMBELI"        ) var IDPEMBELI        : Int?      = null,
+    @SerializedName("ID_TOKO"           ) var IDTOKO           : Int?      = null,
+    @SerializedName("ID_BARANG"         ) var IDBARANG         : IDBARANG? = IDBARANG(),
+    @SerializedName("total_barang"      ) var totalBarang      : Int?      = null,
+    @SerializedName("catatan"           ) var catatan          : String?   = null,
+    @SerializedName("alamat_pengiriman" ) var alamatPengiriman : String?   = null,
+    @SerializedName("metode_pembayaran" ) var metodePembayaran : String?   = null,
+    @SerializedName("tanggal_order"     ) var tanggalOrder     : String?   = null,
+    @SerializedName("status"            ) var status           : String?   = null
+)
+
+data class CompleteOrder (
+    @SerializedName("message" ) var message : String? = null
+)
+
+

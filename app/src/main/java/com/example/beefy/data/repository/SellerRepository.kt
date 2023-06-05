@@ -11,6 +11,7 @@ import com.example.beefy.data.response.EditPPPenjualResponse
 import com.example.beefy.data.response.EditPenjualResponse
 import com.example.beefy.data.response.EditProductResponse
 import com.example.beefy.data.response.ErrorResponse
+import com.example.beefy.data.response.PaidOrderResponse
 import com.example.beefy.data.response.Product
 import com.example.beefy.data.response.SellerOrderProductResponse
 import com.example.beefy.data.source.remote.ApiServices
@@ -167,6 +168,21 @@ class SellerRepository(
         }
     }
 
+    suspend fun sellerGetPaidOrder(
+        idToko: Int
+    ) : Flow<Resource<List<PaidOrderResponse>>>{
+        return flow {
+            emit(Resource.Loading)
+            try {
+                val response = apiServices.sellerPaidOrder(idToko)
+                emit(Resource.Success(response))
+            }catch (e: HttpException) {
+                Log.e("SellerRepository", "PaidOrder HttpException: " + e.message)
+                emit(Resource.Error(getError(e)))
+            }
+        }
+    }
+
     suspend fun sellerGetOrderInWaiting(
         idToko: Int
     ) : Flow<Resource<List<SellerOrderProductResponse>>>{
@@ -227,7 +243,7 @@ class SellerRepository(
         }
     }
 
-    suspend fun getDetailOrder(
+    suspend fun sellerGetDetailOrder(
         idOrder: Int
     ) : Flow<Resource<DetailOrderResponse>>{
         return flow {

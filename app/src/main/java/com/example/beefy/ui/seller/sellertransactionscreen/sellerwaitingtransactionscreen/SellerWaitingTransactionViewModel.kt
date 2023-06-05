@@ -6,14 +6,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.beefy.data.repository.SellerRepository
 import com.example.beefy.data.repository.UserPrefRepository
+import com.example.beefy.data.response.PaidOrderResponse
 import com.example.beefy.data.response.SellerOrderProductResponse
 import com.example.beefy.utils.Resource
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class SellerWaitingTransactionViewModel(private val userPrefRepository: UserPrefRepository, private val sellerRepository: SellerRepository): ViewModel() {
-    private var _orderInWaiting = MutableLiveData<Resource<List<SellerOrderProductResponse>>>()
-    val orderInWaiting : LiveData<Resource<List<SellerOrderProductResponse>>> = _orderInWaiting
+    private var _orderInWaiting = MutableLiveData<Resource<List<PaidOrderResponse>>>()
+    val orderInWaiting : LiveData<Resource<List<PaidOrderResponse>>> = _orderInWaiting
 
     init {
         getOrderInWaiting()
@@ -23,7 +24,7 @@ class SellerWaitingTransactionViewModel(private val userPrefRepository: UserPref
         viewModelScope.launch {
             userPrefRepository.getIdType().collect{
                 if(it.isNotEmpty()){
-                    sellerRepository.sellerGetOrderInWaiting(it.toInt()).collect{
+                    sellerRepository.sellerGetPaidOrder(it.toInt()).collect{
                         _orderInWaiting.postValue(it)
                     }
                 }

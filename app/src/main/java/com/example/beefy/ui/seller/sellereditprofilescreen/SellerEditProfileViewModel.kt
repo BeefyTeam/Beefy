@@ -34,17 +34,6 @@ class SellerEditProfileViewModel(
     private var _sellerEditPenjual = MutableLiveData<Resource<EditPenjualResponse>>()
     val sellerEditPenjual: LiveData<Resource<EditPenjualResponse>> = _sellerEditPenjual
 
-//    private var _sellerEditPPPenjualStatus = MutableLiveData<Boolean>()
-//    val sellerEditPPPenjualStatus : LiveData<Boolean> = _sellerEditPPPenjualStatus
-//
-//    private var _sellerEditPenjualStatus = MutableLiveData<Boolean>()
-//    val sellerEditPenjualStatus : LiveData<Boolean> = _sellerEditPenjualStatus
-
-    var sellerEditPPPenjualStatus: Boolean = false
-    var sellerEditPenjualStatus: Boolean = false
-
-    private var _confirmEditStatus = MutableLiveData<Boolean>()
-    val confirmEditStatus: LiveData<Boolean> = _confirmEditStatus
 
 
     init {
@@ -122,13 +111,6 @@ class SellerEditProfileViewModel(
 
     }
 
-    fun handleEditPPResult(result: Resource<EditPPPenjualResponse>) {
-
-    }
-
-    fun handleEditPenjualResult(result: Resource<EditPenjualResponse>) {
-
-    }
 
 
 }

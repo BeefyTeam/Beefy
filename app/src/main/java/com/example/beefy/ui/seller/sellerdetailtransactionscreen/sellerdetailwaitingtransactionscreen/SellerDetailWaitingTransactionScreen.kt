@@ -25,16 +25,18 @@ class SellerDetailWaitingTransactionScreen : Fragment() {
     private var _binding: FragmentSellerDetailWaitingTransactionScreenBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var idProduk: String
+    private lateinit var myId:String
     private lateinit var idPembeli: String
     private lateinit var idPembayaran: String
     private lateinit var gambar:String
+
+    private lateinit var idAkunPembeli : String
+    private lateinit var namaAkunPembeli : String
 
     private val sellerDetailWaitingTransactionViewModel: SellerDetailWaitingTransactionViewModel by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        idProduk = requireArguments().getString("idProduk").toString()
         idPembeli = requireArguments().getString("idPembeli").toString()
         idPembayaran = requireArguments().getString("idPembayaran").toString()
         gambar = requireArguments().getString("gambar").toString()
@@ -53,6 +55,7 @@ class SellerDetailWaitingTransactionScreen : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         initView()
         setupButton()
         setupObserver()
@@ -61,6 +64,10 @@ class SellerDetailWaitingTransactionScreen : Fragment() {
     }
 
     private fun setupObserver() {
+        sellerDetailWaitingTransactionViewModel.userId.observe(viewLifecycleOwner){
+            myId = it
+        }
+
         sellerDetailWaitingTransactionViewModel.buyerDetail.observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Loading -> {
@@ -126,11 +133,22 @@ class SellerDetailWaitingTransactionScreen : Fragment() {
         binding.sellerDetailWaitingTransactionItemCard.meatDatePriceNoteItemTitleTv.text = detailOrderResponse.Barang?.namaBarang
 
         Glide.with(binding.root).load(detailOrderResponse.BuktiPembayaran).into(binding.sellerDetailWaitingTransactionPaymentProofImageView)
+
     }
 
     private fun setupButton() {
         binding.sellerDetailWaitingTransactionAcceptBtn.setOnClickListener {
             sellerDetailWaitingTransactionViewModel.acceptOrder(idPembayaran.toInt())
+        }
+
+        binding.sellerDetailWaitingChatFAB.setOnClickListener {
+            val bundle = Bundle().apply {
+                putString("currentUserId", myId)
+                putString("otherUserId", idAkunPembeli)
+                putString("namaAkunPembeli", namaAkunPembeli)
+            }
+
+            findNavController().navigate(R.id.action_sellerDetailWaitingTransactionScreen_to_sellerChatScreen, bundle)
         }
     }
 
@@ -143,7 +161,11 @@ class SellerDetailWaitingTransactionScreen : Fragment() {
         binding.sellerDetailWaitingTransactionAddressCard.addressSellerViewAddressTv.text = buyerDetail.alamatLengkap
         binding.sellerDetailWaitingTransactionAddressCard.addressSellerViewNameTv.text = buyerDetail.namaPenerima
         binding.sellerDetailWaitingTransactionAddressCard.addressSellerViewPhoneNumberTv.text = buyerDetail.nomorTelp
+
+        namaAkunPembeli = buyerDetail.nama.toString()
+        idAkunPembeli = buyerDetail.userAccount?.idAccount.toString()
     }
+
 
     private fun setLoading(boolean: Boolean) {
         if (boolean) {

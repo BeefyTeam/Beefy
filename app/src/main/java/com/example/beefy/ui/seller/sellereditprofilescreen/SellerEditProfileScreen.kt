@@ -73,7 +73,6 @@ class SellerEditProfileScreen : Fragment() {
         validateInput()
         setupEditText()
         setupObserver()
-
         setupButton()
 
     }
@@ -186,10 +185,6 @@ class SellerEditProfileScreen : Fragment() {
         binding.sellerEditProfileInfoCloseHourTIET.setText(detailPenjualResponse.jamOperasionalTutup)
         binding.sellerEditProfileInfoPaymentMethodTIET.setText(detailPenjualResponse.metodePembayaran)
         binding.sellerEditProfileInfoAccountTIET.setText(detailPenjualResponse.rekening)
-
-
-
-
 
     }
 

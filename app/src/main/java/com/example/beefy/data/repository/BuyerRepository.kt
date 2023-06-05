@@ -2,17 +2,24 @@ package com.example.beefy.data.repository
 
 import android.content.ContentValues
 import android.util.Log
+import com.example.beefy.data.response.AcceptOrderResponse
+import com.example.beefy.data.response.BuyerOrderProductResponse
+import com.example.beefy.data.response.CompleteOrder
 import com.example.beefy.data.response.DetailBuyerResponse
+import com.example.beefy.data.response.DetailOrderResponse
 import com.example.beefy.data.response.DetailPenjualResponse
 import com.example.beefy.data.response.EditBuyerResponse
 import com.example.beefy.data.response.EditPPBuyerResponse
 import com.example.beefy.data.response.ErrorResponse
 import com.example.beefy.data.response.NewOrderResponse
+import com.example.beefy.data.response.PaidOrderResponse
 import com.example.beefy.data.response.Product
 import com.example.beefy.data.response.ScanMeatHistoryResponse
 import com.example.beefy.data.response.ScanMeatResponse
 import com.example.beefy.data.response.SearchStoreResponse
+import com.example.beefy.data.response.SellerOrderProductResponse
 import com.example.beefy.data.response.TrendingStoreResponse
+import com.example.beefy.data.response.UnpaidOrderResponse
 import com.example.beefy.data.response.UploadPaymentProofResponse
 import com.example.beefy.data.source.remote.ApiServices
 import com.example.beefy.utils.Resource
@@ -56,7 +63,7 @@ class BuyerRepository(
             try {
                 val response = apiServices.addDetailBuyer(
                     "Bearer DAFTAR",
-                    idPembeli,
+                    idPembeli.toInt(),
                     alamatLengkap,
                     namaPenerima,
                     nomorTelepon,
@@ -93,13 +100,13 @@ class BuyerRepository(
         namaPenerima: String,
         nomorTelepon: String,
         labelAlamat: String,
-        nama: String
+        nama : String
     ): Flow<Resource<EditBuyerResponse>> {
         return flow {
             emit(Resource.Loading)
             try {
                 val response = apiServices.editDetailBuyer(
-                    idPembeli,
+                    idPembeli.toInt(),
                     alamatLengkap,
                     namaPenerima,
                     nomorTelepon,
@@ -214,6 +221,97 @@ class BuyerRepository(
                 emit(Resource.Success(response))
             } catch (e: HttpException) {
                 Log.e("BuyerRepository", "new order HttpException: " + e.message)
+                emit(Resource.Error(getError(e)))
+            }
+        }
+    }
+
+    suspend fun buyerGetUnpaidOrder(
+        idPembeli: Int
+    ) : Flow<Resource<List<UnpaidOrderResponse>>>{
+        return flow {
+            emit(Resource.Loading)
+            try {
+                val response = apiServices.buyerUnpaidOrder(idPembeli)
+                emit(Resource.Success(response))
+            }catch (e: HttpException) {
+                Log.e("BuyerRepository", "UnpaidOrder HttpException: " + e.message)
+                emit(Resource.Error(getError(e)))
+            }
+        }
+    }
+
+    suspend fun buyerGetPaidOrder(
+        idPembeli: Int
+    ) : Flow<Resource<List<PaidOrderResponse>>>{
+        return flow {
+            emit(Resource.Loading)
+            try {
+                val response = apiServices.buyerPaidOrder(idPembeli)
+                emit(Resource.Success(response))
+            }catch (e: HttpException) {
+                Log.e("BuyerRepository", "PaidOrder HttpException: " + e.message)
+                emit(Resource.Error(getError(e)))
+            }
+        }
+    }
+
+    suspend fun buyerGetOrderInProcess(
+        idPembeli: Int
+    ) : Flow<Resource<List<BuyerOrderProductResponse>>>{
+        return flow {
+            emit(Resource.Loading)
+            try {
+                val response = apiServices.buyerOrderInProcess(idPembeli)
+                emit(Resource.Success(response))
+            }catch (e: HttpException) {
+                Log.e("BuyerRepository", "OrderInProcess HttpException: " + e.message)
+                emit(Resource.Error(getError(e)))
+            }
+        }
+    }
+
+
+    suspend fun buyerGetOrderInComplete(
+        idPembeli: Int
+    ) : Flow<Resource<List<BuyerOrderProductResponse>>>{
+        return flow {
+            emit(Resource.Loading)
+            try {
+                val response = apiServices.buyerOrderInComplete(idPembeli)
+                emit(Resource.Success(response))
+            }catch (e: HttpException) {
+                Log.e("BuyerRepository", "OrderInComplete HttpException: " + e.message)
+                emit(Resource.Error(getError(e)))
+            }
+        }
+    }
+
+    suspend fun buyerGetDetailOrder(
+        idOrder: Int
+    ) : Flow<Resource<DetailOrderResponse>>{
+        return flow {
+            emit(Resource.Loading)
+            try {
+                val response = apiServices.getDetailOrder(idOrder)
+                emit(Resource.Success(response))
+            }catch (e: HttpException) {
+                Log.e("BuyerRepository", "getDetailorder HttpException: " + e.message)
+                emit(Resource.Error(getError(e)))
+            }
+        }
+    }
+
+    suspend fun finishOrder(
+        idOrder: Int
+    ) : Flow<Resource<CompleteOrder>>{
+        return flow {
+            emit(Resource.Loading)
+            try {
+                val response = apiServices.acceptOrderComplete(idOrder)
+                emit(Resource.Success(response))
+            } catch (e: HttpException) {
+                Log.e("BuyerRepository", "acceptordercomplete HttpException: " + e.message)
                 emit(Resource.Error(getError(e)))
             }
         }

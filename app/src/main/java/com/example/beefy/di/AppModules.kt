@@ -8,6 +8,7 @@ import com.example.beefy.data.repository.SellerRepository
 import com.example.beefy.data.repository.UserPrefRepository
 import com.example.beefy.data.source.local.UserPreference
 import com.example.beefy.data.source.remote.ApiConfig
+import com.example.beefy.ui.auth.forgotpasswordscreen.ForgotPasswordViewModel
 import com.example.beefy.ui.auth.loginscreen.LoginScreenViewModel
 import com.example.beefy.ui.auth.registerbuyerscreen.RegisterBuyerViewModel
 import com.example.beefy.ui.auth.registersellerscreen.RegisterSellerViewModel
@@ -75,6 +76,7 @@ val viewModelModule = module {
     viewModel { LoginScreenViewModel(get(), get()) }
     viewModel { RegisterBuyerViewModel(get(),get()) }
     viewModel { RegisterSellerViewModel(get(), get()) }
+    viewModel { ForgotPasswordViewModel(get()) }
 
     //buyer
     viewModel { BuyerHomeScreenViewModel(get()) }

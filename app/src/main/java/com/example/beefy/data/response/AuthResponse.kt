@@ -36,4 +36,9 @@ data class RegisterBuyerResponse (
 
 )
 
+data class ForgotPasswordResponse (
+
+    @SerializedName("message"    ) var message   : String? = null,
+
+)
 

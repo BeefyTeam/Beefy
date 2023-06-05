@@ -13,6 +13,7 @@ import com.example.beefy.data.response.EditPPBuyerResponse
 import com.example.beefy.data.response.EditPPPenjualResponse
 import com.example.beefy.data.response.EditPenjualResponse
 import com.example.beefy.data.response.EditProductResponse
+import com.example.beefy.data.response.ForgotPasswordResponse
 import com.example.beefy.data.response.Product
 import com.example.beefy.data.response.HelloWorldResponse
 import com.example.beefy.data.response.LoginResponse
@@ -78,6 +79,13 @@ interface ApiServices {
         @Field("email") email : String,
         @Field("password") password : String
     ) : RegisterBuyerResponse
+
+    @FormUrlEncoded
+    @POST("auth/forgot-password/")
+    suspend fun forgotPassword(
+        @Field("email") email: String,
+        @Field("new_password") newPassword: String
+    ) : ForgotPasswordResponse
 
 
     //penjual

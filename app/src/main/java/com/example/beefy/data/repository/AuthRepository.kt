@@ -3,6 +3,7 @@ package com.example.beefy.data.repository
 import android.util.Log
 
 import com.example.beefy.data.response.ErrorResponse
+import com.example.beefy.data.response.ForgotPasswordResponse
 import com.example.beefy.data.response.LoginResponse
 import com.example.beefy.data.response.RefreshTokenResponse
 import com.example.beefy.data.response.RegisterBuyerResponse
@@ -86,6 +87,22 @@ class AuthRepository(
                 emit(Resource.Error(getError(e)))
             }
         }
+    }
+
+    suspend fun forgetPassword(
+        email: String,
+        newPassword: String
+    ) : Flow<Resource<ForgotPasswordResponse>> {
+        return flow {
+            emit(Resource.Loading)
+            try {
+                val response = apiServices.forgotPassword(email, newPassword)
+                emit(Resource.Success(response))
+            } catch (e: HttpException) {
+                Log.e("AuthRepository", "forgetPassword HttpException: " + e.message)
+                emit(Resource.Error(getError(e)))
+            }
+        }.flowOn(Dispatchers.IO)
     }
 
     private fun getError(e: HttpException): String {

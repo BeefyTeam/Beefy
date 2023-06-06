@@ -92,7 +92,9 @@
         tools:layout="@layout/fragment_buyer_checkout_screen" >
         <action
             android:id="@+id/action_buyerCheckoutScreen_to_buyerUploadPaymentProofScreen"
-            app:destination="@id/buyerUploadPaymentProofScreen" />
+            app:destination="@id/buyerUploadPaymentProofScreen"
+            app:popUpTo="@id/buyerCheckoutScreen"
+            app:popUpToInclusive="true" />
         <argument
             android:name="idToko"
             app:argType="string" />

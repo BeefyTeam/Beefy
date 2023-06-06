@@ -2,6 +2,7 @@ package com.example.beefy.ui.auth.registerbuyerscreen
 
 import android.app.Activity
 import android.content.ContentValues.TAG
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -14,6 +15,10 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.example.beefy.R
 import com.example.beefy.databinding.FragmentRegisterBuyerUploadProfilePictureScreenBinding
 import com.example.beefy.utils.Resource
@@ -96,6 +101,7 @@ class RegisterBuyerUploadProfilePictureScreen : Fragment() {
                 .compress(1024)			//Final image size will be less than 1 MB(Optional)
                 .maxResultSize(1080, 1080)	//Final image resolution will be less than 1080 x 1080(Optional)
                 .createIntent { intent ->
+                    setLoading(true)
                     startForProfileImageResult.launch(intent)
                 }
         }
@@ -131,10 +137,36 @@ class RegisterBuyerUploadProfilePictureScreen : Fragment() {
                 val myFile = uriToFile(uri as Uri, requireActivity())
                 getFile = myFile
 
-                Glide.with(requireContext()).load(uri).into(binding.registerBuyerUploadProfilePictureImageView)
+                Glide.with(requireContext()).load(uri).listener(object : RequestListener<Drawable> {
+
+                    override fun onLoadFailed(
+                        e: GlideException?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        setLoading(false)
+                        return false
+                    }
+
+                    override fun onResourceReady(
+                        resource: Drawable?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        dataSource: DataSource?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        setLoading(false)
+                        return false
+
+                    }
+
+                }).into(binding.registerBuyerUploadProfilePictureImageView)
             } else if (resultCode == ImagePicker.RESULT_ERROR) {
+                setLoading(false)
                 Toast.makeText(requireContext(), ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
             } else {
+                setLoading(false)
                 Toast.makeText(requireContext(), "Task Cancelled", Toast.LENGTH_SHORT).show()
             }
         }

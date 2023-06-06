@@ -2,6 +2,7 @@ package com.example.beefy.ui.seller.selleradditemscreen
 
 import android.app.Activity
 import android.content.ContentValues
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
@@ -16,6 +17,10 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.example.beefy.R
 import com.example.beefy.databinding.FragmentSellerAddItemScreenBinding
 import com.example.beefy.utils.Resource
@@ -68,15 +73,17 @@ class SellerAddItemScreen : Fragment() {
         sellerAddItemViewModel.add.observe(viewLifecycleOwner){
             when(it){
                 is Resource.Error -> {
+                    setLoading(false)
                     Toast.makeText(requireContext(), it.error, Toast.LENGTH_SHORT).show()
                     Log.e(ContentValues.TAG, "addProduct: "+it.error, )
                 }
 
                 is Resource.Loading -> {
-
+                    setLoading(true)
                 }
 
                 is Resource.Success ->{
+                    setLoading(false)
                     Toast.makeText(requireContext(), it.data.message, Toast.LENGTH_SHORT).show()
                     findNavController().navigate(R.id.action_sellerAddItemScreen_to_sellerHomeScreen)
                 }
@@ -90,6 +97,7 @@ class SellerAddItemScreen : Fragment() {
                 .compress(1024)			//Final image size will be less than 1 MB(Optional)
                 .maxResultSize(1080, 1080)	//Final image resolution will be less than 1080 x 1080(Optional)
                 .createIntent { intent ->
+                    setLoading(true)
                     startForImageResult.launch(intent)
                 }
         }
@@ -127,10 +135,37 @@ class SellerAddItemScreen : Fragment() {
 
                 getFile = uriToFile(uri as Uri, requireContext())
 
-                Glide.with(requireContext()).load(uri).into(binding.sellerAddItemImageView)
+                Glide.with(requireContext()).load(uri).listener(object : RequestListener<Drawable> {
+
+                    override fun onLoadFailed(
+                        e: GlideException?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+
+                        setLoading(false)
+                        return false
+                    }
+
+                    override fun onResourceReady(
+                        resource: Drawable?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        dataSource: DataSource?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        setLoading(false)
+                        return false
+
+                    }
+
+                }).into(binding.sellerAddItemImageView)
             } else if (resultCode == ImagePicker.RESULT_ERROR) {
+                setLoading(false)
                 Toast.makeText(requireContext(), ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
             } else {
+                setLoading(false)
                 Toast.makeText(requireContext(), "Task Cancelled", Toast.LENGTH_SHORT).show()
             }
         }
@@ -210,6 +245,13 @@ class SellerAddItemScreen : Fragment() {
         }
     }
 
+    private fun setLoading(boolean: Boolean){
+        if(boolean){
+            binding.sellerAddItemProgressbar.visibility = View.VISIBLE
+        } else {
+            binding.sellerAddItemProgressbar.visibility = View.GONE
+        }
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

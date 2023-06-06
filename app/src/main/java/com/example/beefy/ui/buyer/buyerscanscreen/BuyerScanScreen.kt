@@ -2,6 +2,7 @@ package com.example.beefy.ui.buyer.buyerscanscreen
 
 import android.app.Activity
 import android.content.ContentValues.TAG
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -14,9 +15,14 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.example.beefy.R
 import com.example.beefy.databinding.FragmentBuyerScanScreenBinding
 import com.example.beefy.utils.Resource
+import com.example.beefy.utils.reduceFileImage
 import com.example.beefy.utils.uriToFile
 import com.github.dhaval2404.imagepicker.ImagePicker
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -86,23 +92,21 @@ class BuyerScanScreen : Fragment() {
     private fun setupButton(){
         binding.buyerScanSlectPhotoBtn.setOnClickListener {
             ImagePicker.with(this)
-                .compress(1024)			//Final image size will be less than 1 MB(Optional)
-                .maxResultSize(1080, 1080)	//Final image resolution will be less than 1080 x 1080(Optional)
                 .createIntent { intent ->
+                    setLoading(true)
                     startForProfileImageResult.launch(intent)
                 }
         }
 
         binding.buyerScanBtn.setOnClickListener {
             val file = getFile as File
-            val image = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
+            val reducedFile = reduceFileImage(file)
+            val image = reducedFile.asRequestBody("image/jpeg".toMediaTypeOrNull())
             val imagePart: MultipartBody.Part = MultipartBody.Part.createFormData(
                 "file_image",
-                file.name,
+                reducedFile.name,
                 image
             )
-
-            Log.e(TAG, "setupButton: scan btn clicked", )
 
             buyerScanViewModel.scanMeat(imagePart)
         }
@@ -124,10 +128,37 @@ class BuyerScanScreen : Fragment() {
                 val myFile = uriToFile(uri as Uri, requireActivity())
                 getFile = myFile
 
-                Glide.with(requireContext()).load(uri).into(binding.buyerScanImageView)
+                Glide.with(requireContext()).load(uri).listener(object : RequestListener<Drawable>{
+
+                    override fun onLoadFailed(
+                        e: GlideException?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+
+                        setLoading(false)
+                        return false
+                    }
+
+                    override fun onResourceReady(
+                        resource: Drawable?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        dataSource: DataSource?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        setLoading(false)
+                        return false
+
+                    }
+
+                }).into(binding.buyerScanImageView)
             } else if (resultCode == ImagePicker.RESULT_ERROR) {
+                setLoading(false)
                 Toast.makeText(requireContext(), ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
             } else {
+                setLoading(false)
                 Toast.makeText(requireContext(), "Task Cancelled", Toast.LENGTH_SHORT).show()
             }
         }
@@ -146,8 +177,11 @@ class BuyerScanScreen : Fragment() {
 
     private fun setLoading(boolean: Boolean){
         if(boolean){
+            Log.e(TAG, "setLoading: true", )
             binding.buyerScanProgressBar.visibility = View.VISIBLE
         }else{
+            Log.e(TAG, "setLoading: false", )
+
             binding.buyerScanProgressBar.visibility = View.GONE
         }
     }

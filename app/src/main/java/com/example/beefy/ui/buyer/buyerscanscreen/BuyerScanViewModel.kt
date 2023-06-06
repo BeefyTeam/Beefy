@@ -1,5 +1,7 @@
 package com.example.beefy.ui.buyer.buyerscanscreen
 
+import android.content.ContentValues.TAG
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -24,6 +26,7 @@ class BuyerScanViewModel (private val userPrefRepository: UserPrefRepository, pr
 
         viewModelScope.launch {
             userPrefRepository.getIdType().collect{
+                Log.e(TAG, "scanMeat: "+it, )
                 if(!it.isNullOrEmpty()){
                     buyerRepository.scanMeat(it.toRequestBody("text/plain".toMediaType()), image).collect{
                         _scanResult.postValue(it)

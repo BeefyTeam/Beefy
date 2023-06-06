@@ -2,6 +2,7 @@ package com.example.beefy.ui.buyer.buyereditprofilescreen
 
 import android.app.Activity
 import android.content.ContentValues
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
@@ -17,6 +18,10 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.example.beefy.R
 import com.example.beefy.data.response.DetailBuyerResponse
 import com.example.beefy.databinding.FragmentBuyerEditProfileScreenBinding
@@ -96,6 +101,7 @@ class BuyerEditProfileScreen : Fragment() {
                 .compress(1024)			//Final image size will be less than 1 MB(Optional)
                 .maxResultSize(1080, 1080)	//Final image resolution will be less than 1080 x 1080(Optional)
                 .createIntent { intent ->
+                    setProgressBar(true)
                     startForProfileImageResult.launch(intent)
                 }
         }
@@ -151,12 +157,38 @@ class BuyerEditProfileScreen : Fragment() {
                 val myFile = uriToFile(uri as Uri, requireActivity())
                 getFile = myFile
 
-                Glide.with(requireContext()).load(uri).into(binding.buyerEditProfileUploadProfilePictureImageView)
+                Glide.with(requireContext()).load(uri).listener(object : RequestListener<Drawable> {
+
+                    override fun onLoadFailed(
+                        e: GlideException?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        setProgressBar(false)
+                        return false
+                    }
+
+                    override fun onResourceReady(
+                        resource: Drawable?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        dataSource: DataSource?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        setProgressBar(false)
+                        return false
+
+                    }
+
+                }).into(binding.buyerEditProfileUploadProfilePictureImageView)
 
                 checkEmptyField()
             } else if (resultCode == ImagePicker.RESULT_ERROR) {
+                setProgressBar(false)
                 Toast.makeText(requireContext(), ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
             } else {
+                setProgressBar(false)
                 Toast.makeText(requireContext(), "Task Cancelled", Toast.LENGTH_SHORT).show()
             }
         }
@@ -273,6 +305,14 @@ class BuyerEditProfileScreen : Fragment() {
             binding.buyerEditProfileLinearLayout.loadSkeleton()
         }else{
             binding.buyerEditProfileLinearLayout.hideSkeleton()
+        }
+    }
+
+    private fun setProgressBar(boolean: Boolean){
+        if(boolean){
+            binding.buyerEditProfileProgressBar.visibility = View.VISIBLE
+        }else{
+            binding.buyerEditProfileProgressBar.visibility = View.GONE
         }
     }
 

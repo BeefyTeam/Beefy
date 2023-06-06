@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.ContentValues.TAG
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -17,6 +18,10 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.example.beefy.R
 import com.example.beefy.databinding.FragmentBuyerUploadPaymentProofScreenBinding
 import com.example.beefy.utils.Resource
@@ -85,7 +90,7 @@ class BuyerUploadPaymentProofScreen : Fragment() {
         buyerUploadPaymentProofViewModel.uploadPaymentProofResponse.observe(viewLifecycleOwner){
             when(it){
                 is Resource.Loading -> {
-                    binding.buyerUploadPaymentProgressBar.visibility = View.VISIBLE
+                    setProgressBar(true)
                 }
 
                 is Resource.Success -> {
@@ -106,6 +111,7 @@ class BuyerUploadPaymentProofScreen : Fragment() {
                 .compress(1024)			//Final image size will be less than 1 MB(Optional)
                 .maxResultSize(1080, 1080)	//Final image resolution will be less than 1080 x 1080(Optional)
                 .createIntent { intent ->
+                    setProgressBar(true)
                     startForProfileImageResult.launch(intent)
                 }
         }
@@ -155,7 +161,31 @@ class BuyerUploadPaymentProofScreen : Fragment() {
 
                 getFile = uriToFile(uri as Uri, requireContext())
 
-                Glide.with(requireContext()).load(uri).into(binding.imageView)
+                Glide.with(requireContext()).load(uri).listener(object : RequestListener<Drawable> {
+
+                    override fun onLoadFailed(
+                        e: GlideException?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        setProgressBar(false)
+                        return false
+                    }
+
+                    override fun onResourceReady(
+                        resource: Drawable?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        dataSource: DataSource?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        setProgressBar(false)
+                        return false
+
+                    }
+
+                }).into(binding.imageView)
             } else if (resultCode == ImagePicker.RESULT_ERROR) {
                 Toast.makeText(requireContext(), ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
             } else {
@@ -173,6 +203,14 @@ class BuyerUploadPaymentProofScreen : Fragment() {
             binding.imageView.visibility = View.GONE
         }else{
             binding.imageView.visibility = View.VISIBLE
+        }
+    }
+
+    private fun setProgressBar(boolean: Boolean){
+        if(boolean){
+            binding.buyerUploadPaymentProgressBar.visibility = View.VISIBLE
+        }else{
+            binding.buyerUploadPaymentProgressBar.visibility = View.GONE
         }
     }
 

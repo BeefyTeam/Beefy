@@ -62,6 +62,13 @@ class BuyerScanHistoryScreen : Fragment() {
                 }
 
                 is Resource.Success -> {
+
+                    if(it.data.isEmpty()){
+                        setEmptyAnim(true)
+                    }else{
+                        setEmptyAnim(false)
+                    }
+
                     setLoading(false)
                     adapter.setData(it.data)
                     binding.buyerScanHistoryTotalCheckTv.text = "Total " + it.data.size.toString() + " cek"
@@ -94,6 +101,14 @@ class BuyerScanHistoryScreen : Fragment() {
         }else{
             binding.buyerScanHistoryTotalCheckTv.hideSkeleton()
             binding.buyerScanHistoryRv.hideSkeleton()
+        }
+    }
+
+    private fun setEmptyAnim(boolean: Boolean){
+        if (boolean){
+            binding.buyerScanHistoryEmptyAnim.root.visibility = View.VISIBLE
+        }else{
+            binding.buyerScanHistoryEmptyAnim.root.visibility = View.GONE
         }
     }
 

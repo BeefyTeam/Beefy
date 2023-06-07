@@ -54,15 +54,19 @@ class BuyerSearchProductResultScreen : Fragment() {
         buyerSearchViewModel.productResult.observe(viewLifecycleOwner){
             when(it){
                 is Resource.Loading -> {
+                    setEmptyIcon(false)
                     setLoading(true)
                 }
 
                 is Resource.Success -> {
                     setLoading(false)
+                    setEmptyIcon(false)
                     adapter.setData(it.data)
                 }
 
                 is Resource.Error -> {
+                    setEmptyIcon(true)
+
                     adapter.setData(emptyList())
                     setLoading(false)
                     Log.e(TAG, "buyersearchproductresultscreen setupObserver: "+ it.error, )
@@ -93,6 +97,14 @@ class BuyerSearchProductResultScreen : Fragment() {
             }
         }else{
             binding.buyerSearchProductResultScreenRv.hideSkeleton()
+        }
+    }
+
+    private fun setEmptyIcon(boolean: Boolean){
+        if(boolean){
+            binding.buyerSearchProductEmptyAnim.root.visibility = View.VISIBLE
+        } else {
+            binding.buyerSearchProductEmptyAnim.root.visibility = View.GONE
         }
     }
 

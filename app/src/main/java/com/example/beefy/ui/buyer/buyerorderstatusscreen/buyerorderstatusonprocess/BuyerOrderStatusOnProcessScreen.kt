@@ -63,6 +63,11 @@ class BuyerOrderStatusOnProcessScreen : Fragment() {
                 }
 
                 is Resource.Success -> {
+                    if(it.data.isEmpty()){
+                        setEmptyAnim(true)
+                    }else{
+                        setEmptyAnim(false)
+                    }
                     setLoading(false)
                     adapter.setData(it.data)
                 }
@@ -91,6 +96,14 @@ class BuyerOrderStatusOnProcessScreen : Fragment() {
             }
         }else{
             binding.buyerOrderStatusOnProcessRv.hideSkeleton()
+        }
+    }
+
+    private fun setEmptyAnim(boolean: Boolean){
+        if(boolean){
+            binding.buyerOrderStatusOnProcessEmptyAnim.root.visibility = View.VISIBLE
+        } else{
+            binding.buyerOrderStatusOnProcessEmptyAnim.root.visibility = View.GONE
         }
     }
 

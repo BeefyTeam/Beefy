@@ -136,8 +136,9 @@ class BuyerChatsListScreen : Fragment() {
 
 
                 if (list.isEmpty()) {
-                    Log.e(TAG, "chat list screnn kosong ")
+                    setEmptyAnim(true)
                 } else {
+                    setEmptyAnim(false)
                     buyerChatsListViewModel.getSellerChatList(list.distinct())
 //                    adapter.setData(list.distinct())
                 }
@@ -156,6 +157,14 @@ class BuyerChatsListScreen : Fragment() {
             }
         }else{
             binding.buyerChatsListRv.hideSkeleton()
+        }
+    }
+
+    private fun setEmptyAnim(boolean: Boolean){
+        if (boolean){
+            binding.buyerChatListEmptyAnim.root.visibility = View.VISIBLE
+        } else {
+            binding.buyerChatListEmptyAnim.root.visibility = View.GONE
         }
     }
 

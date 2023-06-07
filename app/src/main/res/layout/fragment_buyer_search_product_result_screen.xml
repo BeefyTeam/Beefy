@@ -7,6 +7,14 @@
 
     <!-- TODO: Update blank fragment layout -->
 
+    <include
+        android:id="@+id/buyerSearchProductEmptyAnim"
+        layout="@layout/empty_search_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/buyerSearchProductResultScreenRv"
         android:layout_width="match_parent"

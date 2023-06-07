@@ -125,9 +125,10 @@ class SellerChatsListScreen : Fragment() {
 
                 }
 
-                if (list.isEmpty()){
-                    Log.e(ContentValues.TAG, "kosong: ", )
-                }else{
+                if (list.isEmpty()) {
+                    setEmptyAnim(true)
+                } else {
+                    setEmptyAnim(false)
                     Log.e(TAG, "onDataChange: "+ list.distinct(), )
                     sellerChatsListViewModel.getBuyerChatList(list.distinct())
                 }
@@ -146,6 +147,15 @@ class SellerChatsListScreen : Fragment() {
             }
         }else{
             binding.sellerChatsListRv.hideSkeleton()
+        }
+    }
+
+    private fun setEmptyAnim(boolean: Boolean){
+        if (boolean){
+            binding.sellerChatListEmptyAnim.emptyChatTv.setText("Kamu belum pernah melakukan chat dengan pembeli")
+            binding.sellerChatListEmptyAnim.root.visibility = View.VISIBLE
+        } else {
+            binding.sellerChatListEmptyAnim.root.visibility = View.GONE
         }
     }
 

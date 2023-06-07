@@ -62,6 +62,11 @@ class BuyerOrderStatusCompleteScreen : Fragment() {
                 }
 
                 is Resource.Success -> {
+                    if(it.data.isEmpty()){
+                        setEmptyAnim(true)
+                    }else{
+                        setEmptyAnim(false)
+                    }
                     setLoading(false)
                     adapter.setData(it.data)
                 }
@@ -91,6 +96,14 @@ class BuyerOrderStatusCompleteScreen : Fragment() {
             }
         }else{
             binding.buyerOrderStatusCompleteRv.hideSkeleton()
+        }
+    }
+
+    private fun setEmptyAnim(boolean: Boolean){
+        if(boolean){
+            binding.buyerOrderStatusCompleteEmptyAnim.root.visibility = View.VISIBLE
+        } else{
+            binding.buyerOrderStatusCompleteEmptyAnim.root.visibility = View.GONE
         }
     }
 

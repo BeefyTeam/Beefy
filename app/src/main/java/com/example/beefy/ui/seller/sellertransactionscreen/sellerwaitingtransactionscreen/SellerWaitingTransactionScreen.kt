@@ -76,6 +76,12 @@ class SellerWaitingTransactionScreen : Fragment() {
                 }
 
                 is Resource.Success -> {
+                    if(it.data.isEmpty()){
+                        setEmptyAnim(true)
+                    }else{
+                        setEmptyAnim(false)
+                    }
+
                     setLoading(false)
                     adapter.setData(it.data)
                 }
@@ -91,6 +97,14 @@ class SellerWaitingTransactionScreen : Fragment() {
             }
         }else {
             binding.sellerWaitingTransactionRv.hideSkeleton()
+        }
+    }
+
+    private fun setEmptyAnim(boolean: Boolean){
+        if(boolean){
+            binding.sellerWaitingTransactionEmptyAnim.root.visibility = View.VISIBLE
+        }else{
+            binding.sellerWaitingTransactionEmptyAnim.root.visibility = View.GONE
         }
     }
 

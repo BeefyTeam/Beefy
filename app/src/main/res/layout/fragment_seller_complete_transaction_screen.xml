@@ -5,6 +5,14 @@
     android:layout_height="match_parent"
     tools:context=".ui.seller.sellertransactionscreen.sellercompletetransactionscreen.SellerCompleteTransactionScreen">
 
+    <include
+        android:id="@+id/sellerCompleteTransactionEmptyAnim"
+        layout="@layout/empty_item_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/sellerCompleteTransactionRv"
         android:layout_width="match_parent"

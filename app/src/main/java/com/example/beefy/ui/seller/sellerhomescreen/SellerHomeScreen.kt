@@ -65,6 +65,12 @@ class SellerHomeScreen : Fragment() {
                 }
 
                 is Resource.Success -> {
+                    if(it.data.isEmpty()){
+                        setEmptyAnim(true)
+                    }else{
+                        setEmptyAnim(false)
+                    }
+
                     binding.sellerHomeRv.hideSkeleton()
                     adapter.setData(it.data)
                 }
@@ -92,6 +98,13 @@ class SellerHomeScreen : Fragment() {
         }
     }
 
+    private fun setEmptyAnim(boolean: Boolean){
+        if(boolean){
+            binding.sellerHomeEmptyAnim.root.visibility = View.VISIBLE
+        }else{
+            binding.sellerHomeEmptyAnim.root.visibility = View.GONE
+        }
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

@@ -5,6 +5,14 @@
     android:layout_height="match_parent"
     tools:context=".ui.buyer.BuyerChatsListScreen.BuyerChatsListScreen">
 
+    <include
+        android:id="@+id/buyerChatListEmptyAnim"
+        layout="@layout/empty_chat_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/buyerChatsListRv"
         android:layout_width="match_parent"

@@ -57,7 +57,7 @@ class BuyerOrderStatusWaitingPaymentScreen : Fragment() {
 
                 is Resource.Error -> {
                     setLoading(false)
-                    Toast.makeText(requireContext(), it.error, Toast.LENGTH_SHORT)
+                    Toast.makeText(requireContext(), it.error, Toast.LENGTH_SHORT).show()
                     Log.e(ContentValues.TAG, "buyerunpaidorder setupObserver: ", )
                 }
 

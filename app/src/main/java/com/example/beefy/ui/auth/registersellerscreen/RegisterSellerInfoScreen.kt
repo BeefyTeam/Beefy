@@ -11,7 +11,6 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.beefy.R
 import com.example.beefy.databinding.FragmentRegisterSellerInfoScreenBinding
@@ -22,12 +21,12 @@ import java.util.Calendar
 
 class RegisterSellerInfoScreen : Fragment() {
 
-    private var _binding : FragmentRegisterSellerInfoScreenBinding? = null
+    private var _binding: FragmentRegisterSellerInfoScreenBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var idToko:String
+    private lateinit var idToko: String
 
-    private val registerSellerViewModel : RegisterSellerViewModel by inject()
+    private val registerSellerViewModel: RegisterSellerViewModel by inject()
 
     private var mHour: Int = 0
     private var mMinute: Int = 0
@@ -40,7 +39,7 @@ class RegisterSellerInfoScreen : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentRegisterSellerInfoScreenBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -57,9 +56,9 @@ class RegisterSellerInfoScreen : Fragment() {
 
     }
 
-    private fun setupObserver(){
-        registerSellerViewModel.registerEditPenjual.observe(viewLifecycleOwner){
-            when(it){
+    private fun setupObserver() {
+        registerSellerViewModel.registerEditPenjual.observe(viewLifecycleOwner) {
+            when (it) {
                 is Resource.Error -> {
                     setLoading(false)
                     Toast.makeText(requireContext(), it.error, Toast.LENGTH_SHORT).show()
@@ -76,7 +75,7 @@ class RegisterSellerInfoScreen : Fragment() {
         }
     }
 
-    private fun setupButton(){
+    private fun setupButton() {
         binding.registerSellerConfirmDataBtn.setOnClickListener {
             registerSellerViewModel.editPenjual(
                 idToko,
@@ -89,13 +88,13 @@ class RegisterSellerInfoScreen : Fragment() {
         }
     }
 
-    private fun validateInput(){
-        binding.registerSellerInfoAddressTIET.addTextChangedListener(object : TextWatcher{
+    private fun validateInput() {
+        binding.registerSellerInfoAddressTIET.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                binding.registerSellerInfoAddressTIL.error = if(s.toString().isEmpty()){
+                binding.registerSellerInfoAddressTIL.error = if (s.toString().isEmpty()) {
                     "Alamat lengkap tidak boleh kosong"
                 } else {
                     null
@@ -108,12 +107,12 @@ class RegisterSellerInfoScreen : Fragment() {
 
         })
 
-        binding.registerSellerInfoOpenHourTIET.addTextChangedListener(object : TextWatcher{
+        binding.registerSellerInfoOpenHourTIET.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                binding.registerSellerInfoOpenHourTIL.error = if(s.toString().isEmpty()){
+                binding.registerSellerInfoOpenHourTIL.error = if (s.toString().isEmpty()) {
                     "Jam buka operasional tidak boleh kosong"
                 } else {
                     null
@@ -126,12 +125,12 @@ class RegisterSellerInfoScreen : Fragment() {
 
         })
 
-        binding.registerSellerInfoCloseHourTIET.addTextChangedListener(object : TextWatcher{
+        binding.registerSellerInfoCloseHourTIET.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                binding.registerSellerInfoCloseHourTIL.error = if(s.toString().isEmpty()){
+                binding.registerSellerInfoCloseHourTIL.error = if (s.toString().isEmpty()) {
                     "Jam tutup operasional tidak boleh kosong"
                 } else {
                     null
@@ -144,12 +143,12 @@ class RegisterSellerInfoScreen : Fragment() {
 
         })
 
-        binding.registerSellerInfoPaymentMethodTIET.addTextChangedListener(object : TextWatcher{
+        binding.registerSellerInfoPaymentMethodTIET.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                binding.registerSellerInfoPaymentMethodTIET.error = if(s.toString().isEmpty()){
+                binding.registerSellerInfoPaymentMethodTIET.error = if (s.toString().isEmpty()) {
                     "Metode Pembayaran tidak boleh kosong"
                 } else {
                     null
@@ -162,13 +161,13 @@ class RegisterSellerInfoScreen : Fragment() {
 
         })
 
-        binding.registerSellerInfoAccountTIET.addTextChangedListener(object : TextWatcher{
+        binding.registerSellerInfoAccountTIET.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                binding.registerSellerInfoAccountTIL.error = if(s.toString().isEmpty()){
+                binding.registerSellerInfoAccountTIL.error = if (s.toString().isEmpty()) {
                     "Rekening tidak boleh kosong"
                 } else {
                     null
@@ -182,7 +181,7 @@ class RegisterSellerInfoScreen : Fragment() {
         })
     }
 
-    private fun checkEmptyField(){
+    private fun checkEmptyField() {
         binding.registerSellerConfirmDataBtn.isEnabled =
             binding.registerSellerInfoAddressTIET.text.toString().isNotEmpty() &&
                     binding.registerSellerInfoOpenHourTIET.text.toString().isNotEmpty() &&
@@ -196,7 +195,7 @@ class RegisterSellerInfoScreen : Fragment() {
                     binding.registerSellerInfoAccountTIL.error == null
     }
 
-    private fun setupEditText(){
+    private fun setupEditText() {
         // Mendapatkan waktu saat ini sebagai default untuk timepicker
         val calendar = Calendar.getInstance()
         mHour = calendar.get(Calendar.HOUR_OF_DAY)
@@ -211,7 +210,13 @@ class RegisterSellerInfoScreen : Fragment() {
                     mMinute = minute
 
                     // Mengubah teks pada TIET openhour dengan waktu yang dipilih
-                    binding.registerSellerInfoOpenHourTIET.setText(String.format("%02d:%02d", mHour, mMinute))
+                    binding.registerSellerInfoOpenHourTIET.setText(
+                        String.format(
+                            "%02d:%02d",
+                            mHour,
+                            mMinute
+                        )
+                    )
                 },
                 mHour,
                 mMinute,
@@ -232,7 +237,13 @@ class RegisterSellerInfoScreen : Fragment() {
                     mMinute = minute
 
                     // Mengubah teks pada TIET openhour dengan waktu yang dipilih
-                    binding.registerSellerInfoCloseHourTIET.setText(String.format("%02d:%02d", mHour, mMinute))
+                    binding.registerSellerInfoCloseHourTIET.setText(
+                        String.format(
+                            "%02d:%02d",
+                            mHour,
+                            mMinute
+                        )
+                    )
                 },
                 mHour,
                 mMinute,
@@ -244,20 +255,20 @@ class RegisterSellerInfoScreen : Fragment() {
         }
 
         val paymentMethodItems = listOf("BCA", "Mandiri", "BNI")
-        val adapter = ArrayAdapter(requireContext(), R.layout.payment_method_list_item, paymentMethodItems)
+        val adapter =
+            ArrayAdapter(requireContext(), R.layout.payment_method_list_item, paymentMethodItems)
         (binding.registerSellerInfoPaymentMethodTIET as? AutoCompleteTextView)?.setAdapter(adapter)
     }
 
-    private fun setLoading(boolean: Boolean){
-        binding.registerSellerInfoProgressbar.visibility = if(
+    private fun setLoading(boolean: Boolean) {
+        binding.registerSellerInfoProgressbar.visibility = if (
             boolean
         ) {
             View.VISIBLE
-        }else{
+        } else {
             View.GONE
         }
     }
-
 
 
     override fun onDestroyView() {

@@ -1,41 +1,32 @@
 package com.example.beefy.ui.auth.forgotpasswordscreen
 
-import android.content.ContentValues
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.util.Patterns
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.beefy.R
 import com.example.beefy.databinding.FragmentForgotPasswordScreenBinding
-import com.example.beefy.ui.buyer.BuyerActivity
-import com.example.beefy.ui.seller.SellerActivity
 import com.example.beefy.utils.Resource
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class ForgotPasswordScreen : Fragment() {
 
-    private var _binding : FragmentForgotPasswordScreenBinding? = null
+    private var _binding: FragmentForgotPasswordScreenBinding? = null
     private val binding get() = _binding!!
 
-    private val forgotPasswordViewModel : ForgotPasswordViewModel by viewModel()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    private val forgotPasswordViewModel: ForgotPasswordViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentForgotPasswordScreenBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -50,15 +41,18 @@ class ForgotPasswordScreen : Fragment() {
 
     }
 
-    private fun setupButton(){
+    private fun setupButton() {
         binding.forgotPasswordConfirmBtn.setOnClickListener {
-            forgotPasswordViewModel.forgetPassword(binding.forgotPasswordEmailTIET.text.toString(), binding.forgotPasswordPasswordTIET.text.toString())
+            forgotPasswordViewModel.forgetPassword(
+                binding.forgotPasswordEmailTIET.text.toString(),
+                binding.forgotPasswordPasswordTIET.text.toString()
+            )
         }
     }
 
-    private fun setupObserver(){
-        forgotPasswordViewModel.forgetPassword.observe(viewLifecycleOwner){
-            when(it){
+    private fun setupObserver() {
+        forgotPasswordViewModel.forgetPassword.observe(viewLifecycleOwner) {
+            when (it) {
                 is Resource.Success -> {
                     setLoading(false)
                     Toast.makeText(requireContext(), it.data.message, Toast.LENGTH_SHORT).show()
@@ -79,17 +73,18 @@ class ForgotPasswordScreen : Fragment() {
         }
     }
 
-    private fun validateInput(){
+    private fun validateInput() {
         binding.forgotPasswordEmailTIET.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                binding.forgotPasswordEmailTIL.error = if(!Patterns.EMAIL_ADDRESS.matcher(s.toString()).matches()){
-                    "Format Email tidak valid"
-                } else {
-                    null
-                }
+                binding.forgotPasswordEmailTIL.error =
+                    if (!Patterns.EMAIL_ADDRESS.matcher(s.toString()).matches()) {
+                        "Format Email tidak valid"
+                    } else {
+                        null
+                    }
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -104,7 +99,7 @@ class ForgotPasswordScreen : Fragment() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                binding.forgotPasswordPasswordTIL.error = if(s.toString().length<8){
+                binding.forgotPasswordPasswordTIL.error = if (s.toString().length < 8) {
                     "Password tidak boleh kurang dari 8 karakter"
                 } else {
                     null
@@ -121,7 +116,7 @@ class ForgotPasswordScreen : Fragment() {
     }
 
 
-    private fun checkEmptyField(){
+    private fun checkEmptyField() {
         binding.forgotPasswordConfirmBtn.isEnabled =
             binding.forgotPasswordEmailTIET.text.toString().isNotEmpty() &&
                     binding.forgotPasswordPasswordTIET.text.toString().isNotEmpty() &&
@@ -129,12 +124,12 @@ class ForgotPasswordScreen : Fragment() {
                     binding.forgotPasswordPasswordTIL.error == null
     }
 
-    private fun setLoading(boolean: Boolean){
-        binding.forgetPasswordprogressBar.visibility = if(
+    private fun setLoading(boolean: Boolean) {
+        binding.forgetPasswordprogressBar.visibility = if (
             boolean
         ) {
             View.VISIBLE
-        }else{
+        } else {
             View.GONE
         }
     }

@@ -37,12 +37,12 @@ class BuyerChatsListScreen : Fragment() {
     private var _binding: FragmentBuyerChatsListScreenBinding? = null
     private val binding get() = _binding!!
 
-    private val buyerChatsListViewModel : BuyerChatsListViewModel by inject()
+    private val buyerChatsListViewModel: BuyerChatsListViewModel by inject()
 
     private lateinit var db: FirebaseDatabase
     private lateinit var messagesRef: DatabaseReference
 
-    private lateinit var currentUserId : String
+    private lateinit var currentUserId: String
 
     private lateinit var adapter: BuyerChatsListAdapter
 
@@ -70,14 +70,21 @@ class BuyerChatsListScreen : Fragment() {
 
     }
 
-    private fun setupObserver(){
-        buyerChatsListViewModel.getUserId().observe(viewLifecycleOwner){
+    private fun setupObserver() {
+        buyerChatsListViewModel.getUserId().observe(viewLifecycleOwner) {
             currentUserId = it
         }
 
-        buyerChatsListViewModel.sellerChatList.observe(viewLifecycleOwner){
-            when(it){
-                is Resource.Success-> {
+        buyerChatsListViewModel.sellerChatList.observe(viewLifecycleOwner) {
+            when (it) {
+                is Resource.Success -> {
+
+                    if (it.data.isNullOrEmpty()) {
+                        setEmptyAnim(true)
+                    } else {
+                        setEmptyAnim(false)
+                    }
+
                     setLoading(false)
                     adapter.setData(it.data)
                 }
@@ -94,7 +101,7 @@ class BuyerChatsListScreen : Fragment() {
         }
     }
 
-    private fun setupAdapter(){
+    private fun setupAdapter() {
         adapter = BuyerChatsListAdapter {
 
             val bundle = Bundle().apply {
@@ -134,14 +141,8 @@ class BuyerChatsListScreen : Fragment() {
                     }
                 }
 
+                buyerChatsListViewModel.getSellerChatList(list.distinct())
 
-                if (list.isEmpty()) {
-                    setEmptyAnim(true)
-                } else {
-                    setEmptyAnim(false)
-                    buyerChatsListViewModel.getSellerChatList(list.distinct())
-//                    adapter.setData(list.distinct())
-                }
 
             }
 
@@ -150,18 +151,18 @@ class BuyerChatsListScreen : Fragment() {
         })
     }
 
-    private fun setLoading(boolean: Boolean){
-        if(boolean){
-            binding.buyerChatsListRv.loadSkeleton(R.layout.message_chat_list_item){
+    private fun setLoading(boolean: Boolean) {
+        if (boolean) {
+            binding.buyerChatsListRv.loadSkeleton(R.layout.message_chat_list_item) {
                 itemCount(4)
             }
-        }else{
+        } else {
             binding.buyerChatsListRv.hideSkeleton()
         }
     }
 
-    private fun setEmptyAnim(boolean: Boolean){
-        if (boolean){
+    private fun setEmptyAnim(boolean: Boolean) {
+        if (boolean) {
             binding.buyerChatListEmptyAnim.root.visibility = View.VISIBLE
         } else {
             binding.buyerChatListEmptyAnim.root.visibility = View.GONE

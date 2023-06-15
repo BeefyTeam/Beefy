@@ -12,17 +12,13 @@ import com.example.beefy.databinding.FragmentRegisterConfirmationScreenBinding
 
 class RegisterConfirmationScreenFragment : Fragment() {
 
-    private var _binding : FragmentRegisterConfirmationScreenBinding? = null
+    private var _binding: FragmentRegisterConfirmationScreenBinding? = null
     private val binding get() = _binding!!
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentRegisterConfirmationScreenBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -33,14 +29,16 @@ class RegisterConfirmationScreenFragment : Fragment() {
         setupButton()
     }
 
-    private fun setupButton(){
+    private fun setupButton() {
 
         binding.registerConfirmationScreenBuyerCardView.root.setOnClickListener {
-            it.findNavController().navigate(R.id.action_registerConfirmationScreenFragment_to_registerBuyerScreen)
+            it.findNavController()
+                .navigate(R.id.action_registerConfirmationScreenFragment_to_registerBuyerScreen)
         }
 
         binding.registerConfirmationScreenSellerCardView.root.setOnClickListener {
-            it.findNavController().navigate(R.id.action_registerConfirmationScreenFragment_to_registerSellerScreen)
+            it.findNavController()
+                .navigate(R.id.action_registerConfirmationScreenFragment_to_registerSellerScreen)
         }
 
     }

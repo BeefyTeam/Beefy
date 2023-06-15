@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.beefy.data.repository.BuyerRepository
-import com.example.beefy.data.response.HelloWorldResponse
 import com.example.beefy.data.response.Product
 import com.example.beefy.data.response.TrendingStoreResponse
 import com.example.beefy.utils.Resource

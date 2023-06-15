@@ -1,20 +1,15 @@
 package com.example.beefy.data.source.remote
 
 import android.content.ContentValues.TAG
-import android.content.Context
 import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
-import androidx.datastore.preferences.preferencesDataStore
 import com.example.beefy.data.repository.AuthRepository
 import com.example.beefy.data.repository.UserPrefRepository
 import com.example.beefy.data.source.local.UserPreference
 import com.example.beefy.utils.Resource
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
 import okhttp3.Response
@@ -60,7 +55,7 @@ class AuthInterceptor(private val dataStore: DataStore<Preferences>) : Intercept
                 }
 
                 runBlocking {
-                    authRepository.refreshToken(tokenRefresh.toString()).collect() {
+                    authRepository.refreshToken(tokenRefresh.toString()).collect {
                         when (it) {
                             is Resource.Success -> {
                                 userPrefRepository.saveTokenAccess(it.data.tokenAccess.toString())
@@ -71,7 +66,7 @@ class AuthInterceptor(private val dataStore: DataStore<Preferences>) : Intercept
                             }
 
                             is Resource.Error -> {
-                                Log.e(TAG, "error refresh token in authIntereceptor: " + it.error)
+                                Log.e(TAG, "error refresh token in authInterceptor: " + it.error)
                             }
                         }
                     }

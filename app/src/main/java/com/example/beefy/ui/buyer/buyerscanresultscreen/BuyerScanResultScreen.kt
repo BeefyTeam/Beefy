@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.example.beefy.R
 import com.example.beefy.databinding.FragmentBuyerScanResultScreenBinding
+import kotlin.math.roundToInt
 
 
 class BuyerScanResultScreen : Fragment() {
@@ -48,13 +49,68 @@ class BuyerScanResultScreen : Fragment() {
 
     private fun setupView(){
         Glide.with(binding.root).load(gambar).into(binding.scanResultImageView)
-        binding.buyerScanResultResultItem.scanResultMeatResultTv.text = if(hasil.equals("fresh") || hasil.equals("true") ){
-            "Segar"
-        } else {
-            "Tidak segar"
+        when(jenis){
+            "beef", "sapi" ->{
+                binding.buyerScanResultResultItem.scanResultMeatResultTv.text = if(hasil.equals("fresh") || hasil.equals("true") ){
+                    "Segar"
+                } else {
+                    "Tidak segar"
+                }
+                binding.buyerScanResultResultItem.scanResultFreshnessPercentageTv.text = levelKesegaran
+                binding.buyerScanResultResultItem.scanResultTypeResultTv.text = jenis
+                binding.buyerScanResultResultItem.scanResultShelfLifeREsult.text = checkShelfLife()
+            }
+
+            "pork", "others" ->{
+                if(hasil == "others" || hasil == "false"){
+                    binding.scanResultTitleTv.setText("Kami tidak mendeteksi daging pada gambar kamu")
+                    binding.buyerScanResultResultItem.scanResultTv.visibility = View.GONE
+                    binding.buyerScanResultResultItem.scanResultMeatResultTv.visibility = View.GONE
+                    binding.buyerScanResultResultItem.scanResultFreshnessLEvelTv.visibility = View.GONE
+                    binding.buyerScanResultResultItem.scanResultFreshnessPercentageTv.visibility = View.GONE
+                    binding.buyerScanResultResultItem.scanResultTypeResultTv.text = "others"
+                    binding.buyerScanResultResultItem.scanResultShelfLifeTv.visibility = View.GONE
+                    binding.buyerScanResultResultItem.scanResultShelfLifeREsult.visibility = View.GONE
+                }else{
+                    binding.buyerScanResultResultItem.scanResultTv.visibility = View.GONE
+                    binding.buyerScanResultResultItem.scanResultMeatResultTv.visibility = View.GONE
+                    binding.buyerScanResultResultItem.scanResultFreshnessLEvelTv.visibility = View.GONE
+                    binding.buyerScanResultResultItem.scanResultFreshnessPercentageTv.visibility = View.GONE
+                    binding.buyerScanResultResultItem.scanResultFreshnessPercentageTv.text = levelKesegaran
+                    binding.buyerScanResultResultItem.scanResultTypeResultTv.text = jenis
+                    binding.buyerScanResultResultItem.scanResultShelfLifeTv.visibility = View.GONE
+                    binding.buyerScanResultResultItem.scanResultShelfLifeREsult.visibility = View.GONE
+                }
+
+            }
+
+            else->{
+
+
+            }
+
         }
-        binding.buyerScanResultResultItem.scanResultFreshnessPercentageTv.text = levelKesegaran
-        binding.buyerScanResultResultItem.scanResultTypeResultTv.text = jenis
+
+
+    }
+
+    private fun checkShelfLife():String{
+        val level = levelKesegaran.dropLast(1).toFloat().roundToInt()
+        return when(level){
+
+            in 76 ..100 -> "suhu 0°C - 4°C Selama 2 - 4 hari"
+
+            in 51 ..75 -> "suhu 0°C - 4°C Selama +- 2 hari"
+
+            in 26 ..50 -> "suhu 0°C - 4°C dan Kurang dari 1 hari (tidak layak)"
+
+            in 0 ..25 -> "suhu 0°C - 4°C dan Kurang dari 0 hari (tidak layak)"
+
+            else -> "kosong"
+
+
+        }
+
     }
 
 

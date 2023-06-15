@@ -4,10 +4,12 @@ import android.content.Context
 import androidx.datastore.preferences.preferencesDataStore
 import com.example.beefy.data.repository.AuthRepository
 import com.example.beefy.data.repository.BuyerRepository
+import com.example.beefy.data.repository.MLRepository
 import com.example.beefy.data.repository.SellerRepository
 import com.example.beefy.data.repository.UserPrefRepository
 import com.example.beefy.data.source.local.UserPreference
 import com.example.beefy.data.source.remote.ApiConfig
+import com.example.beefy.data.source.remote.ml.MlApiConfig
 import com.example.beefy.ui.auth.forgotpasswordscreen.ForgotPasswordViewModel
 import com.example.beefy.ui.auth.loginscreen.LoginScreenViewModel
 import com.example.beefy.ui.auth.registerbuyerscreen.RegisterBuyerViewModel
@@ -58,6 +60,10 @@ val apiModule = module {
     single { ApiConfig(androidContext().dataStore).getApiService() }
 }
 
+val mlAPiModule = module{
+    single { MlApiConfig(androidContext().dataStore).getMLApiService() }
+}
+
 val userPreferenceModule = module {
     single { UserPreference(androidContext().dataStore) }
 }
@@ -67,6 +73,7 @@ val repositoryModule = module {
     single { BuyerRepository(get()) }
     single { SellerRepository(get()) }
     single { UserPrefRepository(get()) }
+    single { MLRepository(get()) }
 
 }
 
@@ -74,26 +81,26 @@ val viewModelModule = module {
     //auth
     viewModel { SplashScreenViewModel(get()) }
     viewModel { LoginScreenViewModel(get(), get()) }
-    viewModel { RegisterBuyerViewModel(get(),get()) }
+    viewModel { RegisterBuyerViewModel(get(), get()) }
     viewModel { RegisterSellerViewModel(get(), get()) }
     viewModel { ForgotPasswordViewModel(get()) }
 
     //buyer
     viewModel { BuyerHomeScreenViewModel(get()) }
-    viewModel { BuyerProfileViewModel(get(),get()) }
-    viewModel { BuyerChatsListViewModel(get(),get())}
-    viewModel { BuyerCheckoutViewModel(get(), get(), get())}
-    viewModel { BuyerOrderDetailPaidViewModel(get())}
-    viewModel { BuyerOrderDetailUnpaidViewModel(get(),get())}
-    viewModel { BuyerOrderDetailOnProcessViewModel(get())}
-    viewModel { BuyerOrderDetailCompleteViewModel(get())}
-    viewModel { BuyerOrderStatusOnProcessViewModel(get(),get())}
-    viewModel { BuyerOrderStatusCompleteViewModel(get(),get())}
-    viewModel { BuyerOrderStatusUnpaidViewModel(get(),get())}
-    viewModel { BuyerOrderStatusPaidViewModel(get(),get())}
-    viewModel { BuyerProductDetailViewModel(get(), get())}
-    viewModel { BuyerScanHistoryViewModel(get(), get())}
-    viewModel { BuyerScanViewModel(get(),get())}
+    viewModel { BuyerProfileViewModel(get(), get()) }
+    viewModel { BuyerChatsListViewModel(get(), get()) }
+    viewModel { BuyerCheckoutViewModel(get(), get(), get()) }
+    viewModel { BuyerOrderDetailPaidViewModel(get()) }
+    viewModel { BuyerOrderDetailUnpaidViewModel(get(), get()) }
+    viewModel { BuyerOrderDetailOnProcessViewModel(get()) }
+    viewModel { BuyerOrderDetailCompleteViewModel(get()) }
+    viewModel { BuyerOrderStatusOnProcessViewModel(get(), get()) }
+    viewModel { BuyerOrderStatusCompleteViewModel(get(), get()) }
+    viewModel { BuyerOrderStatusUnpaidViewModel(get(), get()) }
+    viewModel { BuyerOrderStatusPaidViewModel(get(), get()) }
+    viewModel { BuyerProductDetailViewModel(get(), get()) }
+    viewModel { BuyerScanHistoryViewModel(get(), get()) }
+    viewModel { BuyerScanViewModel(get(), get(), get()) }
     viewModel { BuyerStoreDetailViewModel(get(), get()) }
     viewModel { BuyerUploadPaymentProofViewModel(get()) }
     viewModel { BuyerSearchViewModel(get()) }
@@ -102,18 +109,18 @@ val viewModelModule = module {
 
 
     //seller
-    viewModel { SellerChatsListViewModel(get(),get()) }
-    viewModel { SellerAddItemViewModel(get(),get()) }
+    viewModel { SellerChatsListViewModel(get(), get()) }
+    viewModel { SellerAddItemViewModel(get(), get()) }
     viewModel { SellerDetailItemViewModel(get()) }
-    viewModel { SellerDetailCompleteTransactionViewModel(get(),get(),get()) }
-    viewModel { SellerDetailProcessTransactionViewModel(get(),get(),get()) }
-    viewModel { SellerDetailWaitingTransactionViewModel(get(), get(),get()) }
+    viewModel { SellerDetailCompleteTransactionViewModel(get(), get(), get()) }
+    viewModel { SellerDetailProcessTransactionViewModel(get(), get(), get()) }
+    viewModel { SellerDetailWaitingTransactionViewModel(get(), get(), get()) }
     viewModel { SellerEditItemViewModel(get()) }
     viewModel { SellerEditProfileViewModel(get(), get()) }
-    viewModel { SellerHomeViewModel(get(),get()) }
-    viewModel { SellerProfileViewModel(get(),get()) }
-    viewModel { SellerCompleteTransactionViewModel(get(),get()) }
-    viewModel { SellerProcessTransactionViewModel(get(),get()) }
-    viewModel { SellerWaitingTransactionViewModel(get(),get()) }
+    viewModel { SellerHomeViewModel(get(), get()) }
+    viewModel { SellerProfileViewModel(get(), get()) }
+    viewModel { SellerCompleteTransactionViewModel(get(), get()) }
+    viewModel { SellerProcessTransactionViewModel(get(), get()) }
+    viewModel { SellerWaitingTransactionViewModel(get(), get()) }
 
 }

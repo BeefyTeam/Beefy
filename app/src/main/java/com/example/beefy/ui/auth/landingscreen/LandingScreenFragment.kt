@@ -1,13 +1,11 @@
 package com.example.beefy.ui.auth.landingscreen
 
 import android.Manifest
-import android.content.ContentValues.TAG
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.example.beefy.R
 import com.example.beefy.databinding.FragmentLandingScreenBinding
@@ -17,19 +15,16 @@ import pub.devrel.easypermissions.EasyPermissions
 
 class LandingScreenFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
-    private var _binding : FragmentLandingScreenBinding? = null
+    private var _binding: FragmentLandingScreenBinding? = null
     private val binding get() = _binding!!
 
     private val cameraPerms = Manifest.permission.CAMERA
     private val galleryPerms = Manifest.permission.READ_EXTERNAL_STORAGE
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentLandingScreenBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -37,7 +32,7 @@ class LandingScreenFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if(!hasCameraPerms()){
+        if (!hasCameraPerms()) {
             requestCameraPerms()
         }
 //
@@ -50,13 +45,15 @@ class LandingScreenFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
     }
 
-    private fun setupButton(){
+    private fun setupButton() {
         binding.landingScreenLoginBtn.setOnClickListener {
-            it.findNavController().navigate(R.id.action_landingScreenFragment_to_loginScreenFragment)
+            it.findNavController()
+                .navigate(R.id.action_landingScreenFragment_to_loginScreenFragment)
         }
 
         binding.landingScreenRegisterBtn.setOnClickListener {
-            it.findNavController().navigate(R.id.action_landingScreenFragment_to_registerConfirmationScreenFragment)
+            it.findNavController()
+                .navigate(R.id.action_landingScreenFragment_to_registerConfirmationScreenFragment)
         }
     }
 
@@ -71,13 +68,13 @@ class LandingScreenFragment : Fragment(), EasyPermissions.PermissionCallbacks {
             cameraPerms
         )
 
-    private fun hasGalleryPerms()=
+    private fun hasGalleryPerms() =
         EasyPermissions.hasPermissions(
             requireContext(),
             galleryPerms
         )
 
-    private fun requestCameraPerms(){
+    private fun requestCameraPerms() {
         EasyPermissions.requestPermissions(
             this,
             "Membutuhkan Akses Camera",
@@ -87,7 +84,7 @@ class LandingScreenFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     }
 
 
-    private fun requestGalleryPerms(){
+    private fun requestGalleryPerms() {
         EasyPermissions.requestPermissions(
             this,
             "Membutuhkan Akses Gallery",
@@ -95,6 +92,7 @@ class LandingScreenFragment : Fragment(), EasyPermissions.PermissionCallbacks {
             galleryPerms,
         )
     }
+
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -111,10 +109,10 @@ class LandingScreenFragment : Fragment(), EasyPermissions.PermissionCallbacks {
 
     override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
 
-        if(EasyPermissions.somePermissionPermanentlyDenied(this, perms)){
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
             AppSettingsDialog.Builder(requireActivity()).build().show()
         } else {
-                requestCameraPerms()
+            requestCameraPerms()
         }
 
 

@@ -81,6 +81,7 @@ class BuyerSearchProductResultScreen : Fragment() {
             val bundle = Bundle()
             bundle.putString("idItem", it.pk.toString())
             bundle.putString("namaBarang", it.namaBarang)
+            bundle.putString("gambar", it.gambar)
             bundle.putString("deskripsi", it.deskripsi)
             bundle.putString("harga", it.harga.toString())
             bundle.putString("idToko", it.IDTOKO.toString())

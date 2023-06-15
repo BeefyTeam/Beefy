@@ -7,20 +7,17 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.util.Patterns
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.beefy.R
 import com.example.beefy.databinding.FragmentLoginScreenBinding
 import com.example.beefy.ui.buyer.BuyerActivity
 import com.example.beefy.ui.seller.SellerActivity
 import com.example.beefy.utils.Resource
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import org.koin.android.ext.android.inject
 
 
@@ -31,14 +28,10 @@ class LoginScreenFragment : Fragment() {
 
     private val loginScreenViewModel : LoginScreenViewModel by inject()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
        _binding = FragmentLoginScreenBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -90,7 +83,7 @@ class LoginScreenFragment : Fragment() {
 
 
                     loginScreenViewModel.saveUserPref(response.idUser.toString(), response.jenisAkun.toString(), idType.toString(),  response.access.toString(), response.refresh.toString())
-                    Log.e(TAG, "login: id_account = ${response.idUser} ", )
+                    Log.e(TAG, "login: id_account = ${response.idUser} ")
                     if(response.jenisAkun.equals("pembeli")){
                         requireActivity().startActivity(Intent(requireContext(), BuyerActivity::class.java))
                         requireActivity().finish()

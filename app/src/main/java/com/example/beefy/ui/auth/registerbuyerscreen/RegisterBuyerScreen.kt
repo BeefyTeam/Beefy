@@ -22,15 +22,13 @@ class RegisterBuyerScreen : Fragment() {
     private var _binding: FragmentRegisterBuyerBinding? = null
     private val binding get() = _binding!!
 
-    private val registerBuyerViewModel : RegisterBuyerViewModel by inject()
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    private val registerBuyerViewModel: RegisterBuyerViewModel by inject()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentRegisterBuyerBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -45,9 +43,9 @@ class RegisterBuyerScreen : Fragment() {
         setupButton()
     }
 
-    private fun setupObserver(){
-        registerBuyerViewModel.registerBuyer.observe(viewLifecycleOwner){
-            when(it){
+    private fun setupObserver() {
+        registerBuyerViewModel.registerBuyer.observe(viewLifecycleOwner) {
+            when (it) {
                 is Resource.Error -> {
                     setLoading(false)
                     Toast.makeText(requireContext(), it.error, Toast.LENGTH_SHORT).show()
@@ -63,7 +61,10 @@ class RegisterBuyerScreen : Fragment() {
                     bundle.putString("id", it.data.idPembeli.toString())
                     bundle.putString("nama", binding.registerBuyerNameTIET.text.toString())
 
-                    findNavController().navigate(R.id.action_registerBuyerScreen_to_registerBuyerUploadProfilePictureScreen, bundle)
+                    findNavController().navigate(
+                        R.id.action_registerBuyerScreen_to_registerBuyerUploadProfilePictureScreen,
+                        bundle
+                    )
                 }
             }
         }
@@ -147,19 +148,19 @@ class RegisterBuyerScreen : Fragment() {
     private fun checkEmptyField() {
         binding.registerBuyerRegisterBtn.isEnabled =
             binding.registerBuyerNameTIET.text.toString().isNotEmpty() &&
-            binding.registerBuyerEmailTIET.text.toString().isNotEmpty() &&
-            binding.registerBuyerPassworsTIET.text.toString().isNotEmpty() &&
+                    binding.registerBuyerEmailTIET.text.toString().isNotEmpty() &&
+                    binding.registerBuyerPassworsTIET.text.toString().isNotEmpty() &&
                     binding.registerBuyerNameTIL.error == null &&
                     binding.registerBuyerEmailTIL.error == null &&
                     binding.registerBuyerPasswordTIL.error == null
     }
 
-    private fun setLoading(boolean: Boolean){
-        binding.registerBuyerProgressBar.visibility = if(
+    private fun setLoading(boolean: Boolean) {
+        binding.registerBuyerProgressBar.visibility = if (
             boolean
         ) {
             View.VISIBLE
-        }else{
+        } else {
             View.GONE
         }
     }

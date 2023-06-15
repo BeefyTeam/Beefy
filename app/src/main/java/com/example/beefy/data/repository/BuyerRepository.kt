@@ -1,31 +1,33 @@
 package com.example.beefy.data.repository
 
 import android.content.ContentValues
+import android.content.ContentValues.TAG
 import android.util.Log
-import com.example.beefy.data.response.AcceptOrderResponse
 import com.example.beefy.data.response.BuyerOrderProductResponse
 import com.example.beefy.data.response.CompleteOrder
 import com.example.beefy.data.response.DetailBuyerResponse
 import com.example.beefy.data.response.DetailOrderResponse
-import com.example.beefy.data.response.DetailPenjualResponse
 import com.example.beefy.data.response.EditBuyerResponse
 import com.example.beefy.data.response.EditPPBuyerResponse
 import com.example.beefy.data.response.ErrorResponse
+import com.example.beefy.data.response.MlScanMeatResponse
 import com.example.beefy.data.response.NewOrderResponse
 import com.example.beefy.data.response.PaidOrderResponse
 import com.example.beefy.data.response.Product
+import com.example.beefy.data.response.SaveScanResponse
 import com.example.beefy.data.response.ScanMeatHistoryResponse
 import com.example.beefy.data.response.ScanMeatResponse
 import com.example.beefy.data.response.SearchStoreResponse
-import com.example.beefy.data.response.SellerOrderProductResponse
 import com.example.beefy.data.response.TrendingStoreResponse
 import com.example.beefy.data.response.UnpaidOrderResponse
 import com.example.beefy.data.response.UploadPaymentProofResponse
 import com.example.beefy.data.source.remote.ApiServices
 import com.example.beefy.utils.Resource
 import com.google.gson.Gson
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.HttpException
@@ -46,8 +48,10 @@ class BuyerRepository(
             } catch (e: HttpException) {
                 Log.e("BuyerRepository", "add PP buyer HttpException: " + e.message)
                 emit(Resource.Error(getError(e)))
+            }catch (e: Exception){
+                emit(Resource.Error(e.message.toString()))
             }
-        }
+        }.flowOn(Dispatchers.IO)
     }
 
     suspend fun addDetailBuyer(
@@ -74,8 +78,10 @@ class BuyerRepository(
             } catch (e: HttpException) {
                 Log.e("BuyerRepository", "add pembeli HttpException: " + e.message)
                 emit(Resource.Error(getError(e)))
+            }catch (e: Exception){
+                emit(Resource.Error(e.message.toString()))
             }
-        }
+        }.flowOn(Dispatchers.IO)
     }
 
     suspend fun editPPBuyer(
@@ -90,8 +96,10 @@ class BuyerRepository(
             } catch (e: HttpException) {
                 Log.e("BuyerRepository", "edit PP buyer HttpException: " + e.message)
                 emit(Resource.Error(getError(e)))
+            }catch (e: Exception){
+                emit(Resource.Error(e.message.toString()))
             }
-        }
+        }.flowOn(Dispatchers.IO)
     }
 
     suspend fun editDetailBuyer(
@@ -117,8 +125,10 @@ class BuyerRepository(
             } catch (e: HttpException) {
                 Log.e("BuyerRepository", "edit pembeli HttpException: " + e.message)
                 emit(Resource.Error(getError(e)))
+            }catch (e: Exception){
+                emit(Resource.Error(e.message.toString()))
             }
-        }
+        }.flowOn(Dispatchers.IO)
     }
 
     suspend fun getDetailBuyer(
@@ -132,8 +142,10 @@ class BuyerRepository(
             } catch (e: HttpException) {
                 Log.e("BuyerRepository", "detail pembeli HttpException: " + e.message)
                 emit(Resource.Error(getError(e)))
+            }catch (e: Exception){
+                emit(Resource.Error(e.message.toString()))
             }
-        }
+        }.flowOn(Dispatchers.IO)
     }
 
     suspend fun getDetailPembeliByIdAccount(
@@ -142,21 +154,23 @@ class BuyerRepository(
         return flow {
             emit(Resource.Loading)
             try {
-                var list = mutableListOf<DetailBuyerResponse>()
+                val list = mutableListOf<DetailBuyerResponse>()
 
                 idAccount.forEach {
                     val response = apiServices.getDetailPembeliByIdAccount(it.toInt())
                     list.add(response)
                 }
 
-                Log.e(ContentValues.TAG, "getDetailPembeliByIdAccount: "+ list, )
+                Log.e(ContentValues.TAG, "getDetailPembeliByIdAccount: $list")
 
                 emit(Resource.Success(list))
             }catch (e: HttpException) {
                 Log.e("SellerRepository", "getDEtailPembeliByIdAccount HttpException: " + e.message)
                 emit(Resource.Error(getError(e)))
+            }catch (e: Exception){
+                emit(Resource.Error(e.message.toString()))
             }
-        }
+        }.flowOn(Dispatchers.IO)
     }
 
     suspend fun searchProduct(
@@ -170,8 +184,10 @@ class BuyerRepository(
             } catch (e: HttpException) {
                 Log.e("BuyerRepository", "search product HttpException: " + e.message)
                 emit(Resource.Error(getError(e)))
+            }catch (e: Exception){
+                emit(Resource.Error(e.message.toString()))
             }
-        }
+        }.flowOn(Dispatchers.IO)
     }
 
     suspend fun searchStore(
@@ -185,8 +201,10 @@ class BuyerRepository(
             } catch (e: HttpException) {
                 Log.e("BuyerRepository", "search store HttpException: " + e.message)
                 emit(Resource.Error(getError(e)))
+            }catch (e: Exception){
+                emit(Resource.Error(e.message.toString()))
             }
-        }
+        }.flowOn(Dispatchers.IO)
     }
 
     suspend fun newOrder(
@@ -222,8 +240,10 @@ class BuyerRepository(
             } catch (e: HttpException) {
                 Log.e("BuyerRepository", "new order HttpException: " + e.message)
                 emit(Resource.Error(getError(e)))
+            }catch (e: Exception){
+                emit(Resource.Error(e.message.toString()))
             }
-        }
+        }.flowOn(Dispatchers.IO)
     }
 
     suspend fun buyerGetUnpaidOrder(
@@ -237,8 +257,10 @@ class BuyerRepository(
             }catch (e: HttpException) {
                 Log.e("BuyerRepository", "UnpaidOrder HttpException: " + e.message)
                 emit(Resource.Error(getError(e)))
+            }catch (e: Exception){
+                emit(Resource.Error(e.message.toString()))
             }
-        }
+        }.flowOn(Dispatchers.IO)
     }
 
     suspend fun buyerGetPaidOrder(
@@ -252,8 +274,10 @@ class BuyerRepository(
             }catch (e: HttpException) {
                 Log.e("BuyerRepository", "PaidOrder HttpException: " + e.message)
                 emit(Resource.Error(getError(e)))
+            }catch (e: Exception){
+                emit(Resource.Error(e.message.toString()))
             }
-        }
+        }.flowOn(Dispatchers.IO)
     }
 
     suspend fun buyerGetOrderInProcess(
@@ -267,8 +291,10 @@ class BuyerRepository(
             }catch (e: HttpException) {
                 Log.e("BuyerRepository", "OrderInProcess HttpException: " + e.message)
                 emit(Resource.Error(getError(e)))
+            }catch (e: Exception){
+                emit(Resource.Error(e.message.toString()))
             }
-        }
+        }.flowOn(Dispatchers.IO)
     }
 
 
@@ -283,8 +309,10 @@ class BuyerRepository(
             }catch (e: HttpException) {
                 Log.e("BuyerRepository", "OrderInComplete HttpException: " + e.message)
                 emit(Resource.Error(getError(e)))
+            }catch (e: Exception){
+                emit(Resource.Error(e.message.toString()))
             }
-        }
+        }.flowOn(Dispatchers.IO)
     }
 
     suspend fun buyerGetDetailOrder(
@@ -298,8 +326,10 @@ class BuyerRepository(
             }catch (e: HttpException) {
                 Log.e("BuyerRepository", "getDetailorder HttpException: " + e.message)
                 emit(Resource.Error(getError(e)))
+            }catch (e: Exception){
+                emit(Resource.Error(e.message.toString()))
             }
-        }
+        }.flowOn(Dispatchers.IO)
     }
 
     suspend fun finishOrder(
@@ -313,8 +343,10 @@ class BuyerRepository(
             } catch (e: HttpException) {
                 Log.e("BuyerRepository", "acceptordercomplete HttpException: " + e.message)
                 emit(Resource.Error(getError(e)))
+            }catch (e: Exception){
+                emit(Resource.Error(e.message.toString()))
             }
-        }
+        }.flowOn(Dispatchers.IO)
     }
 
     suspend fun uploadPaymentProof(
@@ -329,8 +361,10 @@ class BuyerRepository(
             } catch (e: HttpException) {
                 Log.e("BuyerRepository", "upload payment proof HttpException: " + e.message)
                 emit(Resource.Error(getError(e)))
+            }catch (e: Exception){
+                emit(Resource.Error(e.message.toString()))
             }
-        }
+        }.flowOn(Dispatchers.IO)
     }
 
     suspend fun scanMeat(
@@ -345,9 +379,34 @@ class BuyerRepository(
             } catch (e: HttpException) {
                 Log.e("BuyerRepository", "scan meat HttpException: " + e.message)
                 emit(Resource.Error(getError(e)))
+            }catch (e: Exception){
+                emit(Resource.Error(e.message.toString()))
             }
-        }
+        }.flowOn(Dispatchers.IO)
     }
+
+    suspend fun saveScanResult(
+        idPembeli:RequestBody,
+        label:RequestBody,
+        levelKesegaran:RequestBody,
+        type:RequestBody,
+        file_image: MultipartBody.Part
+    ) : Flow<Resource<SaveScanResponse>>{
+        return flow {
+            emit(Resource.Loading)
+            try {
+                val response = apiServices.saveScanResult(idPembeli, label, levelKesegaran, type, file_image)
+                emit(Resource.Success(response))
+            } catch (e: HttpException) {
+                Log.e("BuyerRepository", "save scan HttpException: " + e.message)
+                emit(Resource.Error(getError(e)))
+            }catch (e: Exception){
+                emit(Resource.Error(e.message.toString()))
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
+
 
     suspend fun scanMeatHistory(
         idPembeli: Int,
@@ -360,8 +419,10 @@ class BuyerRepository(
             } catch (e: HttpException) {
                 Log.e("BuyerRepository", "scanmeathistory HttpException: " + e.message)
                 emit(Resource.Error(getError(e)))
+            }catch (e: Exception){
+                emit(Resource.Error(e.message.toString()))
             }
-        }
+        }.flowOn(Dispatchers.IO)
     }
 
     suspend fun getTrendingStore() : Flow<Resource<List<TrendingStoreResponse>>>{
@@ -373,8 +434,10 @@ class BuyerRepository(
             } catch (e: HttpException) {
                 Log.e("BuyerRepository", "gettrendingstore HttpException: " + e.message)
                 emit(Resource.Error(getError(e)))
+            } catch (e: Exception){
+                emit(Resource.Error(e.message.toString()))
             }
-        }
+        }.flowOn(Dispatchers.IO)
     }
 
     suspend fun getTrendingProduct() : Flow<Resource<List<Product>>>{
@@ -386,8 +449,10 @@ class BuyerRepository(
             } catch (e: HttpException) {
                 Log.e("BuyerRepository", "gettrendingproduct HttpException: " + e.message)
                 emit(Resource.Error(getError(e)))
+            }catch (e: Exception){
+                emit(Resource.Error(e.message.toString()))
             }
-        }
+        }.flowOn(Dispatchers.IO)
     }
 
     private fun getError(e: HttpException): String {

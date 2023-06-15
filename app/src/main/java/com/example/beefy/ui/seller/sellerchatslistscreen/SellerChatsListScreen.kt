@@ -71,6 +71,12 @@ class SellerChatsListScreen : Fragment() {
         sellerChatsListViewModel.buyerChatList.observe(viewLifecycleOwner){
             when(it){
                 is Resource.Success-> {
+                    if (it.data.isNullOrEmpty()) {
+                        setEmptyAnim(true)
+                    } else {
+                        setEmptyAnim(false)
+                    }
+
                     setLoading(false)
                     adapter.setData(it.data)
                 }
@@ -125,13 +131,7 @@ class SellerChatsListScreen : Fragment() {
 
                 }
 
-                if (list.isEmpty()) {
-                    setEmptyAnim(true)
-                } else {
-                    setEmptyAnim(false)
-                    Log.e(TAG, "onDataChange: "+ list.distinct(), )
                     sellerChatsListViewModel.getBuyerChatList(list.distinct())
-                }
 
             }
 

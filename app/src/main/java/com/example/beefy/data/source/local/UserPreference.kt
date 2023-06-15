@@ -32,6 +32,7 @@ class UserPreference(private val dataStore: DataStore<Preferences>) {
             it[ID_TYPE] ?: ""
         }
     }
+
     fun getTokenAccess(): Flow<String> {
         return dataStore.data.map {
             it[TOKEN_ACCESS_KEY] ?: ""
@@ -44,13 +45,13 @@ class UserPreference(private val dataStore: DataStore<Preferences>) {
         }
     }
 
-    suspend fun saveTokenAccess(tokenAccess: String){
+    suspend fun saveTokenAccess(tokenAccess: String) {
         dataStore.edit {
             it[TOKEN_ACCESS_KEY] = tokenAccess
         }
     }
 
-    suspend fun saveUserPref(user : UserPreferenceClass){
+    suspend fun saveUserPref(user: UserPreferenceClass) {
         dataStore.edit {
             it[USER_ID] = user.userId
             it[USER_TYPE] = user.userType
@@ -65,6 +66,7 @@ class UserPreference(private val dataStore: DataStore<Preferences>) {
             it[TOKEN_ACCESS_KEY] = ""
         }
     }
+
     suspend fun clear() {
         dataStore.edit {
             it.clear()
@@ -73,4 +75,10 @@ class UserPreference(private val dataStore: DataStore<Preferences>) {
 
 }
 
-data class UserPreferenceClass(val userId : String, val userType : String, val idType:String, val tokenAccess : String, val tokenRefresh : String)
+data class UserPreferenceClass(
+    val userId: String,
+    val userType: String,
+    val idType: String,
+    val tokenAccess: String,
+    val tokenRefresh: String
+)

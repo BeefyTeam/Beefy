@@ -24,7 +24,7 @@ class AuthRepository(
     suspend fun login(
         email: String,
         password: String
-    ) : Flow<Resource<LoginResponse>> {
+    ): Flow<Resource<LoginResponse>> {
         return flow {
             emit(Resource.Loading)
             try {
@@ -33,66 +33,80 @@ class AuthRepository(
             } catch (e: HttpException) {
                 Log.e("AuthRepository", "login HttpException: " + e.message)
                 emit(Resource.Error(getError(e)))
+            } catch (e: Exception) {
+                emit(Resource.Error(e.message.toString()))
             }
         }.flowOn(Dispatchers.IO)
     }
 
     suspend fun refreshToken(
-        tokenRefresh : String
-    ) : Flow<Resource<RefreshTokenResponse>> {
+        tokenRefresh: String
+    ): Flow<Resource<RefreshTokenResponse>> {
         return flow {
             emit(Resource.Loading)
             try {
                 val response = apiServices.refreshToken(tokenRefresh)
                 emit(Resource.Success(response))
-            }catch (e: HttpException) {
+            } catch (e: HttpException) {
                 Log.e("AuthRepository", "refresh token HttpException: " + e.message)
                 emit(Resource.Error(getError(e)))
+            } catch (e: Exception) {
+                emit(Resource.Error(e.message.toString()))
             }
-        }
+        }.flowOn(Dispatchers.IO)
     }
 
     //register penjual
     suspend fun registerPenjual(
-        namaToko : String,
-        nomorTelepon:String,
-        email:String,
-        password:String
-    ) : Flow<Resource<RegisterPenjualResponse>> {
+        namaToko: String,
+        nomorTelepon: String,
+        email: String,
+        password: String
+    ): Flow<Resource<RegisterPenjualResponse>> {
         return flow {
             emit(Resource.Loading)
             try {
-                val response = apiServices.registerPenjual("Bearer DAFTAR", namaToko, nomorTelepon, email, password)
+                val response = apiServices.registerPenjual(
+                    "Bearer DAFTAR",
+                    namaToko,
+                    nomorTelepon,
+                    email,
+                    password
+                )
                 emit(Resource.Success(response))
-            }catch (e: HttpException) {
+            } catch (e: HttpException) {
                 Log.e("AuthRepository", "register penjual HttpException: " + e.message)
                 emit(Resource.Error(getError(e)))
+            } catch (e: Exception) {
+                emit(Resource.Error(e.message.toString()))
             }
-        }
+        }.flowOn(Dispatchers.IO)
     }
 
     //register pembeli
     suspend fun registerBuyer(
-        name : String,
-        email:String,
-        password:String
-    ) : Flow<Resource<RegisterBuyerResponse>> {
+        name: String,
+        email: String,
+        password: String
+    ): Flow<Resource<RegisterBuyerResponse>> {
         return flow {
             emit(Resource.Loading)
             try {
                 val response = apiServices.registerPembeli("Bearer DAFTAR", name, email, password)
                 emit(Resource.Success(response))
-            }catch (e: HttpException) {
+            } catch (e: HttpException) {
                 Log.e("AuthRepository", "register pembeli HttpException: " + e.message)
                 emit(Resource.Error(getError(e)))
+            } catch (e: Exception) {
+                emit(Resource.Error(e.message.toString()))
             }
-        }
+        }.flowOn(Dispatchers.IO)
     }
 
     suspend fun forgetPassword(
         email: String,
         newPassword: String
-    ) : Flow<Resource<ForgotPasswordResponse>> {
+    ): Flow<Resource<ForgotPasswordResponse>> {
         return flow {
             emit(Resource.Loading)
             try {
@@ -101,6 +115,8 @@ class AuthRepository(
             } catch (e: HttpException) {
                 Log.e("AuthRepository", "forgetPassword HttpException: " + e.message)
                 emit(Resource.Error(getError(e)))
+            } catch (e: Exception) {
+                emit(Resource.Error(e.message.toString()))
             }
         }.flowOn(Dispatchers.IO)
     }

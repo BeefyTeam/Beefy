@@ -7,6 +7,7 @@
     tools:context=".ui.buyer.buyerscanscreen.BuyerScanScreen">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/buyerScanCOnstraintLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -58,6 +59,14 @@
         android:id="@+id/buyerScanProgressBar"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+
+    <include
+        android:id="@+id/scanLoadingLayout"
+        layout="@layout/scan_loading_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:visibility="gone" />

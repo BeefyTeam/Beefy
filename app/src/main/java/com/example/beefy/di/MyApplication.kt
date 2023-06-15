@@ -13,6 +13,7 @@ class MyApplication : Application() {
             androidContext(this@MyApplication)
             modules(
                 apiModule,
+                mlAPiModule,
                 userPreferenceModule,
                 repositoryModule,
                 viewModelModule

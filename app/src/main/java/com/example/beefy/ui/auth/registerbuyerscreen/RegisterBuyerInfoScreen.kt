@@ -1,6 +1,5 @@
 package com.example.beefy.ui.auth.registerbuyerscreen
 
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -12,20 +11,19 @@ import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.example.beefy.R
 import com.example.beefy.databinding.FragmentRegisterBuyerInfoScreenBinding
-import com.example.beefy.ui.buyer.BuyerActivity
 import com.example.beefy.utils.Resource
 import org.koin.android.ext.android.inject
 
 
 class RegisterBuyerInfoScreen : Fragment() {
 
-    private var _binding : FragmentRegisterBuyerInfoScreenBinding? = null
+    private var _binding: FragmentRegisterBuyerInfoScreenBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var id : String
-    private lateinit var nama : String
+    private lateinit var id: String
+    private lateinit var nama: String
 
-    private val registerBuyerViewModel : RegisterBuyerViewModel by inject()
+    private val registerBuyerViewModel: RegisterBuyerViewModel by inject()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         id = requireArguments().getString("id").toString()
@@ -35,7 +33,7 @@ class RegisterBuyerInfoScreen : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentRegisterBuyerInfoScreenBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -50,9 +48,9 @@ class RegisterBuyerInfoScreen : Fragment() {
         setupButton()
     }
 
-    private fun setupObserver(){
-        registerBuyerViewModel.registerEditBuyer.observe(viewLifecycleOwner){
-            when(it){
+    private fun setupObserver() {
+        registerBuyerViewModel.registerEditBuyer.observe(viewLifecycleOwner) {
+            when (it) {
                 is Resource.Error -> {
                     setLoading(false)
                     Toast.makeText(requireContext(), it.error, Toast.LENGTH_SHORT).show()
@@ -69,7 +67,7 @@ class RegisterBuyerInfoScreen : Fragment() {
         }
     }
 
-    private fun setupButton(){
+    private fun setupButton() {
         binding.registerBuyerInfoConfirmAddressBtn.setOnClickListener {
             registerBuyerViewModel.registerEditBuyer(
                 id,
@@ -82,13 +80,13 @@ class RegisterBuyerInfoScreen : Fragment() {
         }
     }
 
-    private fun validateInput(){
-        binding.registerBuyerInfoNameTIET.addTextChangedListener(object : TextWatcher{
+    private fun validateInput() {
+        binding.registerBuyerInfoNameTIET.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                binding.registerBuyerInfoNameTIL.error = if(s.toString().isEmpty()){
+                binding.registerBuyerInfoNameTIL.error = if (s.toString().isEmpty()) {
                     "Nama Penerima tidak boleh kosong"
                 } else {
                     null
@@ -102,12 +100,12 @@ class RegisterBuyerInfoScreen : Fragment() {
 
         })
 
-        binding.registerBuyerInfoPhoneNumberTIET.addTextChangedListener(object : TextWatcher{
+        binding.registerBuyerInfoPhoneNumberTIET.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                binding.registerBuyerInfoPhoneNumberTIL.error = if(s.toString().length<8){
+                binding.registerBuyerInfoPhoneNumberTIL.error = if (s.toString().length < 8) {
                     "Nomor telefon tidak boleh kurang dari 8"
                 } else {
                     null
@@ -120,12 +118,12 @@ class RegisterBuyerInfoScreen : Fragment() {
 
         })
 
-        binding.registerBuyerInfoAddressLabelTIET.addTextChangedListener(object : TextWatcher{
+        binding.registerBuyerInfoAddressLabelTIET.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                binding.registerBuyerInfoAddressLabelTIL.error = if(s.toString().isEmpty()){
+                binding.registerBuyerInfoAddressLabelTIL.error = if (s.toString().isEmpty()) {
                     "Label alamat tidak boleh kosong"
                 } else {
                     null
@@ -138,12 +136,12 @@ class RegisterBuyerInfoScreen : Fragment() {
 
         })
 
-        binding.registerBuyerInfoFullAddressTIET.addTextChangedListener(object : TextWatcher{
+        binding.registerBuyerInfoFullAddressTIET.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                binding.registerBuyerInfoFullAddressTIL.error = if(s.toString().isEmpty()){
+                binding.registerBuyerInfoFullAddressTIL.error = if (s.toString().isEmpty()) {
                     "Alamat tidak boleh kosong"
                 } else {
                     null
@@ -157,7 +155,7 @@ class RegisterBuyerInfoScreen : Fragment() {
         })
     }
 
-    private fun checkEmptyField(){
+    private fun checkEmptyField() {
         binding.registerBuyerInfoConfirmAddressBtn.isEnabled =
             binding.registerBuyerInfoNameTIET.text.toString().isNotEmpty() &&
                     binding.registerBuyerInfoPhoneNumberTIET.text.toString().isNotEmpty() &&
@@ -169,15 +167,16 @@ class RegisterBuyerInfoScreen : Fragment() {
                     binding.registerBuyerInfoFullAddressTIL.error == null
     }
 
-    private fun setLoading(boolean: Boolean){
-        binding.registerBuyerInfoProgressBar.visibility = if(
+    private fun setLoading(boolean: Boolean) {
+        binding.registerBuyerInfoProgressBar.visibility = if (
             boolean
         ) {
             View.VISIBLE
-        }else{
+        } else {
             View.GONE
         }
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

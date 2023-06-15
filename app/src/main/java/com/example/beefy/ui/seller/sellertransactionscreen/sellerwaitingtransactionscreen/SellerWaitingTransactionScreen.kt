@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.beefy.R
+import com.example.beefy.data.response.PaidOrderResponse
 import com.example.beefy.databinding.FragmentSellerWaitingTransactionScreenBinding
 import com.example.beefy.utils.Resource
 import koleton.api.hideSkeleton
@@ -83,10 +84,23 @@ class SellerWaitingTransactionScreen : Fragment() {
                     }
 
                     setLoading(false)
-                    adapter.setData(it.data)
+
+                    setData(it.data)
                 }
             }
         }
+    }
+
+    fun setData(list : List<PaidOrderResponse>){
+        var newList = mutableListOf<PaidOrderResponse>()
+
+        list.forEach {
+            if(it.FKOrder?.status.equals("Menunggu")){
+                newList.add(it)
+            }
+        }
+
+        adapter.setData(newList)
     }
 
 

@@ -58,7 +58,7 @@ class BuyerOrderStatusOnProcessScreen : Fragment() {
 
                 is Resource.Error -> {
                     setLoading(false)
-                    Toast.makeText(requireContext(), it.error, Toast.LENGTH_SHORT)
+                    Toast.makeText(requireContext(), it.error, Toast.LENGTH_SHORT).show()
                     Log.e(TAG, "buyerorderstatusonprocess setupObserver: ", )
                 }
 

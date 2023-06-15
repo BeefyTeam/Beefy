@@ -11,20 +11,29 @@ import com.example.beefy.data.source.local.UserPreferenceClass
 import com.example.beefy.utils.Resource
 import kotlinx.coroutines.launch
 
-class LoginScreenViewModel(private val authRepository: AuthRepository, private val userPrefRepository: UserPrefRepository):ViewModel() {
+class LoginScreenViewModel(
+    private val authRepository: AuthRepository,
+    private val userPrefRepository: UserPrefRepository
+) : ViewModel() {
 
     private var _userLogin = MutableLiveData<Resource<LoginResponse>>()
     val userLogin: LiveData<Resource<LoginResponse>> = _userLogin
 
-    fun login(email:String, password:String){
+    fun login(email: String, password: String) {
         viewModelScope.launch {
-            authRepository.login(email, password).collect{
+            authRepository.login(email, password).collect {
                 _userLogin.postValue(it)
             }
         }
     }
 
-    fun saveUserPref(userId: String, userType:String, idType:String, tokenAccess:String, tokenRefresh: String){
+    fun saveUserPref(
+        userId: String,
+        userType: String,
+        idType: String,
+        tokenAccess: String,
+        tokenRefresh: String
+    ) {
 
         val userPref = UserPreferenceClass(userId, userType, idType, tokenAccess, tokenRefresh)
 

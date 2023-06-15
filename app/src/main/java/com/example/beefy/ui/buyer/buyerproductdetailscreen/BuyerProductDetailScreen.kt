@@ -29,6 +29,7 @@ class BuyerProductDetailScreen : Fragment() {
     private lateinit var idToko : String
     private lateinit var idItem : String
     private lateinit var namaBarang:String
+    private lateinit var gambar:String
     private lateinit var harga:String
     private lateinit var deskripsi:String
     private lateinit var currentUserId : String
@@ -44,6 +45,7 @@ class BuyerProductDetailScreen : Fragment() {
         idToko = requireArguments().getString("idToko").toString()
         idItem = requireArguments().getString("idItem").toString()
         namaBarang = requireArguments().getString("namaBarang").toString()
+        gambar = requireArguments().getString("gambar").toString()
         harga = requireArguments().getString("harga").toString()
         deskripsi = requireArguments().getString("deskripsi").toString()
 
@@ -100,8 +102,7 @@ class BuyerProductDetailScreen : Fragment() {
 
     private fun setupView(detailPenjualResponse: DetailPenjualResponse){
         //item
-        val imgUrl = "https://cdn.idntimes.com/content-images/post/20211202/striploin-steak-raw-beef-butchery-cut-white-table-top-view-249006-3611-90cff3e110751a704f06e897dd6e72fd.jpg"
-        Glide.with(requireContext()).load(imgUrl).into(binding.buyerProductDetailImageView)
+        Glide.with(requireContext()).load(gambar).into(binding.buyerProductDetailImageView)
         binding.buyerProductScreenTitleTv.text = namaBarang
         binding.buyerProductDetailPriceTv.text = "Rp"+ harga
         binding.buyerProductDetailDescTv.text = deskripsi
@@ -139,6 +140,7 @@ class BuyerProductDetailScreen : Fragment() {
                 putString("idToko", idToko)
                 putString("totalItem", count.toString())
                 putString("idBarang", idItem)
+                putString("gambar", gambar)
                 putString("namaBarang", namaBarang)
                 putString("harga", harga)
             }

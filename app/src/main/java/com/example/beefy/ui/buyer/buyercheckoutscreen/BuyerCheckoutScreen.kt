@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.example.beefy.R
 import com.example.beefy.data.response.DetailBuyerResponse
 import com.example.beefy.data.response.DetailPenjualResponse
@@ -28,6 +29,7 @@ class BuyerCheckoutScreen : Fragment() {
     private lateinit var idToko:String
     private lateinit var idBarang:String
     private lateinit var namaBarang:String
+    private lateinit var gambar:String
     private lateinit var harga:String
     private lateinit var totalItem:String
     private lateinit var rekening:String
@@ -46,6 +48,7 @@ class BuyerCheckoutScreen : Fragment() {
         idToko = requireArguments().getString("idToko").toString()
         idBarang = requireArguments().getString("idBarang").toString()
         namaBarang = requireArguments().getString("namaBarang").toString()
+        gambar = requireArguments().getString("gambar").toString()
         harga = requireArguments().getString("harga").toString()
         totalItem = requireArguments().getString("totalItem").toString()
     }
@@ -91,6 +94,7 @@ class BuyerCheckoutScreen : Fragment() {
         kodeUnik = (0..999).random().toString()
         totalPembayaran = (priceAmount.toInt() + biayaPengiriman.toInt() + kodeUnik.toInt()).toString()
 
+        Glide.with(binding.root).load(gambar).into(binding.buyerCheckoutItemCard.checkoutCardItemImageView)
         binding.buyerCheckoutItemCard.checkoutCardItemTitleTv.text = namaBarang
         binding.buyerCheckoutItemCard.checkoutCardItemPriceTv.text = harga
         binding.buyerCheckoutItemCard.checkoutCardItemCountTv.text = totalItem
